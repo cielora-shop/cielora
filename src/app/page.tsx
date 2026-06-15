@@ -25,7 +25,7 @@ export default function Home() {
       </section>
 
       {/* First Product Row */}
-      <ProductRow collectionName="Silver Collection" price="₹ 12,000" label="FREE KEYRING" />
+      <ProductRow collectionName="Silver Collection" price="£ 12,000" label="FREE KEYRING" />
 
       {/* Arcadia Hero Banner */}
       <section className="relative w-full h-[60vh] md:h-[700px] bg-stone-100 flex items-center overflow-hidden">
@@ -48,7 +48,7 @@ export default function Home() {
       </section>
 
       {/* Arcadia Product Row */}
-      <ProductRow collectionName="Arcadia" price="₹ 14,500" label="BEST SELLER" />
+      <ProductRow collectionName="Arcadia" price="£ 14,500" label="BEST SELLER" />
 
       {/* Mid Banner - Model looking down */}
       <section className="sticky top-0 w-full h-screen bg-stone-800 flex items-center overflow-hidden z-0">
@@ -117,7 +117,7 @@ export default function Home() {
       </section>
 
       {/* Last Product Row */}
-      <ProductRow collectionName="Classic" price="₹ 8,500" label="FREE SHIPPING" />
+      <ProductRow collectionName="Classic" price="£ 8,500" label="FREE SHIPPING" />
 
       {/* Luminis Edition */}
       <section className="relative w-full h-[60vh] md:h-[700px] bg-stone-900 flex items-center overflow-hidden">

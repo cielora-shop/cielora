@@ -5,17 +5,6 @@ import { Globe, MessageCircle, Accessibility } from "lucide-react";
 export default function Footer() {
   return (
     <footer className="bg-[#211d1d] text-white w-full flex flex-col relative overflow-hidden">
-      {/* Left Logo */}
-      <div className="w-full md:absolute md:left-0 md:top-0 md:bottom-0 md:w-1/4 lg:w-1/5 shrink-0 flex items-start justify-start p-8 bg-[#211d1d] md:bg-transparent z-10 pointer-events-none">
-         <Image 
-            src="/images/footer.svg" 
-            alt="UNO DE50" 
-            width={208} 
-            height={496} 
-            className="w-full max-w-[208px] object-contain h-auto pointer-events-auto" 
-         />
-      </div>
-
       {/* Main Content */}
       <div className="w-full flex flex-col justify-center min-h-[550px] py-10 px-8 lg:px-16 relative z-0">
         {/* Social Icons (Top Right) */}
