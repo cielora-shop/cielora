@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export interface ProductCardProps {
+  id?: string | number;
   title: string;
   price: string;
   label?: string; // "New in", "Best seller"
@@ -14,16 +15,21 @@ export interface ProductCardProps {
     silver?: { img1: string, img2: string };
     gold?: { img1: string, img2: string };
   };
+  galleryImages?: string[];
 }
 
-export default function ProductCard({ title, price, label, labelColor, bottomLabel, colors, images }: ProductCardProps) {
+export default function ProductCard({ id = 1, title, price, label, labelColor, bottomLabel, colors, images, galleryImages }: ProductCardProps) {
   const [selectedColor, setSelectedColor] = useState<"silver" | "gold">(colors[0] || "silver");
   const router = useRouter();
 
-  const currentImages = images[selectedColor] || Object.values(images)[0] || { img1: "/images/product 1.jpg", img2: "/images/product 1.1.jpg" };
+  let currentImages = images[selectedColor] || Object.values(images)[0] || { img1: "/images/product 1.jpg", img2: "/images/product 1.1.jpg" };
+  
+  if (galleryImages && galleryImages.length >= 2) {
+    currentImages = { img1: galleryImages[0], img2: galleryImages[1] };
+  }
 
   return (
-    <div onClick={() => router.push('/products/1')} className="cursor-pointer flex flex-col items-start w-full flex-shrink-0">
+    <div onClick={() => router.push(`/products/${id}`)} className="cursor-pointer flex flex-col items-start w-full flex-shrink-0">
       <div className="group relative aspect-[13/15] w-full mb-3 bg-gray-50 flex items-center justify-center overflow-hidden">
         {label && (
           <div 

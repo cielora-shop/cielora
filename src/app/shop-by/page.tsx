@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
 import ProductCard from '@/components/ProductCard';
+import { products as dummyProducts } from "@/data/products";
 
 export default function ShopByPage() {
   const [isSortOpen, setIsSortOpen] = useState(false);
@@ -134,65 +135,6 @@ export default function ShopByPage() {
   const bottomFilters = [
     "CATEGORY", "PRICE", "SIZE", "PLATING", "COMPONENT", "LEATHER", "COLOR"
   ];
-
-  const dummyProducts = Array.from({ length: 20 }).map((_, i) => {
-    const isSilver = i % 3 === 0;
-    const isGold = i % 3 === 1;
-    const isBoth = i % 3 === 2;
-    
-    const colors: ("silver" | "gold")[] = isBoth ? ["silver", "gold"] : isSilver ? ["silver"] : ["gold"];
-    const productColors: string[] = colors.map(c => c === "silver" ? "Silver" : "Gold");
-    if (i % 4 === 0) productColors.push("Black");
-    
-    let label = undefined;
-    let labelColor = undefined;
-    let bottomLabel = undefined;
-    
-    if (i === 0 || i === 5) {
-      label = "New in";
-      labelColor = "#cde6ec";
-    } else if (i === 3 || i === 8) {
-      label = "Best seller";
-      labelColor = "#e1bbff";
-    } 
-    
-    if (i === 1 || i === 6) {
-      bottomLabel = "Free Keyring";
-    }
-
-    const priceValue = 100 + i * 15;
-    
-    const categoryOptions = ["Bracelets", "Charm", "Necklaces", "Earrings", "Rings"];
-    const sizeOptions = ["9", "12", "U", "S", "M"];
-    const platingOptions = ["18K gold-plated", "Sterling silver-plated"];
-    const componentOptions = ["Crafted Crystal", "Natural Stone", "Shell Pearl"];
-    const leatherOptions = ["Yes", "No"];
-    
-    const category = categoryOptions[i % categoryOptions.length];
-    const size = sizeOptions[i % sizeOptions.length];
-    const plating = platingOptions[i % platingOptions.length];
-    const component = componentOptions[i % componentOptions.length];
-    const leather = leatherOptions[i % leatherOptions.length];
-    
-    // Inject top filter keywords occasionally to ensure dummy products are discoverable
-    const extras = i % 5 === 0 ? "accessory for women" : i % 5 === 1 ? "men's dragonfly" : i % 5 === 2 ? "heart best seller" : "";
-
-    return {
-      id: i,
-      title: category,
-      description: `Beautiful ${category} made of ${component} with ${plating}. Leather: ${leather}. Size: ${size}. Colors: ${productColors.join(', ')}. ${extras}`,
-      price: `£ ${priceValue.toFixed(2)}`,
-      priceValue,
-      label,
-      labelColor,
-      bottomLabel,
-      colors,
-      images: {
-        silver: { img1: "/images/product 1.jpg", img2: "/images/product 1.1.jpg" },
-        gold: { img1: "/images/product%206%20yellow.1.jpg", img2: "/images/product%206%20yellow.2.jpg" }
-      }
-    };
-  });
 
   const filteredProducts = dummyProducts.filter(p => {
     const textToSearch = (p.title + " " + p.description).toLowerCase();

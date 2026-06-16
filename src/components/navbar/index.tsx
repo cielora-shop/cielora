@@ -5,31 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import ProductCard from "@/components/ProductCard";
 
-const dummyProducts = Array.from({ length: 40 }).map((_, i) => {
-  const categories = ["Silver Bracelets", "Gold Bracelets", "Leather Bracelets", "Pearl Bracelets", "Cord Bracelets", "Bangle Bracelets", "Cuff Bracelets", "Link Bracelets", "Beaded Bracelets", "Bracelets for Men", "Birthstone Bracelets", "Charm Bracelets", "Best Selling Bracelets", "Silver Earrings", "Gold Necklaces", "Rings"];
-  const category = categories[i % categories.length];
-  const isSilver = i % 3 === 0;
-  const isGold = i % 3 === 1;
-  const isBoth = i % 3 === 2;
-  const colors: ("silver" | "gold")[] = isBoth ? ["silver", "gold"] : isSilver ? ["silver"] : ["gold"];
-  const productColors = colors.map(c => c === "silver" ? "Silver" : "Gold");
-  const priceValue = 100 + i * 15;
-  return {
-    id: i,
-    title: category,
-    description: `Beautiful ${category} with colors: ${productColors.join(', ')}.`,
-    price: `£ ${priceValue.toFixed(2)}`,
-    priceValue,
-    label: i % 5 === 0 ? "New in" : undefined,
-    labelColor: i % 5 === 0 ? "#cde6ec" : undefined,
-    bottomLabel: undefined,
-    colors,
-    images: {
-      silver: { img1: "/images/product 1.jpg", img2: "/images/product 1.1.jpg" },
-      gold: { img1: "/images/product%206%20yellow.1.jpg", img2: "/images/product%206%20yellow.2.jpg" }
-    }
-  };
-});
+import { products as dummyProducts } from "@/data/products";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -584,6 +560,7 @@ export default function Navbar() {
                 {dummyProducts.filter(p => (p.title + " " + p.description).toLowerCase().includes(searchQuery.toLowerCase())).slice(0, 8).map(product => (
                   <ProductCard 
                     key={product.id}
+                    id={product.id}
                     title={product.title}
                     price={product.price}
                     label={product.label}

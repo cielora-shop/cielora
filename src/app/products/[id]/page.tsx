@@ -3,8 +3,17 @@ import ProductRow from "@/components/ProductRow";
 import ZoomableImage from "@/components/ZoomableImage";
 import SizeSelector from "@/components/SizeSelector";
 import DetailsAccordion from "@/components/DetailsAccordion";
+import { products } from "@/data/products";
+import { notFound } from "next/navigation";
 
-export default function ProductDetailPage() {
+export default async function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params;
+  const product = products.find(p => String(p.id) === resolvedParams.id);
+  
+  if (!product) {
+    notFound();
+  }
+
   return (
     <main className="flex flex-col min-h-screen bg-white pt-16">
       <div className="w-full flex flex-col lg:flex-row gap-8 lg:gap-12 xl:gap-16 pb-0">
@@ -12,12 +21,9 @@ export default function ProductDetailPage() {
         {/* Left Side - Image Gallery */}
         <div className="w-full lg:w-[60%] xl:w-[65%] flex flex-col">
           <div className="grid grid-cols-2 gap-1">
-            <ZoomableImage src="/images/1 product.jpg" alt="Product Studio 1" />
-            <ZoomableImage src="/images/1.2 product.jpg" alt="Product Studio 2" />
-            <ZoomableImage src="/images/banner 4.jpg" alt="Model 1" />
-            <ZoomableImage src="/images/banner 3.jpg" alt="Model 2" />
-            <ZoomableImage src="/images/product 2.jpg" alt="Product Studio 3" />
-            <ZoomableImage src="/images/product 2.1.jpg" alt="Model 3" />
+            {product.galleryImages.map((src, idx) => (
+              <ZoomableImage key={idx} src={src} alt={`${product.title} Gallery Image ${idx + 1}`} />
+            ))}
           </div>
         </div>
 
@@ -27,27 +33,32 @@ export default function ProductDetailPage() {
             {/* Breadcrumbs */}
             <nav className="text-[12px] text-gray-500 mb-6 font-normal">
               <span className="hover:text-black cursor-pointer">Home</span> <span className="mx-1">&gt;</span>
-              <span className="hover:text-black cursor-pointer">Bracelets</span> <span className="mx-1">&gt;</span>
-              <span className="hover:text-black cursor-pointer">Silver collection</span>
+              <span className="hover:text-black cursor-pointer">{product.category || 'Shop'}</span> <span className="mx-1">&gt;</span>
+              <span className="hover:text-black cursor-pointer">{product.title}</span>
             </nav>
 
             {/* Title & Price & Ref */}
             <h1 className="text-[20px] font-semibold leading-tight text-gray-900 mb-1 pr-8">
-              Margin bracelet with two tubes in silver
+              {product.title}
             </h1>
             <p className="text-[16px] font-semibold text-gray-900 mb-[20px]">
-              £ 165.00
+              {product.price}
             </p>
 
             {/* Color Picker */}
             <div className="flex justify-between items-center w-full mb-6">
-              <div
-                className="w-[24px] h-[24px] rounded-full bg-white cursor-pointer border border-gray-400 flex items-center justify-center"
-                aria-label="Silver color option"
-              >
-                <div className="w-[14px] h-[14px] rounded-full" style={{ backgroundColor: "#C0C0C0" }}></div>
+              <div className="flex gap-3">
+                {product.colors.map(color => (
+                  <div
+                    key={color}
+                    className="w-[24px] h-[24px] rounded-full bg-white cursor-pointer border border-gray-400 flex items-center justify-center"
+                    aria-label={`${color} color option`}
+                  >
+                    <div className="w-[14px] h-[14px] rounded-full" style={{ backgroundColor: color === 'silver' ? "#C0C0C0" : "#FFD700" }}></div>
+                  </div>
+                ))}
               </div>
-              <span className="text-[10px] text-gray-900">Silver</span>
+              <span className="text-[10px] text-gray-900 capitalize">{product.colors.join(', ')}</span>
             </div>
 
             <button className="text-gray-500 hover:text-black absolute right-0 top-[60px]">
@@ -96,7 +107,7 @@ export default function ProductDetailPage() {
             <div className="mt-8 mb-6">
               <h3 className="text-[12px] font-semibold text-gray-900 mb-3">Description</h3>
               <p className="text-[12px] text-gray-600 leading-[1.6]">
-                Original silver-plated metal boy and girl-shaped keychain. 100% handcrafted in Spain with the unique and unmistakable style of UNOde50. Get it and take it with you on any occasion or make a gift to a special person.
+                {product.description}
               </p>
             </div>
 
