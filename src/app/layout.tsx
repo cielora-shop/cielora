@@ -35,8 +35,9 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${jakarta.variable} ${playfair.variable} ${styleScript.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col font-sans text-foreground bg-background">
+      <body className="min-h-full flex flex-col font-sans text-foreground bg-background" suppressHydrationWarning>
         <Navbar />
         {children}
         <Footer />

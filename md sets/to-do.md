@@ -1,6 +1,4 @@
-# to do work on all submenu texts of nav tab like "Women's jewelry"
-
-
+# fix below error message from console witout affecting  ui
 
 # note
 

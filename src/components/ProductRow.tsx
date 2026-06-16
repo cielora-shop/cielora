@@ -1,15 +1,18 @@
 "use client";
 
 import { useRef, useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
 
 interface ProductRowProps {
   collectionName: string;
   price: string;
   label: string;
+  className?: string;
 }
 
 function ProductCard({ index, collectionName, price, defaultLabel }: { index: number, collectionName: string, price: string, defaultLabel: string }) {
   const [selectedColor, setSelectedColor] = useState<"gray" | "yellow">("gray");
+  const router = useRouter();
 
   const isArcadia = collectionName === "Arcadia";
   const isFirstArcadia = isArcadia && index === 0;
@@ -30,7 +33,7 @@ function ProductCard({ index, collectionName, price, defaultLabel }: { index: nu
   }
 
   return (
-    <div className="cursor-pointer flex flex-col items-start w-[50%] md:w-[25%] flex-shrink-0 snap-start">
+    <div onClick={() => router.push('/products/1')} className="cursor-pointer flex flex-col items-start w-[50%] md:w-[25%] flex-shrink-0 snap-start pr-1">
       <div className="group relative aspect-[13/15] w-full mb-3 bg-gray-50 flex items-center justify-center overflow-hidden">
         {isFirstArcadia && (
           <div 
@@ -57,20 +60,20 @@ function ProductCard({ index, collectionName, price, defaultLabel }: { index: nu
             <>
               <div 
                 onClick={(e) => { e.stopPropagation(); setSelectedColor("gray"); }}
-                className={`w-[14px] h-[14px] rounded-full border ${selectedColor === "gray" ? "border-gray-800" : "border-gray-400"} flex items-center justify-center cursor-pointer`}
+                className={`w-[16px] h-[16px] rounded-full bg-white border ${selectedColor === "gray" ? "border-gray-800" : "border-gray-400"} flex items-center justify-center cursor-pointer`}
               >
-                <div className="w-[10px] h-[10px] rounded-full bg-gray-400"></div>
+                <div className="w-[10px] h-[10px] rounded-full" style={{ backgroundColor: "#C0C0C0" }}></div>
               </div>
               <div 
                 onClick={(e) => { e.stopPropagation(); setSelectedColor("yellow"); }}
-                className={`w-[14px] h-[14px] rounded-full border ${selectedColor === "yellow" ? "border-gray-800" : "border-gray-400"} flex items-center justify-center cursor-pointer`}
+                className={`w-[16px] h-[16px] rounded-full bg-white border ${selectedColor === "yellow" ? "border-gray-800" : "border-gray-400"} flex items-center justify-center cursor-pointer`}
               >
                 <div className="w-[10px] h-[10px] rounded-full" style={{ backgroundColor: "#ffc107" }}></div>
               </div>
             </>
           ) : (
-            <div className="w-[14px] h-[14px] rounded-full border border-gray-400 flex items-center justify-center cursor-pointer">
-              <div className="w-[10px] h-[10px] rounded-full bg-gray-300"></div>
+            <div className="w-[16px] h-[16px] rounded-full bg-white border border-gray-400 flex items-center justify-center cursor-pointer">
+              <div className="w-[10px] h-[10px] rounded-full" style={{ backgroundColor: "#C0C0C0" }}></div>
             </div>
           )}
         </div>
@@ -89,7 +92,7 @@ function ProductCard({ index, collectionName, price, defaultLabel }: { index: nu
   );
 }
 
-export default function ProductRow({ collectionName, price, label }: ProductRowProps) {
+export default function ProductRow({ collectionName, price, label, className = "py-16" }: ProductRowProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -121,7 +124,7 @@ export default function ProductRow({ collectionName, price, label }: ProductRowP
   };
 
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 w-full">
+    <section className={`${className} px-4 sm:px-6 lg:px-8 w-full`}>
       <div className="flex justify-end mb-4 gap-4 pr-4">
         <button 
           onClick={scrollLeft} 
@@ -149,7 +152,7 @@ export default function ProductRow({ collectionName, price, label }: ProductRowP
         onScroll={checkScroll}
         className="flex overflow-x-auto snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
       >
-        {[1, 2, 3, 4, 5].map((item, index) => (
+        {[1, 2, 3, 4, 5, 6, 7, 8].map((item, index) => (
           <ProductCard 
             key={item} 
             index={index} 
