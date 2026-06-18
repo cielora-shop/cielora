@@ -364,6 +364,7 @@ function getInitialDbState(): DbSchema {
     { 
       name: "Shop by", 
       href: "/shop-by",
+      groupFilters: ["Women's jewelry", "Men's jewelry", "Accesories", "Heart Jewelry", "Dragonfly Jewelry", "Silver Jewelry", "Gold Jewelry", "Leather Jewelry", "Crystal Jewelry", "Limited Edition", "Best Sellers", "Special events jewerly", "Everyday Jewelry", "Genderless jewelry", "UNOde50 Icons", "Gold and silver jewelry"],
       megaMenu: {
         featureImage: "/images/1 product.jpg",
         columns: [
@@ -402,6 +403,7 @@ function getInitialDbState(): DbSchema {
     { 
       name: "Collections", 
       href: "/collections",
+      groupFilters: ["Arcadia", "Flutter", "Core", "Gravity", "Beat", "Roots", "Empowerment Collections", "Soulcrafted Collections"],
       megaMenu: {
         featureTitle: "UNOde50 Collections",
         featureImage: "/images/1 product.jpg",
@@ -438,6 +440,7 @@ function getInitialDbState(): DbSchema {
     { 
       name: "Bracelets", 
       href: "/bracelets",
+      groupFilters: ["Silver Bracelets", "Gold Bracelets", "Leather Bracelets", "Pearl Bracelets", "Cord Bracelets", "Bangle Bracelets", "Cuff Bracelets", "Link Bracelets", "Beaded Bracelets", "Bracelets for Men", "Charm Bracelets", "Best Selling Bracelets"],
       megaMenu: {
         featureTitle: "Bracelets",
         featureImage: "/images/1 product.jpg",
@@ -476,6 +479,7 @@ function getInitialDbState(): DbSchema {
     { 
       name: "Earrings", 
       href: "/earrings",
+      groupFilters: ["Silver Earrings", "Gold Earrings", "Pearl Earrings", "Hoop Earrings", "Drop Earrings", "Stud Earrings", "Single Earrings", "Heart-Shaped Earrings"],
       megaMenu: {
         featureTitle: "Earrings",
         featureImage: "/images/1 product.jpg",
@@ -511,6 +515,7 @@ function getInitialDbState(): DbSchema {
     { 
       name: "Necklaces", 
       href: "/necklaces",
+      groupFilters: ["Silver Necklaces", "Gold Necklaces", "Leather Necklaces", "Pearl Necklaces", "Chain Necklaces", "Multi Strand Necklaces", "Long Necklaces", "Short Necklaces", "Beaded Necklaces", "Pendant Necklaces", "Heart-Shaped Necklaces", "Charm Necklaces"],
       megaMenu: {
         featureTitle: "Necklaces",
         featureImage: "/images/1 product.jpg",
@@ -550,6 +555,7 @@ function getInitialDbState(): DbSchema {
     { 
       name: "Rings", 
       href: "/rings",
+      groupFilters: ["Silver Rings", "Gold Rings", "Crystal Rings", "Minimal Rings", "Best Selling Rings"],
       megaMenu: {
         featureTitle: "Rings",
         featureImage: "/images/1 product.jpg",
@@ -576,6 +582,7 @@ function getInitialDbState(): DbSchema {
     { 
       name: "Charms", 
       href: "/charms",
+      groupFilters: ["Silver Charms", "Gold Charms", "Gemstone Charms", "Zodiac Charms", "Initial Charms", "Hoop Charms", "Heart-shaped charms"],
       megaMenu: {
         featureTitle: "Charms",
         featureImage: "/images/1 product.jpg",
@@ -603,6 +610,7 @@ function getInitialDbState(): DbSchema {
     { 
       name: "For him", 
       href: "/for-him",
+      groupFilters: ["Bracelets for men", "Silver bracelets for men", "Leather bracelets for men", "Chain and Link bracelets", "Rings for men", "Necklaces for men", "Watches", "Keychains", "Men's Best Sellers"],
       megaMenu: {
         featureTitle: "For him",
         featureImage: "/images/1 product.jpg",
@@ -759,6 +767,18 @@ export async function getDb(): Promise<DbSchema> {
       const initialState = getInitialDbState();
       parsed.admins = initialState.admins;
     }
+    // Backward compat for groupFilters
+    if (parsed.navbarTabs && parsed.navbarTabs.length > 0 && !parsed.navbarTabs[1].groupFilters) {
+      const initialState = getInitialDbState();
+      parsed.navbarTabs = parsed.navbarTabs.map(t => {
+        const initialTab = initialState.navbarTabs.find(it => it.href === t.href);
+        if (initialTab && initialTab.groupFilters) {
+          return { ...t, groupFilters: initialTab.groupFilters };
+        }
+        return t;
+      });
+    }
+
     return parsed;
   } catch (error) {
     console.error("Error reading database from MongoDB, resetting to initial state", error);
