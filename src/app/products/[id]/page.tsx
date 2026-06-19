@@ -9,6 +9,8 @@ import ProductInteractiveView from "@/components/ProductInteractiveView";
 import { getDb } from "@/lib/db";
 import { notFound } from "next/navigation";
 
+export const dynamic = "force-dynamic";
+
 export default async function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
   const db = await getDb();

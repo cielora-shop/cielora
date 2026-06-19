@@ -441,6 +441,7 @@ function CharmsContent() {
           {filteredProducts.slice(0, visibleCount).map((product) => (
             <ProductCard 
               key={product.id}
+              id={product.id}
               title={product.title}
               price={product.price}
               label={product.label}
