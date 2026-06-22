@@ -22,10 +22,19 @@ export default function Navbar() {
         document.cookie = "googtrans=/en/es; path=/";
         document.cookie = "googtrans=/en/es; domain=" + window.location.hostname + "; path=/";
       } else {
-        const domain = window.location.hostname;
+        const hostname = window.location.hostname;
+        const parts = hostname.split('.');
+        
+        // Clear standard path
         document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=" + domain + "; path=/;";
-        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=." + domain + "; path=/;";
+        
+        // Loop through all domain combinations (e.g. www.domain.com, .domain.com, domain.com)
+        while (parts.length > 0) {
+          const domainStr = parts.join('.');
+          document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=" + domainStr + "; path=/;";
+          document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=." + domainStr + "; path=/;";
+          parts.shift();
+        }
       }
       window.location.reload();
     }
