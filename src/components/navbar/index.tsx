@@ -12,6 +12,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const { isCartOpen, openCart, closeCart, cartItems } = useCart();
   const { wishlistItems } = useWishlist();
@@ -76,6 +77,7 @@ export default function Navbar() {
   useEffect(() => {
     setIsSearchOpen(false);
     setIsOpen(false);
+    setIsLanguageOpen(false);
   }, [pathname]);
 
   if (pathname && pathname.startsWith('/admin')) {
@@ -84,11 +86,11 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-[#fffbf7] flex flex-col">
-      <div className="w-full pr-4">
+      <div className="w-full">
         <div className="flex h-[70px] items-center justify-between">
 
           {/* Logo (Left) */}
-          <div className="flex items-center pl-[72px] pr-6">
+          <div className="flex items-center pl-4 md:pl-[72px] pr-2 md:pr-6">
             <Link
               href="/"
               className="flex items-center text-[44px] font-normal leading-none tracking-[0.02em] select-none"
@@ -164,7 +166,7 @@ export default function Navbar() {
           </nav>
 
           {/* Icons on Right Side */}
-          <div className="flex items-center gap-5 text-gray-800">
+          <div className="flex items-center gap-3 md:gap-5 text-gray-800 pr-4 md:pr-8">
             {/* Search */}
             <button onClick={() => setIsSearchOpen(!isSearchOpen)} aria-label="Search" title="Search" className="hover:text-[#ac2505] transition-colors cursor-pointer">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
@@ -205,7 +207,12 @@ export default function Navbar() {
             </button>
 
             {/* Language */}
-            <div className="relative group cursor-pointer">
+            <div 
+              className="relative cursor-pointer" 
+              onClick={() => setIsLanguageOpen(!isLanguageOpen)}
+              onMouseEnter={() => setIsLanguageOpen(true)}
+              onMouseLeave={() => setIsLanguageOpen(false)}
+            >
               <div className="hover:text-[#ac2505] transition-colors flex items-center" aria-label="Language" title="Language">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="m5 8 6 6" />
@@ -217,11 +224,11 @@ export default function Navbar() {
                 </svg>
               </div>
               
-              <div className="absolute right-[-10px] top-[100%] pt-5 w-32 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <div className={`absolute right-[-10px] top-[100%] pt-5 w-32 transition-all duration-200 z-50 ${isLanguageOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
                 <div className="bg-white shadow-md border border-gray-100 overflow-hidden">
                   <div className="flex flex-col text-[14px] text-gray-700 font-medium">
-                    <div onClick={() => changeLanguage('en')} className="notranslate px-4 py-3 hover:bg-gray-50 hover:text-[#ac2505] transition-colors text-center border-b border-gray-50">English</div>
-                    <div onClick={() => changeLanguage('es')} className="notranslate px-4 py-3 hover:bg-gray-50 hover:text-[#ac2505] transition-colors text-center">Español</div>
+                    <div onClick={(e) => { e.stopPropagation(); changeLanguage('en'); setIsLanguageOpen(false); }} className="notranslate px-4 py-3 hover:bg-gray-50 hover:text-[#ac2505] transition-colors text-center border-b border-gray-50">English</div>
+                    <div onClick={(e) => { e.stopPropagation(); changeLanguage('es'); setIsLanguageOpen(false); }} className="notranslate px-4 py-3 hover:bg-gray-50 hover:text-[#ac2505] transition-colors text-center">Español</div>
                   </div>
                 </div>
               </div>
