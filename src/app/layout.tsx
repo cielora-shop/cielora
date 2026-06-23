@@ -1,3 +1,5 @@
+export const revalidate = 60;
+
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Playfair_Display, Style_Script } from "next/font/google";
 import Script from "next/script";
