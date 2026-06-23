@@ -151,7 +151,13 @@ function CollectionsContent() {
     if (selectedFilters.SIZE.length > 0 && !selectedFilters.SIZE.some(size => textToSearch.includes(size.toLowerCase()))) return false;
     if (selectedFilters.PLATING.length > 0 && !selectedFilters.PLATING.some(plating => textToSearch.includes(plating.toLowerCase()))) return false;
     if (selectedFilters.COMPONENT.length > 0 && !selectedFilters.COMPONENT.some(comp => textToSearch.includes(comp.toLowerCase()))) return false;
-    if (selectedFilters.LEATHER.length > 0 && !selectedFilters.LEATHER.some(leather => textToSearch.includes(leather.toLowerCase()))) return false;
+    if (selectedFilters.LEATHER.length > 0) {
+      const hasLeather = (p.description || '').toLowerCase().includes('leather');
+      const wantsLeather = selectedFilters.LEATHER.includes('Yes');
+      const wantsNoLeather = selectedFilters.LEATHER.includes('No');
+      if (wantsLeather && !wantsNoLeather && !hasLeather) return false;
+      if (wantsNoLeather && !wantsLeather && hasLeather) return false;
+    }
     if (selectedFilters.COLOR.length > 0 && !selectedFilters.COLOR.some(color => textToSearch.includes(color.toLowerCase()))) return false;
     
     if (selectedFilters.PRICE.length > 0) {

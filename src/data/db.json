@@ -3,7 +3,7 @@
     {
       "id": "1",
       "title": "Silver Earring",
-      "description": "Beautiful Bracelets made of Crafted Crystal with 18K gold-plated. Leather: Yes. Size: 9. Colors: Silver, Black. accessory for women",
+      "description": "Beautiful Bracelets made of Crafted Crystal with 18K gold-plated. Size: 9. Colors: Silver, Black. accessory for women",
       "price": "£ 165.00",
       "priceValue": 165,
       "bottomLabel": "Free Keyring",
@@ -46,7 +46,7 @@
     {
       "id": "2",
       "title": "Silver Fish shape earings",
-      "description": "Beautiful Charm made of Natural Stone with Sterling silver-plated. Leather: No. Size: 12. Colors: Gold. men's dragonfly",
+      "description": "Beautiful Charm made of Natural Stone with Sterling silver-plated. Size: 12. Colors: Gold. men's dragonfly",
       "price": "£ 115.00",
       "priceValue": 115,
       "bottomLabel": "Free Keyring",
@@ -90,7 +90,7 @@
     {
       "id": "3",
       "title": "Necklaces",
-      "description": "Beautiful Necklaces made of Shell Pearl with 18K gold-plated. Leather: Yes. Size: U. Colors: Silver, Gold. heart best seller",
+      "description": "Beautiful Necklaces made of Shell Pearl with 18K gold-plated. Size: U. Colors: Silver, Gold. heart best seller",
       "price": "£ 130.00",
       "priceValue": 130,
       "colors": [
@@ -133,7 +133,7 @@
     {
       "id": "4",
       "title": "Earrings",
-      "description": "Beautiful Earrings made of Crafted Crystal with Sterling silver-plated. Leather: No. Size: S. Colors: Silver. ",
+      "description": "Beautiful Earrings made of Crafted Crystal with Sterling silver-plated. Size: S. Colors: Silver. ",
       "price": "£ 145.00",
       "priceValue": 145,
       "label": "Best seller",
@@ -177,7 +177,7 @@
     {
       "id": "5",
       "title": "Rings",
-      "description": "Beautiful Rings made of Natural Stone with 18K gold-plated. Leather: Yes. Size: M. Colors: Gold, Black. ",
+      "description": "Beautiful Rings made of Natural Stone with 18K gold-plated. Size: M. Colors: Gold, Black. ",
       "price": "£ 160.00",
       "priceValue": 160,
       "colors": [
@@ -221,7 +221,7 @@
     {
       "id": "6",
       "title": "Bracelets",
-      "description": "Beautiful Bracelets made of Shell Pearl with Sterling silver-plated. Leather: No. Size: 9. Colors: Silver, Gold. accessory for women",
+      "description": "Beautiful Bracelets made of Shell Pearl with Sterling silver-plated. Size: 9. Colors: Silver, Gold. accessory for women",
       "price": "£ 175.00",
       "priceValue": 175,
       "label": "New in",
@@ -266,7 +266,7 @@
     {
       "id": "7",
       "title": "Charm",
-      "description": "Beautiful Charm made of Crafted Crystal with 18K gold-plated. Leather: Yes. Size: 12. Colors: Silver. men's dragonfly",
+      "description": "Beautiful Charm made of Crafted Crystal with 18K gold-plated. Size: 12. Colors: Silver. men's dragonfly",
       "price": "£ 190.00",
       "priceValue": 190,
       "bottomLabel": "Free Keyring",
@@ -309,7 +309,7 @@
     {
       "id": "8",
       "title": "Necklaces",
-      "description": "Beautiful Necklaces made of Natural Stone with Sterling silver-plated. Leather: No. Size: U. Colors: Gold. heart best seller",
+      "description": "Beautiful Necklaces made of Natural Stone with Sterling silver-plated. Size: U. Colors: Gold. heart best seller",
       "price": "£ 205.00",
       "priceValue": 205,
       "colors": [
@@ -351,7 +351,7 @@
     {
       "id": "9",
       "title": "Earrings",
-      "description": "Beautiful Earrings made of Shell Pearl with 18K gold-plated. Leather: Yes. Size: S. Colors: Silver, Gold, Black. ",
+      "description": "Beautiful Earrings made of Shell Pearl with 18K gold-plated. Size: S. Colors: Silver, Gold, Black. ",
       "price": "£ 220.00",
       "priceValue": 220,
       "label": "Best seller",
@@ -396,7 +396,7 @@
     {
       "id": "10",
       "title": "Rings",
-      "description": "Beautiful Rings made of Crafted Crystal with Sterling silver-plated. Leather: No. Size: M. Colors: Silver. ",
+      "description": "Beautiful Rings made of Crafted Crystal with Sterling silver-plated. Size: M. Colors: Silver. ",
       "price": "£ 235.00",
       "priceValue": 235,
       "colors": [
@@ -440,7 +440,7 @@
     {
       "id": "11",
       "title": "Bracelets",
-      "description": "Beautiful Bracelets made of Natural Stone with 18K gold-plated. Leather: Yes. Size: 9. Colors: Gold. accessory for women",
+      "description": "Beautiful Bracelets made of Natural Stone with 18K gold-plated. Size: 9. Colors: Gold. accessory for women",
       "price": "£ 250.00",
       "priceValue": 250,
       "colors": [
@@ -482,7 +482,7 @@
     {
       "id": "12",
       "title": "Charm",
-      "description": "Beautiful Charm made of Shell Pearl with Sterling silver-plated. Leather: No. Size: 12. Colors: Silver, Gold. men's dragonfly",
+      "description": "Beautiful Charm made of Shell Pearl with Sterling silver-plated. Size: 12. Colors: Silver, Gold. men's dragonfly",
       "price": "£ 265.00",
       "priceValue": 265,
       "colors": [
@@ -525,7 +525,7 @@
     {
       "id": "13",
       "title": "Necklaces",
-      "description": "Beautiful Necklaces made of Crafted Crystal with 18K gold-plated. Leather: Yes. Size: U. Colors: Silver, Black. heart best seller",
+      "description": "Beautiful Necklaces made of Crafted Crystal with 18K gold-plated. Size: U. Colors: Silver, Black. heart best seller",
       "price": "£ 280.00",
       "priceValue": 280,
       "colors": [
@@ -567,7 +567,7 @@
     {
       "id": "14",
       "title": "Earrings",
-      "description": "Beautiful Earrings made of Natural Stone with Sterling silver-plated. Leather: No. Size: S. Colors: Gold. ",
+      "description": "Beautiful Earrings made of Natural Stone with Sterling silver-plated. Size: S. Colors: Gold. ",
       "price": "£ 295.00",
       "priceValue": 295,
       "colors": [
@@ -609,7 +609,7 @@
     {
       "id": "15",
       "title": "Rings",
-      "description": "Beautiful Rings made of Shell Pearl with 18K gold-plated. Leather: Yes. Size: M. Colors: Silver, Gold. ",
+      "description": "Beautiful Rings made of Shell Pearl with 18K gold-plated. Size: M. Colors: Silver, Gold. ",
       "price": "£ 310.00",
       "priceValue": 310,
       "colors": [
@@ -654,7 +654,7 @@
     {
       "id": "16",
       "title": "Bracelets",
-      "description": "Beautiful Bracelets made of Crafted Crystal with Sterling silver-plated. Leather: No. Size: 9. Colors: Silver. accessory for women",
+      "description": "Beautiful Bracelets made of Crafted Crystal with Sterling silver-plated. Size: 9. Colors: Silver. accessory for women",
       "price": "£ 325.00",
       "priceValue": 325,
       "colors": [
@@ -696,7 +696,7 @@
     {
       "id": "17",
       "title": "Charm",
-      "description": "Beautiful Charm made of Natural Stone with 18K gold-plated. Leather: Yes. Size: 12. Colors: Gold, Black. men's dragonfly",
+      "description": "Beautiful Charm made of Natural Stone with 18K gold-plated. Size: 12. Colors: Gold, Black. men's dragonfly",
       "price": "£ 340.00",
       "priceValue": 340,
       "colors": [
@@ -738,7 +738,7 @@
     {
       "id": "18",
       "title": "Necklaces",
-      "description": "Beautiful Necklaces made of Shell Pearl with Sterling silver-plated. Leather: No. Size: U. Colors: Silver, Gold. heart best seller",
+      "description": "Beautiful Necklaces made of Shell Pearl with Sterling silver-plated. Size: U. Colors: Silver, Gold. heart best seller",
       "price": "£ 355.00",
       "priceValue": 355,
       "colors": [
@@ -781,7 +781,7 @@
     {
       "id": "19",
       "title": "Earrings",
-      "description": "Beautiful Earrings made of Crafted Crystal with 18K gold-plated. Leather: Yes. Size: S. Colors: Silver. ",
+      "description": "Beautiful Earrings made of Crafted Crystal with 18K gold-plated. Size: S. Colors: Silver. ",
       "price": "£ 370.00",
       "priceValue": 370,
       "colors": [
@@ -823,7 +823,7 @@
     {
       "id": "20",
       "title": "Rings",
-      "description": "Beautiful Rings made of Natural Stone with Sterling silver-plated. Leather: No. Size: M. Colors: Gold. ",
+      "description": "Beautiful Rings made of Natural Stone with Sterling silver-plated. Size: M. Colors: Gold. ",
       "price": "£ 385.00",
       "priceValue": 385,
       "colors": [
@@ -867,7 +867,7 @@
     {
       "id": "21",
       "title": "Bracelets",
-      "description": "Beautiful Bracelets made of Shell Pearl with 18K gold-plated. Leather: Yes. Size: 9. Colors: Silver, Gold, Black. accessory for women",
+      "description": "Beautiful Bracelets made of Shell Pearl with 18K gold-plated. Size: 9. Colors: Silver, Gold, Black. accessory for women",
       "price": "£ 400.00",
       "priceValue": 400,
       "colors": [
@@ -910,7 +910,7 @@
     {
       "id": "22",
       "title": "Charm",
-      "description": "Beautiful Charm made of Crafted Crystal with Sterling silver-plated. Leather: No. Size: 12. Colors: Silver. men's dragonfly",
+      "description": "Beautiful Charm made of Crafted Crystal with Sterling silver-plated. Size: 12. Colors: Silver. men's dragonfly",
       "price": "£ 415.00",
       "priceValue": 415,
       "colors": [
@@ -952,7 +952,7 @@
     {
       "id": "23",
       "title": "Necklaces",
-      "description": "Beautiful Necklaces made of Natural Stone with 18K gold-plated. Leather: Yes. Size: U. Colors: Gold. heart best seller",
+      "description": "Beautiful Necklaces made of Natural Stone with 18K gold-plated. Size: U. Colors: Gold. heart best seller",
       "price": "£ 430.00",
       "priceValue": 430,
       "colors": [
@@ -994,7 +994,7 @@
     {
       "id": "24",
       "title": "Earrings",
-      "description": "Beautiful Earrings made of Shell Pearl with Sterling silver-plated. Leather: No. Size: S. Colors: Silver, Gold. ",
+      "description": "Beautiful Earrings made of Shell Pearl with Sterling silver-plated. Size: S. Colors: Silver, Gold. ",
       "price": "£ 445.00",
       "priceValue": 445,
       "colors": [
@@ -1037,7 +1037,7 @@
     {
       "id": "25",
       "title": "Rings",
-      "description": "Beautiful Rings made of Crafted Crystal with 18K gold-plated. Leather: Yes. Size: M. Colors: Silver, Black. ",
+      "description": "Beautiful Rings made of Crafted Crystal with 18K gold-plated. Size: M. Colors: Silver, Black. ",
       "price": "£ 460.00",
       "priceValue": 460,
       "colors": [
@@ -1081,7 +1081,7 @@
     {
       "id": "26",
       "title": "Bracelets",
-      "description": "Beautiful Bracelets made of Natural Stone with Sterling silver-plated. Leather: No. Size: 9. Colors: Gold. accessory for women",
+      "description": "Beautiful Bracelets made of Natural Stone with Sterling silver-plated. Size: 9. Colors: Gold. accessory for women",
       "price": "£ 475.00",
       "priceValue": 475,
       "colors": [
@@ -1123,7 +1123,7 @@
     {
       "id": "27",
       "title": "Charm",
-      "description": "Beautiful Charm made of Shell Pearl with 18K gold-plated. Leather: Yes. Size: 12. Colors: Silver, Gold. men's dragonfly",
+      "description": "Beautiful Charm made of Shell Pearl with 18K gold-plated. Size: 12. Colors: Silver, Gold. men's dragonfly",
       "price": "£ 490.00",
       "priceValue": 490,
       "colors": [
@@ -1166,7 +1166,7 @@
     {
       "id": "28",
       "title": "Necklaces",
-      "description": "Beautiful Necklaces made of Crafted Crystal with Sterling silver-plated. Leather: No. Size: U. Colors: Silver. heart best seller",
+      "description": "Beautiful Necklaces made of Crafted Crystal with Sterling silver-plated. Size: U. Colors: Silver. heart best seller",
       "price": "£ 505.00",
       "priceValue": 505,
       "colors": [
@@ -1208,7 +1208,7 @@
     {
       "id": "29",
       "title": "Earrings",
-      "description": "Beautiful Earrings made of Natural Stone with 18K gold-plated. Leather: Yes. Size: S. Colors: Gold, Black. ",
+      "description": "Beautiful Earrings made of Natural Stone with 18K gold-plated. Size: S. Colors: Gold, Black. ",
       "price": "£ 520.00",
       "priceValue": 520,
       "colors": [
@@ -1250,7 +1250,7 @@
     {
       "id": "30",
       "title": "Rings",
-      "description": "Beautiful Rings made of Shell Pearl with Sterling silver-plated. Leather: No. Size: M. Colors: Silver, Gold. ",
+      "description": "Beautiful Rings made of Shell Pearl with Sterling silver-plated. Size: M. Colors: Silver, Gold. ",
       "price": "£ 535.00",
       "priceValue": 535,
       "colors": [
@@ -1295,7 +1295,7 @@
     {
       "id": "31",
       "title": "Bracelets",
-      "description": "Beautiful Bracelets made of Crafted Crystal with 18K gold-plated. Leather: Yes. Size: 9. Colors: Silver. accessory for women",
+      "description": "Beautiful Bracelets made of Crafted Crystal with 18K gold-plated. Size: 9. Colors: Silver. accessory for women",
       "price": "£ 550.00",
       "priceValue": 550,
       "colors": [
@@ -1337,7 +1337,7 @@
     {
       "id": "32",
       "title": "Charm",
-      "description": "Beautiful Charm made of Natural Stone with Sterling silver-plated. Leather: No. Size: 12. Colors: Gold. men's dragonfly",
+      "description": "Beautiful Charm made of Natural Stone with Sterling silver-plated. Size: 12. Colors: Gold. men's dragonfly",
       "price": "£ 565.00",
       "priceValue": 565,
       "colors": [
@@ -1379,7 +1379,7 @@
     {
       "id": "33",
       "title": "Necklaces",
-      "description": "Beautiful Necklaces made of Shell Pearl with 18K gold-plated. Leather: Yes. Size: U. Colors: Silver, Gold, Black. heart best seller",
+      "description": "Beautiful Necklaces made of Shell Pearl with 18K gold-plated. Size: U. Colors: Silver, Gold, Black. heart best seller",
       "price": "£ 580.00",
       "priceValue": 580,
       "colors": [
@@ -1422,7 +1422,7 @@
     {
       "id": "34",
       "title": "Earrings",
-      "description": "Beautiful Earrings made of Crafted Crystal with Sterling silver-plated. Leather: No. Size: S. Colors: Silver. ",
+      "description": "Beautiful Earrings made of Crafted Crystal with Sterling silver-plated. Size: S. Colors: Silver. ",
       "price": "£ 595.00",
       "priceValue": 595,
       "colors": [
@@ -1464,7 +1464,7 @@
     {
       "id": "35",
       "title": "Rings",
-      "description": "Beautiful Rings made of Natural Stone with 18K gold-plated. Leather: Yes. Size: M. Colors: Gold. ",
+      "description": "Beautiful Rings made of Natural Stone with 18K gold-plated. Size: M. Colors: Gold. ",
       "price": "£ 610.00",
       "priceValue": 610,
       "colors": [
@@ -1508,7 +1508,7 @@
     {
       "id": "36",
       "title": "Bracelets",
-      "description": "Beautiful Bracelets made of Shell Pearl with Sterling silver-plated. Leather: No. Size: 9. Colors: Silver, Gold. accessory for women",
+      "description": "Beautiful Bracelets made of Shell Pearl with Sterling silver-plated. Size: 9. Colors: Silver, Gold. accessory for women",
       "price": "£ 625.00",
       "priceValue": 625,
       "colors": [
@@ -1551,7 +1551,7 @@
     {
       "id": "37",
       "title": "Charm",
-      "description": "Beautiful Charm made of Crafted Crystal with 18K gold-plated. Leather: Yes. Size: 12. Colors: Silver, Black. men's dragonfly",
+      "description": "Beautiful Charm made of Crafted Crystal with 18K gold-plated. Size: 12. Colors: Silver, Black. men's dragonfly",
       "price": "£ 640.00",
       "priceValue": 640,
       "colors": [
@@ -1593,7 +1593,7 @@
     {
       "id": "38",
       "title": "Necklaces",
-      "description": "Beautiful Necklaces made of Natural Stone with Sterling silver-plated. Leather: No. Size: U. Colors: Gold. heart best seller",
+      "description": "Beautiful Necklaces made of Natural Stone with Sterling silver-plated. Size: U. Colors: Gold. heart best seller",
       "price": "£ 655.00",
       "priceValue": 655,
       "colors": [
@@ -1635,7 +1635,7 @@
     {
       "id": "39",
       "title": "Earrings",
-      "description": "Beautiful Earrings made of Shell Pearl with 18K gold-plated. Leather: Yes. Size: S. Colors: Silver, Gold. ",
+      "description": "Beautiful Earrings made of Shell Pearl with 18K gold-plated. Size: S. Colors: Silver, Gold. ",
       "price": "£ 670.00",
       "priceValue": 670,
       "colors": [
@@ -1678,7 +1678,7 @@
     {
       "id": "40",
       "title": "Rings",
-      "description": "Beautiful Rings made of Crafted Crystal with Sterling silver-plated. Leather: No. Size: M. Colors: Silver. ",
+      "description": "Beautiful Rings made of Crafted Crystal with Sterling silver-plated. Size: M. Colors: Silver. ",
       "price": "£ 685.00",
       "priceValue": 685,
       "colors": [
@@ -1722,7 +1722,7 @@
     {
       "id": "41",
       "title": "Bracelets",
-      "description": "Beautiful Bracelets made of Natural Stone with 18K gold-plated. Leather: Yes. Size: 9. Colors: Gold, Black. accessory for women",
+      "description": "Beautiful Bracelets made of Natural Stone with 18K gold-plated. Size: 9. Colors: Gold, Black. accessory for women",
       "price": "£ 700.00",
       "priceValue": 700,
       "colors": [
@@ -1764,7 +1764,7 @@
     {
       "id": "42",
       "title": "Charm",
-      "description": "Beautiful Charm made of Shell Pearl with Sterling silver-plated. Leather: No. Size: 12. Colors: Silver, Gold. men's dragonfly",
+      "description": "Beautiful Charm made of Shell Pearl with Sterling silver-plated. Size: 12. Colors: Silver, Gold. men's dragonfly",
       "price": "£ 715.00",
       "priceValue": 715,
       "colors": [
@@ -1807,7 +1807,7 @@
     {
       "id": "43",
       "title": "Necklaces",
-      "description": "Beautiful Necklaces made of Crafted Crystal with 18K gold-plated. Leather: Yes. Size: U. Colors: Silver. heart best seller",
+      "description": "Beautiful Necklaces made of Crafted Crystal with 18K gold-plated. Size: U. Colors: Silver. heart best seller",
       "price": "£ 730.00",
       "priceValue": 730,
       "colors": [
@@ -1849,7 +1849,7 @@
     {
       "id": "44",
       "title": "Earrings",
-      "description": "Beautiful Earrings made of Natural Stone with Sterling silver-plated. Leather: No. Size: S. Colors: Gold. ",
+      "description": "Beautiful Earrings made of Natural Stone with Sterling silver-plated. Size: S. Colors: Gold. ",
       "price": "£ 745.00",
       "priceValue": 745,
       "colors": [
@@ -1891,7 +1891,7 @@
     {
       "id": "45",
       "title": "Rings",
-      "description": "Beautiful Rings made of Shell Pearl with 18K gold-plated. Leather: Yes. Size: M. Colors: Silver, Gold, Black. ",
+      "description": "Beautiful Rings made of Shell Pearl with 18K gold-plated. Size: M. Colors: Silver, Gold, Black. ",
       "price": "£ 760.00",
       "priceValue": 760,
       "colors": [
@@ -1936,7 +1936,7 @@
     {
       "id": "46",
       "title": "Bracelets",
-      "description": "Beautiful Bracelets made of Crafted Crystal with Sterling silver-plated. Leather: No. Size: 9. Colors: Silver. accessory for women",
+      "description": "Beautiful Bracelets made of Crafted Crystal with Sterling silver-plated. Size: 9. Colors: Silver. accessory for women",
       "price": "£ 775.00",
       "priceValue": 775,
       "colors": [
@@ -1978,7 +1978,7 @@
     {
       "id": "47",
       "title": "Charm",
-      "description": "Beautiful Charm made of Natural Stone with 18K gold-plated. Leather: Yes. Size: 12. Colors: Gold. men's dragonfly",
+      "description": "Beautiful Charm made of Natural Stone with 18K gold-plated. Size: 12. Colors: Gold. men's dragonfly",
       "price": "£ 790.00",
       "priceValue": 790,
       "colors": [
@@ -2020,7 +2020,7 @@
     {
       "id": "48",
       "title": "Necklaces",
-      "description": "Beautiful Necklaces made of Shell Pearl with Sterling silver-plated. Leather: No. Size: U. Colors: Silver, Gold. heart best seller",
+      "description": "Beautiful Necklaces made of Shell Pearl with Sterling silver-plated. Size: U. Colors: Silver, Gold. heart best seller",
       "price": "£ 805.00",
       "priceValue": 805,
       "colors": [
