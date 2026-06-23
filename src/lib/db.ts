@@ -121,6 +121,7 @@ export interface NavbarTab {
   href: string;
   megaMenu?: MegaMenu;
   groupFilters?: string[];
+  isHidden?: boolean;
 }
 
 export interface GlobalSettings {

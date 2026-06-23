@@ -33,20 +33,24 @@ export function CartProvider({ children }: { children: ReactNode }) {
   // Load from local storage on mount
   useEffect(() => {
     setIsMounted(true);
-    const saved = localStorage.getItem("cielora_cart");
-    if (saved) {
-      try {
+    try {
+      const saved = localStorage.getItem("cielora_cart");
+      if (saved) {
         setCartItems(JSON.parse(saved));
-      } catch (e) {
-        console.error("Error parsing cart");
       }
+    } catch (e) {
+      console.error("Error accessing/parsing cart from local storage", e);
     }
   }, []);
 
   // Save to local storage whenever cart changes
   useEffect(() => {
     if (isMounted) {
-      localStorage.setItem("cielora_cart", JSON.stringify(cartItems));
+      try {
+        localStorage.setItem("cielora_cart", JSON.stringify(cartItems));
+      } catch (e) {
+        console.error("Error saving cart to local storage", e);
+      }
     }
   }, [cartItems, isMounted]);
 

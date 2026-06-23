@@ -63,7 +63,7 @@ export default function Navbar() {
       .then((res) => res.json())
       .then((data) => {
         if (data.navbarTabs) {
-          setTabs(data.navbarTabs);
+          setTabs(data.navbarTabs.filter((tab: any) => !tab.isHidden));
         }
         if (data.products) {
           setDbProducts(data.products);

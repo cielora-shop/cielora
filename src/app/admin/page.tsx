@@ -2390,6 +2390,16 @@ export default function AdminPage() {
                     </div>
                     <div className="flex gap-2">
                       <button
+                        onClick={() => {
+                          const updated = [...db.navbarTabs];
+                          updated[idx] = { ...tab, isHidden: !tab.isHidden };
+                          saveDatabase({ ...db, navbarTabs: updated });
+                        }}
+                        className={`border ${tab.isHidden ? 'border-green-300 hover:border-green-600 text-green-700 bg-green-50' : 'border-gray-300 hover:border-black text-gray-700 hover:text-black'} text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded transition-colors`}
+                      >
+                        {tab.isHidden ? 'Show Tab' : 'Hide Tab'}
+                      </button>
+                      <button
                         onClick={() => setEditingNavbarTabFull(JSON.parse(JSON.stringify(tab)))}
                         className="border border-gray-300 hover:border-black text-gray-700 hover:text-black text-[10px] font-semibold uppercase tracking-wider px-3 py-1 rounded transition-colors"
                       >

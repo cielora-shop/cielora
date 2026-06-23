@@ -72,42 +72,8 @@ export default function Footer() {
         </div>
 
         {/* Links Section */}
-        <div className="w-full max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 pt-4 pb-16">
-          {/* Column 1 */}
-          <div className="flex flex-col space-y-4">
-            <h4 className="text-[13px] font-bold tracking-wider text-white border-b border-white pb-3 mb-1 uppercase">CIELORA</h4>
-            <Link href="/bracelets" className="text-[13px] text-gray-200 hover:text-white transition-colors">Bracelets</Link>
-            <Link href="/necklaces" className="text-[13px] text-gray-200 hover:text-white transition-colors">Necklaces</Link>
-            <Link href="/earrings" className="text-[13px] text-gray-200 hover:text-white transition-colors">Earrings</Link>
-            <Link href="/rings" className="text-[13px] text-gray-200 hover:text-white transition-colors">Rings</Link>
-            <Link href="/shop-by?filter=Women's jewelry" className="text-[13px] text-gray-200 hover:text-white transition-colors">Women's jewelry</Link>
-            <Link href="#" className="text-[13px] text-gray-200 hover:text-white transition-colors">Gift Guide</Link>
-            <Link href="#" className="text-[13px] text-gray-200 hover:text-white transition-colors">Blog</Link>
-          </div>
-
-          {/* Column 2 */}
-          <div className="flex flex-col space-y-4">
-            <h4 className="text-[13px] font-bold tracking-wider text-white border-b border-white pb-3 mb-1 uppercase">CONTACT US</h4>
-            <Link href="#" className="text-[13px] text-gray-200 hover:text-white transition-colors">Join MUNDO UNO</Link>
-            <Link href="/store" className="text-[13px] text-gray-200 hover:text-white transition-colors">Contact us</Link>
-            <Link href="#" className="text-[13px] text-gray-200 hover:text-white transition-colors">Store locator</Link>
-            <Link href="#" className="text-[13px] text-gray-200 hover:text-white transition-colors">Distribution</Link>
-            <Link href="#" className="text-[13px] text-gray-200 hover:text-white transition-colors">Legal notice</Link>
-            <Link href="#" className="text-[13px] text-gray-200 hover:text-white transition-colors">Privacy policy</Link>
-          </div>
-
-          {/* Column 3 */}
-          <div className="flex flex-col space-y-4">
-            <h4 className="text-[13px] font-bold tracking-wider text-white border-b border-white pb-3 mb-1 uppercase">BUYING GUIDE</h4>
-            <Link href="#" className="text-[13px] text-gray-200 hover:text-white transition-colors">How to buy</Link>
-            <Link href="#" className="text-[13px] text-gray-200 hover:text-white transition-colors">Promotional Conditions</Link>
-            <Link href="#" className="text-[13px] text-gray-200 hover:text-white transition-colors">Size guide</Link>
-            <Link href="#" className="text-[13px] text-gray-200 hover:text-white transition-colors">Shipments</Link>
-            <Link href="#" className="text-[13px] text-gray-200 hover:text-white transition-colors">Payments</Link>
-            <Link href="#" className="text-[13px] text-gray-200 hover:text-white transition-colors">Cookie Policy</Link>
-          </div>
-
-          {/* Column 4 */}
+        <div className="w-full max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 pt-4 pb-16">
+          {/* Column 1 (was Information) */}
           <div className="flex flex-col space-y-4">
             <h4 className="text-[13px] font-bold tracking-wider text-white border-b border-white pb-3 mb-1 uppercase">INFORMATION</h4>
             <Link href="#" className="text-[13px] text-gray-200 hover:text-white transition-colors">About us</Link>
@@ -115,8 +81,24 @@ export default function Footer() {
             <Link href="#" className="text-[13px] text-gray-200 hover:text-white transition-colors">Care for your jewelry</Link>
             <Link href="#" className="text-[13px] text-gray-200 hover:text-white transition-colors">Warranty</Link>
             <Link href="#" className="text-[13px] text-gray-200 hover:text-white transition-colors">International expansion</Link>
-            <Link href="#" className="text-[13px] text-gray-200 hover:text-white transition-colors">How to buy with Klarna?</Link>
             <Link href="#" className="text-[13px] text-gray-200 hover:text-white transition-colors">Declaration of Accessibility</Link>
+          </div>
+
+          {/* Column 2 */}
+          <div className="flex flex-col space-y-4">
+            <h4 className="text-[13px] font-bold tracking-wider text-white border-b border-white pb-3 mb-1 uppercase">CONTACT US</h4>
+            <Link href="/store" className="text-[13px] text-gray-200 hover:text-white transition-colors">Contact us</Link>
+            <Link href="#" className="text-[13px] text-gray-200 hover:text-white transition-colors">Legal notice</Link>
+            <Link href="#" className="text-[13px] text-gray-200 hover:text-white transition-colors">Privacy policy</Link>
+          </div>
+
+          {/* Column 3 (was CIELORA) */}
+          <div className="flex flex-col space-y-4">
+            <h4 className="text-[13px] font-bold tracking-wider text-white border-b border-white pb-3 mb-1 uppercase">CIELORA</h4>
+            <Link href="/bracelets" className="text-[13px] text-gray-200 hover:text-white transition-colors">Bracelets</Link>
+            <Link href="/earrings" className="text-[13px] text-gray-200 hover:text-white transition-colors">Earrings</Link>
+            <Link href="/rings" className="text-[13px] text-gray-200 hover:text-white transition-colors">Rings</Link>
+            <Link href="/shop-by?filter=Women's jewelry" className="text-[13px] text-gray-200 hover:text-white transition-colors">Women's jewelry</Link>
           </div>
         </div>
       </div>

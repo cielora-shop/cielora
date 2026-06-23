@@ -7,3 +7,4 @@
 - nav tabs have 8px padding-top, 8px padding-bottom, 16px padding-left, 16px padding-right
 - in left side of nav bar we have icons of `search` `store` `user` `heart` and `bag`
 
+

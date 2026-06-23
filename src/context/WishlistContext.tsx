@@ -27,20 +27,24 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
   // Load from local storage on mount
   useEffect(() => {
     setIsMounted(true);
-    const saved = localStorage.getItem("cielora_wishlist");
-    if (saved) {
-      try {
+    try {
+      const saved = localStorage.getItem("cielora_wishlist");
+      if (saved) {
         setWishlistItems(JSON.parse(saved));
-      } catch (e) {
-        console.error("Error parsing wishlist");
       }
+    } catch (e) {
+      console.error("Error accessing/parsing wishlist from local storage", e);
     }
   }, []);
 
   // Save to local storage whenever wishlist changes
   useEffect(() => {
     if (isMounted) {
-      localStorage.setItem("cielora_wishlist", JSON.stringify(wishlistItems));
+      try {
+        localStorage.setItem("cielora_wishlist", JSON.stringify(wishlistItems));
+      } catch (e) {
+        console.error("Error saving wishlist to local storage", e);
+      }
     }
   }, [wishlistItems, isMounted]);
 
