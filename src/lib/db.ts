@@ -781,8 +781,8 @@ export async function getDb(): Promise<DbSchema> {
 
     return parsed;
   } catch (error) {
-    console.error("Error reading database from MongoDB, resetting to initial state", error);
-    return getInitialDbState();
+    console.error("Error reading database from MongoDB:", error);
+    throw error;
   }
 }
 
