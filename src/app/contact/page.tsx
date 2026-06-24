@@ -1,18 +1,30 @@
+"use client";
+
+import { FormEvent } from "react";
+
 export default function ContactPage() {
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    // Here you would typically send the data to your API
+    alert("Form submitted successfully!");
+  };
+
   return (
     <div className="min-h-screen pt-24 pb-12 px-4 md:pt-32 md:pb-16 bg-white">
       <div className="max-w-3xl mx-auto">
         <h1 className="text-[24px] font-sans font-semibold mb-6 md:mb-8 text-center">Contact Us</h1>
         
-        <form className="flex flex-col gap-4 md:gap-6 max-w-2xl mx-auto text-[12px] text-gray-700">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 md:gap-6 max-w-2xl mx-auto text-[12px] text-gray-700">
           <div className="flex flex-col md:flex-row gap-4 md:gap-6">
             <input 
               type="text" 
+              required
               placeholder="First Name" 
               className="w-full h-[32px] border border-[#ced4da] py-[6px] px-[12px] rounded-sm focus:outline-none focus:ring-1 focus:ring-black bg-[#FFFBF7] focus:bg-white" 
             />
             <input 
               type="text" 
+              required
               placeholder="Last Name" 
               className="w-full h-[32px] border border-[#ced4da] py-[6px] px-[12px] rounded-sm focus:outline-none focus:ring-1 focus:ring-black bg-[#FFFBF7] focus:bg-white" 
             />
@@ -20,18 +32,26 @@ export default function ContactPage() {
           
           <input 
             type="tel" 
+            required
+            onInput={(e) => {
+              e.currentTarget.value = e.currentTarget.value.replace(/[^\d\s\-\+\(\)]/g, '');
+            }}
+            pattern="^\+?[0-9\s\-()]{7,20}$"
+            title="Please enter a valid phone number (only numbers, spaces, +, -, or parenthesis allowed)"
             placeholder="Phone Number" 
             className="w-full h-[32px] border border-[#ced4da] py-[6px] px-[12px] rounded-sm focus:outline-none focus:ring-1 focus:ring-black bg-[#FFFBF7] focus:bg-white" 
           />
           
           <input 
             type="email" 
+            required
             placeholder="Email" 
             className="w-full h-[32px] border border-[#ced4da] py-[6px] px-[12px] rounded-sm focus:outline-none focus:ring-1 focus:ring-black bg-[#FFFBF7] focus:bg-white" 
           />
           
           <div className="relative">
             <select 
+              required
               className="w-full h-[32px] border border-[#ced4da] py-[6px] px-[12px] rounded-sm focus:outline-none focus:ring-1 focus:ring-black bg-[#FFFBF7] focus:bg-white appearance-none cursor-pointer"
               defaultValue=""
             >
@@ -55,6 +75,7 @@ export default function ContactPage() {
           </div>
           
           <textarea 
+            required
             placeholder="Description" 
             rows={5}
             className="w-full border border-[#ced4da] py-[6px] px-[12px] rounded-sm focus:outline-none focus:ring-1 focus:ring-black bg-[#FFFBF7] focus:bg-white resize-y" 
@@ -63,6 +84,7 @@ export default function ContactPage() {
           <div className="flex items-center gap-2 mt-2">
             <input 
               type="checkbox" 
+              required
               id="terms" 
               className="w-4 h-4 border border-[#ced4da] rounded-sm focus:ring-0 checked:bg-black checked:border-black cursor-pointer accent-black shrink-0" 
             />
@@ -73,7 +95,7 @@ export default function ContactPage() {
           
           <div className="flex justify-end pt-2">
             <button 
-              type="button" 
+              type="submit" 
               className="bg-[#2a1e1e] hover:bg-black text-white w-full md:w-auto px-12 md:px-24 py-3 text-[12px] transition-colors rounded-sm"
             >
               Send
