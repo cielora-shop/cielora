@@ -1,8 +1,6 @@
 # Only for the footer section
-- the footer have a scetion "BUYING GUIDE" that have multiple sub points, remove that entire column of "BUYING GUIDE"
-- in column "CIELORA" remove the 'blog , gift guide, neckless' option
-- from cloumn "Contact us" remove 'join mundo uno, store locater,  disturbution" options 
-- from "information" column remove ' How to buy with Klarna'
+- [x] in ADMIN panel's nav bar create a new nav label below the 'Order & fulment' "Social links"
+- [x] in the "Social Links" make a feature for user where user can edit the links of the soci media and also give a 'hide' button in front of each social media link
 
 # follow
-- after work done npm run dev and check for any error
+- [x] after work done npm run dev and check for any error

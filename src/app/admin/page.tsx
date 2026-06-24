@@ -10,7 +10,7 @@ export default function AdminPage() {
   // DB States
   const [db, setDb] = useState<DbSchema | null>(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<"dashboard" | "products" | "stores" | "banners" | "labels" | "orders" | "navbar" | "settings" | "admins">("dashboard");
+  const [activeTab, setActiveTab] = useState<"dashboard" | "products" | "stores" | "banners" | "labels" | "orders" | "navbar" | "settings" | "admins" | "socialLinks">("dashboard");
 
   useEffect(() => {
     const savedTab = localStorage.getItem("cielora_admin_tab");
@@ -428,6 +428,13 @@ export default function AdminPage() {
     setEditingOrder(null);
   };
 
+  // SOCIAL LINKS
+  const handleSocialLinkChange = (id: string, field: "url" | "isHidden", value: string | boolean) => {
+    if (!db) return;
+    const updated = db.socialLinks.map(sl => sl.id === id ? { ...sl, [field]: value } : sl);
+    saveDatabase({ ...db, socialLinks: updated });
+  };
+
   // NAVBAR CUSTOMIZER
   const handleNavbarSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -552,6 +559,7 @@ export default function AdminPage() {
             { id: "stores", label: "Store Locations", icon: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> },
             { id: "labels", label: "Product Card Labels", icon: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path></svg> },
             { id: "orders", label: "Orders & Fulfillment", icon: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg> },
+            { id: "socialLinks", label: "Social links", icon: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg> },
             { id: "admins", label: "Team & Access", icon: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg> },
             { id: "settings", label: "Global Store Settings", icon: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg> }
           ].map((tab) => (
@@ -1923,6 +1931,42 @@ export default function AdminPage() {
                 </form>
               </div>
             )}
+          </div>
+        )}
+
+        {/* TAB 6.5: SOCIAL LINKS */}
+        {activeTab === "socialLinks" && (
+          <div className="flex flex-col gap-6">
+            <div className="bg-white p-6 rounded-[6px] border border-gray-200 shadow-sm flex flex-col gap-4">
+              <h3 className="text-[14px] font-bold text-gray-900 uppercase tracking-wider border-b pb-2">Footer Social Links</h3>
+              <p className="text-[12px] text-gray-500 mb-4">Manage the social media links displayed in the footer. You can edit the URL or hide specific platforms.</p>
+              
+              <div className="flex flex-col gap-4">
+                {db.socialLinks.map(sl => (
+                  <div key={sl.id} className="flex items-center gap-4 p-4 border border-gray-100 rounded bg-stone-50">
+                    <div className="w-8 h-8 flex items-center justify-center bg-white rounded-full border border-gray-200 text-gray-800" dangerouslySetInnerHTML={{ __html: `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">${sl.iconSvg}</svg>` }} />
+                    <div className="w-32 text-[13px] font-bold text-gray-800">{sl.platform}</div>
+                    
+                    <div className="flex-1">
+                      <input 
+                        type="text" 
+                        value={sl.url}
+                        onChange={(e) => handleSocialLinkChange(sl.id, "url", e.target.value)}
+                        className="w-full border border-gray-300 p-2 text-[12px] rounded focus:outline-none focus:border-gray-500 bg-white"
+                        placeholder={`https://${sl.platform.toLowerCase()}.com/yourprofile`}
+                      />
+                    </div>
+
+                    <button 
+                      onClick={() => handleSocialLinkChange(sl.id, "isHidden", !sl.isHidden)}
+                      className={`px-4 py-2 text-[11px] uppercase tracking-wider font-bold rounded flex items-center gap-2 ${sl.isHidden ? "bg-red-50 text-red-600 border border-red-200 hover:bg-red-100" : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"}`}
+                    >
+                      {sl.isHidden ? "Hidden" : "Visible"}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         )}
 
