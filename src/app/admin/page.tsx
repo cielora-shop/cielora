@@ -10,7 +10,7 @@ export default function AdminPage() {
   // DB States
   const [db, setDb] = useState<DbSchema | null>(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<"dashboard" | "products" | "stores" | "banners" | "labels" | "orders" | "navbar" | "settings" | "admins" | "socialLinks">("dashboard");
+  const [activeTab, setActiveTab] = useState<"dashboard" | "products" | "stores" | "banners" | "labels" | "orders" | "navbar" | "settings" | "admins" | "socialLinks" | "messages">("dashboard");
 
   useEffect(() => {
     const savedTab = localStorage.getItem("cielora_admin_tab");
@@ -86,6 +86,12 @@ export default function AdminPage() {
   const [productToDelete, setProductToDelete] = useState<Product | null>(null);
   const [isClosingDeleteModal, setIsClosingDeleteModal] = useState(false);
 
+  // Messages State
+  const [contactMessages, setContactMessages] = useState<any[]>([]);
+  const [loadingMessages, setLoadingMessages] = useState(false);
+  const [messageToDelete, setMessageToDelete] = useState<string | null>(null);
+  const [isClosingMessageModal, setIsClosingMessageModal] = useState(false);
+
   const { data: session, status } = useSession();
 
   // Load database
@@ -107,6 +113,53 @@ export default function AdminPage() {
         showToast("Error reading filesystem database.", "error");
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    if (activeTab === "messages" && status === "authenticated") {
+      fetchMessages();
+    }
+  }, [activeTab, status]);
+
+  const fetchMessages = () => {
+    setLoadingMessages(true);
+    fetch("/api/admin/messages")
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          setContactMessages(data.messages);
+        }
+        setLoadingMessages(false);
+      })
+      .catch(err => {
+        showToast("Error fetching messages", "error");
+        setLoadingMessages(false);
+      });
+  };
+
+  const cancelDeleteMessage = () => {
+    setIsClosingMessageModal(true);
+    setTimeout(() => {
+      setMessageToDelete(null);
+      setIsClosingMessageModal(false);
+    }, 300);
+  };
+
+  const confirmDeleteMessage = () => {
+    if (!messageToDelete) return;
+    const id = messageToDelete;
+    cancelDeleteMessage();
+    fetch(`/api/admin/messages?id=${id}`, { method: "DELETE" })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          setContactMessages(prev => prev.filter(m => m._id !== id));
+          showToast("Message deleted successfully");
+        } else {
+          showToast("Failed to delete message", "error");
+        }
+      })
+      .catch(err => showToast("Error deleting message", "error"));
   };
 
   // Handle browser back button for inner pages
@@ -559,6 +612,7 @@ export default function AdminPage() {
             { id: "stores", label: "Store Locations", icon: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> },
             { id: "labels", label: "Product Card Labels", icon: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path></svg> },
             { id: "orders", label: "Orders & Fulfillment", icon: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg> },
+            { id: "messages", label: "Messages", icon: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> },
             { id: "socialLinks", label: "Social links", icon: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg> },
             { id: "admins", label: "Team & Access", icon: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg> },
             { id: "settings", label: "Global Store Settings", icon: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg> }
@@ -2458,6 +2512,50 @@ export default function AdminPage() {
           </div>
         )}
 
+        {/* TAB: MESSAGES */}
+        {activeTab === "messages" && (
+          <div className="bg-white rounded-[6px] border border-gray-200 shadow-sm overflow-hidden flex flex-col">
+            <div className="p-4 border-b border-gray-200 bg-stone-100 flex justify-between items-center text-[12px] font-bold text-gray-700">
+              <span>Customer Messages</span>
+              <span>Actions</span>
+            </div>
+            <div className="flex flex-col">
+              {loadingMessages ? (
+                <div className="p-8 text-center text-[13px] text-gray-500">Loading messages...</div>
+              ) : contactMessages.length === 0 ? (
+                <div className="p-8 text-center text-[13px] text-gray-500">No messages found.</div>
+              ) : (
+                contactMessages.map((msg, idx) => (
+                  <div key={msg._id} className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 border-b last:border-b-0 border-gray-100 text-[12px]">
+                    <div className="flex flex-col gap-1 w-full md:w-3/4">
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-[#d2977a]">{idx + 1}.</span>
+                        <span className="font-bold text-gray-900 text-[13px]">{msg.firstName} {msg.lastName}</span>
+                        <a href={`mailto:${msg.email}`} className="text-blue-600 hover:underline">{msg.email}</a>
+                        <span className="text-gray-400">&bull;</span>
+                        <span className="text-gray-500">{new Date(msg.date).toLocaleString()}</span>
+                      </div>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="bg-stone-100 px-2 py-0.5 rounded border text-stone-600 font-bold uppercase tracking-wider text-[10px]">Reason: {msg.reason}</span>
+                        {msg.phone && <span className="text-gray-500">Phone: {msg.phone}</span>}
+                      </div>
+                      <p className="mt-2 text-gray-700 bg-stone-50 p-3 rounded text-[13px] border border-stone-100 whitespace-pre-wrap">{msg.description}</p>
+                    </div>
+                    <div className="mt-4 md:mt-0 flex shrink-0">
+                      <button
+                        onClick={() => setMessageToDelete(msg._id)}
+                        className="border border-red-200 bg-red-50 hover:bg-red-500 hover:text-white text-red-600 px-4 py-2 rounded text-[12px] font-semibold uppercase transition-colors"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        )}
+
         {/* TAB 8: GLOBAL SETTINGS */}
         {activeTab === "settings" && (
           <div className="bg-white p-8 rounded-[6px] border border-gray-200 shadow-sm">
@@ -2639,6 +2737,33 @@ export default function AdminPage() {
                 Cancel
               </button>
               <button onClick={confirmDeleteProduct} className="w-[120px] py-2 bg-[#221f1f] text-white text-[14px] font-medium hover:bg-[#fffbf7] hover:text-black border border-[#221f1f] hover:border-black transition-colors flex justify-center items-center">
+                Yes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Delete Message Confirmation Modal */}
+      {messageToDelete && (
+        <div className={`fixed inset-0 bg-black/50 z-[105] flex items-start justify-center px-4 transition-opacity duration-300 ${isClosingMessageModal ? "opacity-0" : "opacity-100"}`}>
+          <div className={`bg-[#fffbf7] w-full max-w-[500px] shadow-2xl flex flex-col ${isClosingMessageModal ? "animate-slideUp" : "animate-slideDown"}`}>
+            {/* Header */}
+            <div className="flex items-center justify-between p-4 border-b border-gray-200">
+              <h3 className="text-[16px] font-medium text-gray-900">Remove Message?</h3>
+              <button onClick={cancelDeleteMessage} className="text-gray-500 hover:text-black transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              </button>
+            </div>
+            {/* Body */}
+            <div className="p-4 py-6 border-b border-gray-200">
+              <p className="text-[14px] text-gray-800 mb-1">Are you sure you want to permanently delete this message?</p>
+            </div>
+            {/* Footer */}
+            <div className="p-4 flex justify-end gap-4">
+              <button onClick={cancelDeleteMessage} className="w-[120px] py-2 border border-black text-gray-800 text-[14px] font-medium hover:bg-black hover:text-white transition-colors bg-[#fffbf7] flex justify-center items-center">
+                Cancel
+              </button>
+              <button onClick={confirmDeleteMessage} className="w-[120px] py-2 bg-[#221f1f] text-white text-[14px] font-medium hover:bg-[#fffbf7] hover:text-black border border-[#221f1f] hover:border-black transition-colors flex justify-center items-center">
                 Yes
               </button>
             </div>
