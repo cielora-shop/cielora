@@ -76,7 +76,7 @@ export default function ProductRow({ collectionName, className = "", products }:
       <div 
         ref={scrollRef}
         onScroll={checkScroll}
-        className="flex overflow-x-auto touch-pan-y overscroll-x-contain [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] space-x-1"
+        className="flex overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] space-x-1"
       >
         {rowProducts.map((product) => (
           <div key={product.id} className="w-[50%] md:w-[25%] flex-shrink-0 pr-1">

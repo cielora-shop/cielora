@@ -44,7 +44,7 @@ export default function ProductCard({ id = 1, title, price, label, labelColor, b
           </div>
         )}
         <img src={currentImages.img1} alt={title} className="pointer-events-none absolute inset-0 w-full h-full object-cover transition-opacity duration-200 group-hover:opacity-0 group-hover:duration-700" />
-        <img src={currentImages.img2} alt={`${title} Hover`} className="pointer-events-none absolute inset-0 w-full h-full object-cover opacity-0 scale-100 transition-all duration-200 ease-out group-hover:opacity-100 group-hover:scale-110 group-hover:duration-700" />
+        <img src={currentImages.img2} alt={`${title} Hover`} className="pointer-events-none absolute inset-0 w-full h-full object-cover opacity-0 scale-100 transition-[transform,opacity] duration-200 ease-out will-change-transform group-hover:opacity-100 group-hover:scale-110 group-hover:duration-700" />
       </div>
       <div className="flex justify-between items-center w-full mb-2 px-1">
         <div className="flex gap-2">
