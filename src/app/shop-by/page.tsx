@@ -438,37 +438,49 @@ function ShopByContent() {
 
       {/* Product Grid */}
       <div className="w-full pb-12">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-x-1 gap-y-10 mt-6 px-1">
-          {filteredProducts.slice(0, visibleCount).map((product) => (
-            <ProductCard 
-              key={product.id}
-              id={product.id}
-              title={product.title}
-              price={product.price}
-              label={product.label}
-              labelColor={product.labelColor}
-              bottomLabel={product.bottomLabel}
-              colors={product.colors}
-              images={product.images}
-            />
-          ))}
-        </div>
-
-        {/* Load More Section */}
-        <div className="flex flex-col items-center justify-center mt-20 mb-8 w-full max-w-[420px] mx-auto px-4">
-          <p className="text-[12px] text-gray-600 mb-3">You've viewed {Math.min(visibleCount, filteredProducts.length)} of {filteredProducts.length} products</p>
-          <div className="w-full bg-[#e5e5e5] h-[6px] mb-6">
-            <div className="bg-[#b44131] h-full" style={{ width: `${filteredProducts.length > 0 ? (Math.min(visibleCount, filteredProducts.length)/filteredProducts.length)*100 : 0}%` }}></div>
+        {filteredProducts.length === 0 && selectedTopFilter ? (
+          <div className="flex flex-col items-center justify-center py-24 text-center px-4">
+            <h2 className="text-[32px] font-bold text-gray-900 mb-4 tracking-tight">404 - Collection Not Found</h2>
+            <p className="text-[14px] text-gray-500 mb-8 max-w-md mx-auto">The category or collection you are looking for has been removed or does not exist.</p>
+            <Link href="/" className="bg-black text-white px-8 py-3 text-[12px] font-bold uppercase tracking-wider hover:bg-stone-800 transition-colors">
+              Return to Home
+            </Link>
           </div>
-          {visibleCount < filteredProducts.length && (
-            <button 
-              onClick={() => setVisibleCount(prev => Math.min(prev + 16, filteredProducts.length))}
-              className="w-full bg-[#221f1f] text-white font-medium py-[14px] text-[12px] hover:bg-black transition-colors"
-            >
-              Load more
-            </button>
-          )}
-        </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-1 gap-y-10 mt-6 px-1">
+              {filteredProducts.slice(0, visibleCount).map((product) => (
+                <ProductCard 
+                  key={product.id}
+                  id={product.id}
+                  title={product.title}
+                  price={product.price}
+                  label={product.label}
+                  labelColor={product.labelColor}
+                  bottomLabel={product.bottomLabel}
+                  colors={product.colors}
+                  images={product.images}
+                />
+              ))}
+            </div>
+
+            {/* Load More Section */}
+            <div className="flex flex-col items-center justify-center mt-20 mb-8 w-full max-w-[420px] mx-auto px-4">
+              <p className="text-[12px] text-gray-600 mb-3">You've viewed {Math.min(visibleCount, filteredProducts.length)} of {filteredProducts.length} products</p>
+              <div className="w-full bg-[#e5e5e5] h-[6px] mb-6">
+                <div className="bg-[#b44131] h-full" style={{ width: `${filteredProducts.length > 0 ? (Math.min(visibleCount, filteredProducts.length)/filteredProducts.length)*100 : 0}%` }}></div>
+              </div>
+              {visibleCount < filteredProducts.length && (
+                <button 
+                  onClick={() => setVisibleCount(prev => Math.min(prev + 16, filteredProducts.length))}
+                  className="w-full bg-[#221f1f] text-white font-medium py-[14px] text-[12px] hover:bg-black transition-colors"
+                >
+                  Load more
+                </button>
+              )}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

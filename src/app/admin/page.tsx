@@ -494,9 +494,15 @@ export default function AdminPage() {
     if (!db) return;
 
     const updated = [...db.navbarTabs];
+    const name = navbarTabForm.name || "New Tab";
+    
+    // For the Hybrid architecture: new tabs route to /collections?filter=Name by default
+    const defaultHref = `/collections?filter=${encodeURIComponent(name)}`;
+    const finalHref = navbarTabForm.href ? navbarTabForm.href : defaultHref;
+
     updated.push({
-      name: navbarTabForm.name || "New Tab",
-      href: navbarTabForm.href || "/shop"
+      name: name,
+      href: finalHref
     });
 
     saveDatabase({ ...db, navbarTabs: updated });
@@ -2042,14 +2048,13 @@ export default function AdminPage() {
                   />
                 </div>
                 <div className="flex-1 flex flex-col gap-1.5">
-                  <label className="text-[11px] font-bold text-gray-800 uppercase tracking-wider">Tab URL Link Path</label>
+                  <label className="text-[11px] font-bold text-gray-800 uppercase tracking-wider">Tab URL (Leave empty to Auto-generate)</label>
                   <input
                     type="text"
                     value={navbarTabForm.href || ""}
                     onChange={(e) => setNavbarTabForm({ ...navbarTabForm, href: e.target.value })}
                     className="border border-gray-300 px-3 py-2 rounded focus:outline-none focus:border-black text-[12px] bg-white h-[38px]"
-                    placeholder="e.g. /outlet, /shop-by"
-                    required
+                    placeholder="Auto-generated if empty"
                   />
                 </div>
                 <button
