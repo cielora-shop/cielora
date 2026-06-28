@@ -20,11 +20,13 @@ export default function Navbar() {
   const changeLanguage = (lang: string) => {
     if (typeof window !== "undefined") {
       if (lang === "es") {
+        document.cookie = "cielora_lang=es; path=/";
         document.cookie = "googtrans=/en/es; path=/";
         document.cookie = "googtrans=/en/es; domain=" + window.location.hostname + "; path=/";
       } else {
-        document.cookie = "googtrans=/en/en; path=/";
-        document.cookie = "googtrans=/en/en; domain=" + window.location.hostname + "; path=/";
+        document.cookie = "cielora_lang=en; path=/";
+        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=" + window.location.hostname + "; path=/;";
       }
       window.location.reload();
     }

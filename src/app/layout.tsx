@@ -34,6 +34,7 @@ import Footer from "@/components/footer";
 import { CartProvider } from "@/context/CartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
 import SideCart from "@/components/SideCart";
+import GoogleTranslateScripts from "@/components/GoogleTranslateScripts";
 
 export default function RootLayout({
   children,
@@ -47,31 +48,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-sans text-foreground bg-background" suppressHydrationWarning>
-        {/* Hidden Google Translate Element */}
-        <div id="google_translate_element" className="hidden"></div>
-        <Script id="set-default-lang" strategy="beforeInteractive">
-          {`
-            if (document.cookie.indexOf('googtrans=') === -1) {
-              document.cookie = 'googtrans=/en/es; path=/';
-              document.cookie = 'googtrans=/en/es; domain=' + window.location.hostname + '; path=/';
-            }
-          `}
-        </Script>
-        <Script id="google-translate-init" strategy="lazyOnload">
-          {`
-            function googleTranslateElementInit() {
-              new window.google.translate.TranslateElement({
-                pageLanguage: 'en',
-                includedLanguages: 'es',
-                autoDisplay: false
-              }, 'google_translate_element');
-            }
-          `}
-        </Script>
-        <Script 
-          src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" 
-          strategy="lazyOnload" 
-        />
+        <GoogleTranslateScripts />
         <WishlistProvider>
           <CartProvider>
             <Navbar />

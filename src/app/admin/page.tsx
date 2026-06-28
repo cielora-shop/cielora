@@ -65,7 +65,8 @@ export default function AdminPage() {
     country: "",
     phone: "",
     email: "",
-    googleMapsUrl: ""
+    googleMapsUrl: "",
+    hideDirectionsButton: false
   });
 
   const [editingBanner, setEditingBanner] = useState<Banner | null>(null);
@@ -398,7 +399,8 @@ export default function AdminPage() {
       country: storeForm.country || "",
       phone: storeForm.phone || "",
       email: storeForm.email || "",
-      googleMapsUrl: storeForm.googleMapsUrl || ""
+      googleMapsUrl: storeForm.googleMapsUrl || "",
+      hideDirectionsButton: storeForm.hideDirectionsButton || false
     };
 
     if (isAddingStore) {
@@ -1262,7 +1264,7 @@ export default function AdminPage() {
                     onClick={() => {
                       setIsAddingStore(true);
                       setEditingStore(null);
-                      setStoreForm({ id: String(db.stores.length + 1), name: "", address: "", city: "", postcode: "", country: "", phone: "", email: "", googleMapsUrl: "" });
+                      setStoreForm({ id: String(db.stores.length + 1), name: "", address: "", city: "", postcode: "", country: "", phone: "", email: "", googleMapsUrl: "", hideDirectionsButton: false });
                     }}
                     className="bg-black hover:bg-stone-900 border border-black text-white text-[12px] font-bold uppercase tracking-wider px-4 py-2 rounded-[2px]"
                   >
@@ -1425,8 +1427,20 @@ export default function AdminPage() {
                       onChange={(e) => setStoreForm({ ...storeForm, googleMapsUrl: e.target.value })}
                       className="border border-gray-300 px-3 py-2.5 rounded-[2px] focus:outline-none focus:border-black text-[13px]"
                       placeholder="https://maps.google.com/maps?q=london&output=embed"
-                      required
                     />
+                  </div>
+
+                  <div className="flex items-center gap-2 mt-2">
+                    <input
+                      type="checkbox"
+                      id="hide-directions-btn"
+                      checked={storeForm.hideDirectionsButton || false}
+                      onChange={(e) => setStoreForm({ ...storeForm, hideDirectionsButton: e.target.checked })}
+                      className="w-4 h-4 cursor-pointer"
+                    />
+                    <label htmlFor="hide-directions-btn" className="font-bold text-gray-800 uppercase tracking-wider cursor-pointer">
+                      Hide "Get Directions" button on website
+                    </label>
                   </div>
 
                   <button

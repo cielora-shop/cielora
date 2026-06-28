@@ -22,6 +22,21 @@ export default function Footer() {
       .catch(err => console.error("Error fetching social links:", err));
   }, []);
 
+  const changeLanguage = (lang: string) => {
+    if (typeof window !== "undefined") {
+      if (lang === "es") {
+        document.cookie = "cielora_lang=es; path=/";
+        document.cookie = "googtrans=/en/es; path=/";
+        document.cookie = "googtrans=/en/es; domain=" + window.location.hostname + "; path=/";
+      } else {
+        document.cookie = "cielora_lang=en; path=/";
+        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=" + window.location.hostname + "; path=/;";
+      }
+      window.location.reload();
+    }
+  };
+
   if (pathname && pathname.startsWith('/admin')) {
     return null;
   }
@@ -75,9 +90,13 @@ export default function Footer() {
                   <option className="bg-[#211d1d] text-white">United Kingdom</option>
                   <option className="bg-[#211d1d] text-white">United States</option>
                 </select>
-                <select className="bg-transparent border border-gray-500 rounded px-4 py-1.5 text-sm appearance-none cursor-pointer hover:border-white w-24 focus:outline-none">
-                  <option className="bg-[#211d1d] text-white">English</option>
-                  <option className="bg-[#211d1d] text-white">Español</option>
+                <select 
+                  className="bg-transparent border border-gray-500 rounded px-4 py-1.5 text-sm appearance-none cursor-pointer hover:border-white w-24 focus:outline-none"
+                  onChange={(e) => changeLanguage(e.target.value)}
+                  defaultValue={typeof document !== 'undefined' && document.cookie.includes('/en/es') ? 'es' : 'en'}
+                >
+                  <option value="en" className="bg-[#211d1d] text-white">English</option>
+                  <option value="es" className="bg-[#211d1d] text-white">Español</option>
                 </select>
              </div>
            </div>

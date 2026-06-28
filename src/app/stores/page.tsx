@@ -12,6 +12,7 @@ interface Store {
   phone: string;
   email: string;
   googleMapsUrl: string;
+  hideDirectionsButton?: boolean;
 }
 
 export default function StoresPage() {
@@ -102,15 +103,17 @@ export default function StoresPage() {
                   {store.phone && <p className="mt-3 font-medium text-gray-800">Phone: {store.phone}</p>}
                   {store.email && <p className="font-medium text-gray-800">Email: {store.email}</p>}
                   
-                  <a 
-                    href={buttonLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-4 inline-block bg-[#c43e27] text-white px-4 py-2 rounded text-[13px] font-medium hover:bg-[#a93320] transition-colors"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    Get Directions
-                  </a>
+                  {!store.hideDirectionsButton && (
+                    <a 
+                      href={buttonLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-4 inline-block bg-[#c43e27] text-white px-4 py-2 rounded text-[13px] font-medium hover:bg-[#a93320] transition-colors"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      Get Directions
+                    </a>
+                  )}
                 </div>
               </div>
             );
@@ -119,19 +122,34 @@ export default function StoresPage() {
       </div>
 
       {/* Map Panel */}
-      <div className="flex-1 min-h-[400px] md:min-h-auto relative bg-[#e5e3df]">
+      <div className="flex-1 min-h-[400px] md:min-h-auto relative bg-[#e5e3df] flex items-center justify-center">
         {selectedStore && (() => {
+          if (!selectedStore.googleMapsUrl || selectedStore.googleMapsUrl.trim() === '') {
+            return (
+              <div className="flex flex-col items-center justify-center p-8 text-center text-gray-500">
+                <svg className="w-12 h-12 mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <h3 className="text-[18px] font-medium text-gray-700 mb-2">Map view unavailable</h3>
+                <p className="text-[14px] max-w-sm mx-auto">
+                  A map view is currently not available for this location. You can still use the &quot;Get Directions&quot; button to navigate via Google Maps.
+                </p>
+              </div>
+            );
+          }
+
           let mapEmbedLink = selectedStore.googleMapsUrl;
-          const iframeMatch = selectedStore.googleMapsUrl?.match(/src="([^"]+)"/);
+          const iframeMatch = selectedStore.googleMapsUrl.match(/src="([^"]+)"/);
           if (iframeMatch && iframeMatch[1]) {
             mapEmbedLink = iframeMatch[1];
-          } else if (selectedStore.googleMapsUrl && !selectedStore.googleMapsUrl.includes('/maps/embed')) {
+          } else if (!selectedStore.googleMapsUrl.includes('/maps/embed')) {
             mapEmbedLink = `https://maps.google.com/maps?q=${encodeURIComponent(`${selectedStore.name}, ${selectedStore.address}, ${selectedStore.city}, ${selectedStore.country}`)}&t=&z=14&ie=UTF8&iwloc=&output=embed`;
           }
 
           return (
             <iframe 
-              src={mapEmbedLink || `https://maps.google.com/maps?q=${encodeURIComponent(`${selectedStore.name}, ${selectedStore.address}, ${selectedStore.city}, ${selectedStore.country}`)}&t=&z=14&ie=UTF8&iwloc=&output=embed`}
+              src={mapEmbedLink}
               className="absolute inset-0 w-full h-full border-0" 
               allowFullScreen 
               loading="lazy" 

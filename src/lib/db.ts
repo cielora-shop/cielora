@@ -45,6 +45,7 @@ export interface Store {
   phone: string;
   email: string;
   googleMapsUrl: string;
+  hideDirectionsButton?: boolean;
 }
 
 export interface Banner {
