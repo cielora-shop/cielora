@@ -49,6 +49,14 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col font-sans text-foreground bg-background" suppressHydrationWarning>
         {/* Hidden Google Translate Element */}
         <div id="google_translate_element" className="hidden"></div>
+        <Script id="set-default-lang" strategy="beforeInteractive">
+          {`
+            if (document.cookie.indexOf('googtrans=') === -1) {
+              document.cookie = 'googtrans=/en/es; path=/';
+              document.cookie = 'googtrans=/en/es; domain=' + window.location.hostname + '; path=/';
+            }
+          `}
+        </Script>
         <Script id="google-translate-init" strategy="lazyOnload">
           {`
             function googleTranslateElementInit() {
