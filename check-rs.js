@@ -1,7 +1,8 @@
 const { MongoClient } = require('mongodb');
 
 async function check() {
-  const uri = "mongodb://admin:admin12345@ac-etmb54l-shard-00-00.h4onbz9.mongodb.net:27017/cielora?ssl=true&authSource=admin";
+  require('dotenv').config({ path: '.env.local' });
+  const uri = process.env.MONGODB_URI;
   const client = new MongoClient(uri);
   try {
     await client.connect();
