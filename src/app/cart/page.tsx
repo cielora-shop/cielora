@@ -7,13 +7,13 @@ import Link from "next/link";
 import { useState } from "react";
 
 export default function CartPage() {
-  const { cartItems, removeFromCart, updateQuantity, cartTotal } = useCart();
+  const { cartItems, removeFromCart, updateQuantity, cartTotal, taxPercentage } = useCart();
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   const [itemToRemove, setItemToRemove] = useState<any | null>(null);
   const [isClosingModal, setIsClosingModal] = useState(false);
 
   const cartItemsCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
-  const tax = cartTotal * 0.1735; // mock tax
+  const tax = cartTotal * (taxPercentage / 100);
   const finalTotal = cartTotal + tax;
 
   const confirmRemove = () => {

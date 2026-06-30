@@ -129,6 +129,7 @@ export interface GlobalSettings {
   klarnaEnabled: boolean;
   paypalEnabled: boolean;
   installmentsCount: number;
+  taxPercentage: number;
   legalDisclaimer: string;
   shippingReturns: {
     freeReturnsDays: number;
@@ -697,6 +698,7 @@ function getInitialDbState(): DbSchema {
     klarnaEnabled: true,
     paypalEnabled: true,
     installmentsCount: 3,
+    taxPercentage: 17.35,
     legalDisclaimer: "18+, T&C apply, Credit subject to status.",
     shippingReturns: {
       freeReturnsDays: 30,

@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
 
 export default function SideCart() {
-  const { isCartOpen, closeCart, cartItems, removeFromCart, updateQuantity, cartTotal } = useCart();
+  const { isCartOpen, closeCart, cartItems, removeFromCart, updateQuantity, cartTotal, taxPercentage } = useCart();
   const [itemToRemove, setItemToRemove] = useState<any | null>(null);
   const [isClosingModal, setIsClosingModal] = useState(false);
 
@@ -41,7 +41,7 @@ export default function SideCart() {
     };
   }, [isCartOpen]);
 
-  const tax = cartTotal * 0.1735; // mock tax
+  const tax = cartTotal * (taxPercentage / 100);
   const finalTotal = cartTotal + tax;
 
   return (

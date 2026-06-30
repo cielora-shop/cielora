@@ -11,6 +11,7 @@ export default function AdminPage() {
   const [db, setDb] = useState<DbSchema | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"dashboard" | "products" | "stores" | "banners" | "labels" | "orders" | "navbar" | "settings" | "admins" | "socialLinks" | "messages">("dashboard");
+  const [isTaxChanged, setIsTaxChanged] = useState(false);
 
   useEffect(() => {
     const savedTab = localStorage.getItem("cielora_admin_tab");
@@ -835,14 +836,42 @@ export default function AdminPage() {
           <div className="flex flex-col gap-6">
             {!isAddingProduct && !editingProduct ? (
               <>
-                <div className="flex justify-between items-center bg-white p-4 border border-gray-200 rounded-[4px] shadow-sm">
+                <div className="flex justify-between items-center bg-white p-4 border border-gray-200 rounded-[4px] shadow-sm flex-wrap gap-4">
                   <span className="text-[13px] text-gray-500 font-medium">Catalog List: {db.products.filter(p => !p.isLimitedEdition).length} Products</span>
-                  <button
-                    onClick={startAddProduct}
-                    className="bg-black hover:bg-stone-900 border border-black text-white text-[12px] font-bold uppercase tracking-wider px-4 py-2 rounded-[2px]"
-                  >
-                    Add Product
-                  </button>
+                  
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2 bg-stone-50 border border-gray-200 rounded-[2px] px-3 py-1.5">
+                      <span className="text-[12px] font-bold text-gray-700 uppercase tracking-wide">Tax %:</span>
+                      <input 
+                        type="number" 
+                        value={db.settings?.taxPercentage ?? 17.35}
+                        onChange={(e) => {
+                          const val = parseFloat(e.target.value) || 0;
+                          setDb({ ...db, settings: { ...db.settings, taxPercentage: val } });
+                          setIsTaxChanged(true);
+                        }}
+                        className="w-20 text-[13px] p-1 border border-gray-300 rounded focus:outline-none focus:border-black"
+                        step="0.01"
+                      />
+                      <button
+                        onClick={async () => {
+                          await fetch("/api/db", { method: "POST", body: JSON.stringify(db) });
+                          setIsTaxChanged(false);
+                          showToast("Tax percentage saved successfully!", "success");
+                        }}
+                        className={`${isTaxChanged ? "bg-red-500 hover:bg-red-600 text-white" : "bg-gray-200 hover:bg-gray-300 text-gray-800"} text-[11px] font-bold uppercase px-3 py-1.5 rounded-[2px] ml-2 transition-colors`}
+                      >
+                        Save
+                      </button>
+                    </div>
+                    
+                    <button
+                      onClick={startAddProduct}
+                      className="bg-black hover:bg-stone-900 border border-black text-white text-[12px] font-bold uppercase tracking-wider px-4 py-2 rounded-[2px]"
+                    >
+                      Add Product
+                    </button>
+                  </div>
                 </div>
 
                 <div className="bg-white rounded-[6px] border border-gray-200 shadow-sm overflow-hidden">

@@ -21,6 +21,7 @@ interface CartContextType {
   removeFromCart: (id: string | number) => void;
   updateQuantity: (id: string | number, quantity: number) => void;
   cartTotal: number;
+  taxPercentage: number;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -28,6 +29,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export function CartProvider({ children }: { children: ReactNode }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [taxPercentage, setTaxPercentage] = useState<number>(17.35);
   const [isMounted, setIsMounted] = useState(false);
 
   // Load from local storage on mount
@@ -41,6 +43,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
     } catch (e) {
       console.error("Error accessing/parsing cart from local storage", e);
     }
+    
+    // Fetch tax percentage from global settings
+    fetch("/api/db")
+      .then(res => res.json())
+      .then(data => {
+        if (data?.settings?.taxPercentage !== undefined) {
+          setTaxPercentage(data.settings.taxPercentage);
+        }
+      })
+      .catch(err => console.error("Error fetching db settings", err));
   }, []);
 
   // Save to local storage whenever cart changes
@@ -95,6 +107,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         removeFromCart,
         updateQuantity,
         cartTotal,
+        taxPercentage,
       }}
     >
       {children}
