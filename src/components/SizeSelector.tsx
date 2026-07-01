@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-
+import SizeGuideModal from './SizeGuideModal';
 interface SizeSelectorProps {
   sizes?: string[];
 }
@@ -9,6 +9,7 @@ interface SizeSelectorProps {
 export default function SizeSelector({ sizes = ['M', 'L', 'XL'] }: SizeSelectorProps) {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSelect = (size: string) => {
     setSelectedSize(size);
@@ -47,9 +48,14 @@ export default function SizeSelector({ sizes = ['M', 'L', 'XL'] }: SizeSelectorP
       
       <div className="border-b border-gray-200 mb-3"></div>
       
-      <div className="text-[10px] text-gray-900 underline cursor-pointer inline-block decoration-1 underline-offset-2 hover:text-[#ad4431] transition-colors">
+      <div 
+        onClick={() => setIsModalOpen(true)}
+        className="text-[10px] text-gray-900 underline cursor-pointer inline-block decoration-1 underline-offset-2 hover:text-[#ad4431] transition-colors"
+      >
         Size & Fit Guide
       </div>
+      
+      <SizeGuideModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 }

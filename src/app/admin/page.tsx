@@ -12,6 +12,7 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"dashboard" | "products" | "stores" | "banners" | "labels" | "orders" | "navbar" | "settings" | "admins" | "socialLinks" | "messages">("dashboard");
   const [isTaxChanged, setIsTaxChanged] = useState(false);
+  const [isTaxEditing, setIsTaxEditing] = useState(false);
 
   useEffect(() => {
     const savedTab = localStorage.getItem("cielora_admin_tab");
@@ -845,24 +846,38 @@ export default function AdminPage() {
                       <input 
                         type="number" 
                         value={db.settings?.taxPercentage ?? 17.35}
+                        disabled={!isTaxEditing}
                         onChange={(e) => {
                           const val = parseFloat(e.target.value) || 0;
                           setDb({ ...db, settings: { ...db.settings, taxPercentage: val } });
                           setIsTaxChanged(true);
                         }}
-                        className="w-20 text-[13px] p-1 border border-gray-300 rounded focus:outline-none focus:border-black"
+                        className={`w-20 text-[13px] p-1 border rounded focus:outline-none ${!isTaxEditing ? 'bg-gray-100 text-gray-500 border-transparent cursor-not-allowed' : 'border-gray-300 focus:border-black bg-white'}`}
                         step="0.01"
                       />
-                      <button
-                        onClick={async () => {
-                          await fetch("/api/db", { method: "POST", body: JSON.stringify(db) });
-                          setIsTaxChanged(false);
-                          showToast("Tax percentage saved successfully!", "success");
-                        }}
-                        className={`${isTaxChanged ? "bg-red-500 hover:bg-red-600 text-white" : "bg-gray-200 hover:bg-gray-300 text-gray-800"} text-[11px] font-bold uppercase px-3 py-1.5 rounded-[2px] ml-2 transition-colors`}
-                      >
-                        Save
-                      </button>
+                      {isTaxEditing ? (
+                        <button
+                          onClick={async () => {
+                            if (isTaxChanged) {
+                              await fetch("/api/db", { method: "POST", body: JSON.stringify(db) });
+                              showToast("Tax percentage saved successfully!", "success");
+                            }
+                            setIsTaxChanged(false);
+                            setIsTaxEditing(false);
+                          }}
+                          className={`${isTaxChanged ? "bg-red-500 hover:bg-red-600 text-white" : "bg-gray-400 text-white cursor-default"} text-[11px] font-bold uppercase px-3 py-1.5 rounded-[2px] ml-2 transition-colors`}
+                          disabled={!isTaxChanged}
+                        >
+                          Save
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => setIsTaxEditing(true)}
+                          className="bg-gray-200 hover:bg-gray-300 text-gray-800 text-[11px] font-bold uppercase px-3 py-1.5 rounded-[2px] ml-2 transition-colors"
+                        >
+                          Edit
+                        </button>
+                      )}
                     </div>
                     
                     <button
