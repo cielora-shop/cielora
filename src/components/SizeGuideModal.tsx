@@ -115,10 +115,14 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-black/40 transition-opacity duration-300">
+    <div 
+      className="fixed inset-0 z-50 flex justify-end bg-black/40 transition-opacity duration-300"
+      onClick={onClose}
+    >
       <div 
         className="bg-white w-full md:w-[550px] lg:w-[600px] h-full overflow-hidden shadow-2xl flex flex-col relative"
         style={{ animation: 'slideInRight 0.35s ease-out forwards' }}
+        onClick={(e) => e.stopPropagation()}
       >
         <style>{`
           @keyframes slideInRight {
