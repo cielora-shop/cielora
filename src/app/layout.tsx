@@ -24,6 +24,14 @@ const styleScript = Style_Script({
 export const metadata: Metadata = {
   title: "Cielora | Jewelry E-commerce",
   description: "Discover Cielora's exquisite collection of modern jewelry, featuring limited editions, best sellers, and everyday pieces designed for you.",
+  openGraph: {
+    title: "Cielora | Jewelry E-commerce",
+    description: "Discover Cielora's exquisite collection of modern jewelry, featuring limited editions, best sellers, and everyday pieces designed for you.",
+    url: "https://www.cielora.shop",
+    siteName: "Cielora",
+    locale: "en_US",
+    type: "website",
+  },
   icons: {
     icon: [
       { url: "/favicon-48x48.png", sizes: "48x48", type: "image/png" },
