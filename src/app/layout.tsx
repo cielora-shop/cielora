@@ -32,6 +32,9 @@ export const metadata: Metadata = {
     locale: "en_US",
     type: "website",
   },
+  verification: {
+    google: "hDlhCN3V1fcUpkv3hbwFxwH2G_5GAb4tWEW04QHFc1I",
+  },
   icons: {
     icon: [
       { url: "/favicon-48x48.png", sizes: "48x48", type: "image/png" },
