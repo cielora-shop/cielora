@@ -2239,7 +2239,7 @@
       "image": "/images/banner 3.jpg",
       "title": "Icons that always come back",
       "subtitle": "",
-      "link": "/shop-by?filter=UNOde50+Icons",
+      "link": "/shop-by?filter=Cielora+Icons",
       "linkLabel": "DISCOVER",
       "visible": true
     },
@@ -2426,8 +2426,8 @@
                 "href": "/shop-by?filter=Everyday Jewelry"
               },
               {
-                "name": "UNOde50 Icons",
-                "href": "/shop-by?filter=UNOde50 Icons"
+                "name": "Cielora Icons",
+                "href": "/shop-by?filter=Cielora Icons"
               }
             ]
           }
@@ -2448,7 +2448,7 @@
         "Special events jewerly",
         "Everyday Jewelry",
         "Genderless Jewelry",
-        "UNOde50 Icons",
+        "Cielora Icons",
         "Gold and silver jewelry"
       ]
     },
@@ -2456,7 +2456,7 @@
       "name": "Collections",
       "href": "/collections",
       "megaMenu": {
-        "featureTitle": "UNOde50 Collections",
+        "featureTitle": "Cielora Collections",
         "featureImage": "/images/1 product.jpg",
         "columns": [
           {
@@ -2493,17 +2493,17 @@
             "title": "Featured",
             "links": [
               {
-                "name": "Ser Unode50",
-                "href": "/collections?filter=Ser Unode50"
+                "name": "Discover Cielora",
+                "href": "/collections?filter=Discover Cielora"
               },
               {
-                "name": "Hazte UNO",
-                "href": "/collections?filter=Hazte UNO"
+                "name": "Join Cielora",
+                "href": "/collections?filter=Join Cielora"
               }
             ]
           },
           {
-            "title": "Always UNO",
+            "title": "Always Cielora",
             "links": [
               {
                 "name": "Empowerment Collections",
@@ -2528,8 +2528,8 @@
         "Gravity",
         "Beat",
         "Roots",
-        "Ser Unode50",
-        "Hazte UNO",
+        "Discover Cielora",
+        "Join Cielora",
         "Empowerment Collections",
         "Soulcrafted Collections",
         "Feelings Collections"

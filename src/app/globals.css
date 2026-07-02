@@ -3,7 +3,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --brand-color: #ff4500; /* Example for 'UNO' logo red, we will use accurate color later */
+  --brand-color: #ff4500; /* Example for 'Cielora' logo red, we will use accurate color later */
 }
 
 @theme inline {

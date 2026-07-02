@@ -329,7 +329,7 @@ function getInitialDbState(): DbSchema {
       image: "/images/banner 3.jpg",
       title: "Icons that always come back",
       subtitle: "",
-      link: "/shop-by?filter=UNOde50+Icons",
+      link: "/shop-by?filter=Cielora+Icons",
       linkLabel: "DISCOVER",
       visible: true
     },
@@ -376,7 +376,7 @@ function getInitialDbState(): DbSchema {
     { 
       name: "Shop by", 
       href: "/shop-by",
-      groupFilters: ["Women's jewelry", "Men's jewelry", "Accesories", "Heart Jewelry", "Dragonfly Jewelry", "Silver Jewelry", "Gold Jewelry", "Leather Jewelry", "Crystal Jewelry", "Limited Edition", "Best Sellers", "Special events jewerly", "Everyday Jewelry", "Genderless jewelry", "UNOde50 Icons", "Gold and silver jewelry"],
+      groupFilters: ["Women's jewelry", "Men's jewelry", "Accesories", "Heart Jewelry", "Dragonfly Jewelry", "Silver Jewelry", "Gold Jewelry", "Leather Jewelry", "Crystal Jewelry", "Limited Edition", "Best Sellers", "Special events jewerly", "Everyday Jewelry", "Genderless jewelry", "Cielora Icons", "Gold and silver jewelry"],
       megaMenu: {
         featureImage: "/images/1 product.jpg",
         columns: [
@@ -406,7 +406,7 @@ function getInitialDbState(): DbSchema {
               { name: "Best Sellers", href: "/shop-by?filter=Best Sellers" },
               { name: "Special events jewelry", href: "/shop-by?filter=Special events jewelry" },
               { name: "Everyday Jewelry", href: "/shop-by?filter=Everyday Jewelry" },
-              { name: "UNOde50 Icons", href: "/shop-by?filter=UNOde50 Icons" }
+              { name: "Cielora Icons", href: "/shop-by?filter=Cielora Icons" }
             ]
           }
         ]
@@ -417,7 +417,7 @@ function getInitialDbState(): DbSchema {
       href: "/collections",
       groupFilters: ["Arcadia", "Flutter", "Core", "Gravity", "Beat", "Roots", "Empowerment Collections", "Soulcrafted Collections"],
       megaMenu: {
-        featureTitle: "UNOde50 Collections",
+        featureTitle: "Cielora Collections",
         featureImage: "/images/1 product.jpg",
         columns: [
           {
@@ -434,12 +434,12 @@ function getInitialDbState(): DbSchema {
           {
             title: "Featured",
             links: [
-              { name: "Ser Unode50", href: "/collections?filter=Ser Unode50" },
-              { name: "Hazte UNO", href: "/collections?filter=Hazte UNO" }
+              { name: "Discover Cielora", href: "/collections?filter=Discover Cielora" },
+              { name: "Join Cielora", href: "/collections?filter=Join Cielora" }
             ]
           },
           {
-            title: "Always UNO",
+            title: "Always Cielora",
             links: [
               { name: "Empowerment Collections", href: "/collections?filter=Empowerment Collections" },
               { name: "Soulcrafted Collections", href: "/collections?filter=Soulcrafted Collections" },

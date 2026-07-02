@@ -25,7 +25,10 @@ export const metadata: Metadata = {
   title: "Cielora | Jewelry E-commerce",
   description: "Modern jewelry e-commerce landing page",
   icons: {
-    icon: "/images/fevicon.png",
+    icon: [
+      { url: "/favicon-48x48.png", sizes: "48x48", type: "image/png" },
+      { url: "/images/fevicon.png" }
+    ],
   },
 };
 
