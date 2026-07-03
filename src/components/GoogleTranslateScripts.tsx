@@ -11,9 +11,16 @@ export default function GoogleTranslateScripts() {
   useEffect(() => {
     if (pathname && pathname.startsWith("/admin")) {
       if (document.cookie.includes('googtrans=')) {
-        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=" + window.location.hostname + "; path=/;";
-        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=." + window.location.hostname + "; path=/;";
+        document.cookie = "googtrans=/en/en; path=/;";
+        document.cookie = "googtrans=/en/en; domain=" + window.location.hostname + "; path=/;";
+        document.cookie = "googtrans=/en/en; domain=." + window.location.hostname + "; path=/;";
+        
+        const hostParts = window.location.hostname.split('.');
+        if (hostParts.length >= 2) {
+            const rootDomain = hostParts.slice(-2).join('.');
+            document.cookie = "googtrans=/en/en; domain=" + rootDomain + "; path=/;";
+            document.cookie = "googtrans=/en/en; domain=." + rootDomain + "; path=/;";
+        }
         window.location.reload();
       }
     }

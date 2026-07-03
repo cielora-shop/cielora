@@ -26,12 +26,19 @@ export default function Navbar() {
         document.cookie = "googtrans=/en/es; domain=." + window.location.hostname + "; path=/";
       } else {
         document.cookie = "cielora_lang=en; path=/";
-        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=" + window.location.hostname + "; path=/;";
-        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=." + window.location.hostname + "; path=/;";
         
-        // Also clear potential subpaths just in case
-        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=" + window.location.pathname + ";";
+        // Force value to /en/en to revert translation if deletion fails
+        document.cookie = "googtrans=/en/en; path=/;";
+        document.cookie = "googtrans=/en/en; domain=" + window.location.hostname + "; path=/;";
+        document.cookie = "googtrans=/en/en; domain=." + window.location.hostname + "; path=/;";
+        
+        // Clear aggressively on root domain (fixes Vercel subdomains)
+        const hostParts = window.location.hostname.split('.');
+        if (hostParts.length >= 2) {
+            const rootDomain = hostParts.slice(-2).join('.');
+            document.cookie = "googtrans=/en/en; domain=" + rootDomain + "; path=/;";
+            document.cookie = "googtrans=/en/en; domain=." + rootDomain + "; path=/;";
+        }
       }
       window.location.reload();
     }
