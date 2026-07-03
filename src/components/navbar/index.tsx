@@ -23,10 +23,15 @@ export default function Navbar() {
         document.cookie = "cielora_lang=es; path=/";
         document.cookie = "googtrans=/en/es; path=/";
         document.cookie = "googtrans=/en/es; domain=" + window.location.hostname + "; path=/";
+        document.cookie = "googtrans=/en/es; domain=." + window.location.hostname + "; path=/";
       } else {
         document.cookie = "cielora_lang=en; path=/";
         document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=" + window.location.hostname + "; path=/;";
+        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=." + window.location.hostname + "; path=/;";
+        
+        // Also clear potential subpaths just in case
+        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=" + window.location.pathname + ";";
       }
       window.location.reload();
     }

@@ -13,6 +13,7 @@ export default function GoogleTranslateScripts() {
       if (document.cookie.includes('googtrans=')) {
         document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=" + window.location.hostname + "; path=/;";
+        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=." + window.location.hostname + "; path=/;";
         window.location.reload();
       }
     }
@@ -30,6 +31,7 @@ export default function GoogleTranslateScripts() {
           if (document.cookie.indexOf('googtrans=') === -1 && document.cookie.indexOf('cielora_lang=en') === -1) {
             document.cookie = 'googtrans=/en/es; path=/';
             document.cookie = 'googtrans=/en/es; domain=' + window.location.hostname + '; path=/';
+            document.cookie = 'googtrans=/en/es; domain=.' + window.location.hostname + '; path=/';
           }
         `}
       </Script>
