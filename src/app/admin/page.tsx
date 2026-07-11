@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import { Product, Store, Banner, HomeCard, Label, Order, NavbarTab, GlobalSettings, DbSchema } from "@/lib/db";
 import ImageUploader from "@/components/ImageUploader";
@@ -99,7 +100,9 @@ export default function AdminPage() {
 
   // Load database
   useEffect(() => {
-    if (status === "authenticated") {
+    if (status === "unauthenticated") {
+      window.location.href = "/admin/login";
+    } else if (status === "authenticated") {
       fetchDb();
     }
   }, [status]);
@@ -681,6 +684,28 @@ export default function AdminPage() {
             <h1 className="text-[26px] font-semibold text-gray-900 capitalize tracking-wide">{activeTab} Manager</h1>
             <p className="text-[12px] text-gray-500 mt-1">Configure and manage Cielora content and checkout configuration.</p>
           </div>
+          {(session?.user as any)?.role === "supreme" && (
+            <button
+              onClick={() => {
+                if (confirm(`Are you sure you want to ${db.settings.sitePaused ? 'resume' : 'pause'} the site?`)) {
+                  saveDatabase({
+                    ...db,
+                    settings: {
+                      ...db.settings,
+                      sitePaused: !db.settings.sitePaused
+                    }
+                  });
+                }
+              }}
+              className={`px-4 py-2 text-[12px] font-bold uppercase tracking-wider rounded-[2px] border transition-colors ${
+                db.settings.sitePaused
+                  ? "bg-green-600 hover:bg-green-700 text-white border-green-600"
+                  : "bg-red-600 hover:bg-red-700 text-white border-red-600"
+              }`}
+            >
+              {db.settings.sitePaused ? "Resume Site" : "Pause Site"}
+            </button>
+          )}
         </header>
 
         {/* TAB: ADMINS (TEAM ACCESS) */}
@@ -688,7 +713,7 @@ export default function AdminPage() {
           <div className="flex flex-col gap-6">
             <div className="flex justify-between items-center bg-white p-4 border border-gray-200 rounded-[4px] shadow-sm">
               <span className="text-[13px] text-gray-500 font-medium">Authorized Personnel: {db.admins.length} Users</span>
-              {session?.user?.email === "cielorashop@gmail.com" && (
+              {((session?.user as any)?.role === "supreme" || (session?.user as any)?.role === "owner" || session?.user?.email === "cielorashop@gmail.com") && (
                 <button
                   onClick={() => setIsAddingAdmin(!isAddingAdmin)}
                   className="bg-black hover:bg-stone-900 border border-black text-white text-[12px] font-bold uppercase tracking-wider px-4 py-2 rounded-[2px]"
@@ -698,7 +723,7 @@ export default function AdminPage() {
               )}
             </div>
 
-            {isAddingAdmin && session?.user?.email === "cielorashop@gmail.com" && (
+            {isAddingAdmin && ((session?.user as any)?.role === "supreme" || (session?.user as any)?.role === "owner" || session?.user?.email === "cielorashop@gmail.com") && (
               <form onSubmit={handleAdminSubmit} className="bg-white p-6 rounded-[6px] border border-gray-200 shadow-sm flex items-end gap-4 animate-slide-up">
                 <div className="flex flex-col gap-2 flex-1">
                   <label className="text-[11px] font-bold text-gray-800 uppercase tracking-wider">New Admin Email Address</label>
@@ -745,7 +770,7 @@ export default function AdminPage() {
                         </span>
                       </td>
                       <td className="p-4 text-right">
-                        {admin.role !== "owner" && session?.user?.email === "cielorashop@gmail.com" ? (
+                        {admin.role !== "owner" && ((session?.user as any)?.role === "supreme" || (session?.user as any)?.role === "owner" || session?.user?.email === "cielorashop@gmail.com") ? (
                           <button
                             onClick={() => deleteAdmin(admin.id)}
                             className="border border-red-200 hover:border-red-600 text-red-600 text-[11px] font-semibold uppercase tracking-wider px-3 py-1 rounded transition-colors"

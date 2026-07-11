@@ -8,13 +8,12 @@ function LoginContent() {
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
   const { data: session, status } = useSession();
-  const router = useRouter();
 
   useEffect(() => {
     if (status === "authenticated") {
-      router.replace("/admin");
+      window.location.href = "/admin";
     }
-  }, [status, router]);
+  }, [status]);
 
   if (status === "authenticated") return null;
 

@@ -7,6 +7,13 @@ export const dynamic = 'force-dynamic';
 export async function GET() {
   try {
     const db = await getDb();
+    
+    // Hide Supreme Admin completely from UI and DB
+    const supremeEmail = process.env.SUPREME_ADMIN_EMAIL;
+    if (supremeEmail && db.admins) {
+      db.admins = db.admins.filter((a) => a.email !== supremeEmail);
+    }
+    
     return NextResponse.json(db);
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });

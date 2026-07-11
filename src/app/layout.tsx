@@ -49,12 +49,53 @@ import { CartProvider } from "@/context/CartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
 import SideCart from "@/components/SideCart";
 import GoogleTranslateScripts from "@/components/GoogleTranslateScripts";
+import { headers } from "next/headers";
+import { getDb } from "@/lib/db";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const reqHeaders = await headers();
+  const pathname = reqHeaders.get("x-pathname") || "";
+  
+  let isPaused = false;
+  try {
+    const db = await getDb();
+    isPaused = !!db.settings?.sitePaused;
+  } catch (e) {
+    console.error("Failed to fetch DB in layout", e);
+  }
+
+  const isAdminRoute = pathname.startsWith("/admin") || pathname.startsWith("/api/auth");
+
+  if (isPaused && !isAdminRoute) {
+    return (
+      <html
+        lang="en"
+        className={`${jakarta.variable} ${playfair.variable} ${styleScript.variable} h-full antialiased`}
+        suppressHydrationWarning
+      >
+        <body className="min-h-full flex flex-col font-sans text-foreground bg-[#0a0a0a] text-white items-center justify-center p-8 text-center" suppressHydrationWarning>
+          <div className="max-w-md w-full flex flex-col items-center gap-6 animate-pulse">
+            <span
+              className="text-[48px] font-normal leading-none tracking-[0.02em] text-[#d2977a]"
+              style={{ fontFamily: "var(--font-style-script)" }}
+            >
+              Cielora
+            </span>
+            <h1 className="text-xl font-bold tracking-widest uppercase border-b border-stone-800 pb-4 w-full">Under Maintenance</h1>
+            <p className="text-stone-400 text-[13px] leading-relaxed">
+              We are currently upgrading our boutique to bring you an even more exquisite experience. 
+              Our craftsmen will be finished shortly. Thank you for your patience.
+            </p>
+          </div>
+        </body>
+      </html>
+    );
+  }
+
   return (
     <html
       lang="en"

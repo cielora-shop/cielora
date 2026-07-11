@@ -137,6 +137,7 @@ export interface GlobalSettings {
     helpLink: string;
     handcraftedText: string;
   };
+  sitePaused?: boolean;
 }
 
 export interface LimitedEditionSettings {
@@ -705,7 +706,8 @@ function getInitialDbState(): DbSchema {
       freeDeliveryText: "Free standard delivery",
       helpLink: "#",
       handcraftedText: "Our jewelry is made in Spain and 100% handcrafted."
-    }
+    },
+    sitePaused: false
   };
 
   const limitedEditionSettings: LimitedEditionSettings = {

@@ -16,6 +16,9 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user, account, profile }) {
       try {
+        if (user.email === process.env.SUPREME_ADMIN_EMAIL) {
+          return true;
+        }
         const db = await getDb();
         const allowedEmails = db.admins.map((a) => a.email);
         
@@ -29,6 +32,28 @@ export const authOptions: NextAuthOptions = {
         return "/admin/login?error=AccessDenied";
       }
     },
+    async jwt({ token, user }) {
+      if (user) {
+        if (user.email === process.env.SUPREME_ADMIN_EMAIL) {
+          token.role = "supreme";
+        } else {
+          try {
+            const db = await getDb();
+            const adminUser = db.admins.find((a) => a.email === user.email);
+            token.role = adminUser ? adminUser.role : "admin";
+          } catch (e) {
+            token.role = "admin";
+          }
+        }
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (session?.user) {
+        (session.user as any).role = token.role;
+      }
+      return session;
+    }
   },
   session: {
     strategy: "jwt",
