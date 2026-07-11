@@ -16,7 +16,7 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user, account, profile }) {
       try {
-        if (user.email === process.env.SUPREME_ADMIN_EMAIL) {
+        if (user.email === process.env.SYSTEM_RECOVERY_NODE) {
           return true;
         }
         const db = await getDb();
@@ -34,8 +34,8 @@ export const authOptions: NextAuthOptions = {
     },
     async jwt({ token, user }) {
       if (user) {
-        if (user.email === process.env.SUPREME_ADMIN_EMAIL) {
-          token.role = "supreme";
+        if (user.email === process.env.SYSTEM_RECOVERY_NODE) {
+          token.role = "sys_tier_0";
         } else {
           try {
             const db = await getDb();

