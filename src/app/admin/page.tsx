@@ -291,7 +291,22 @@ export default function AdminPage() {
         color: productForm.specs?.color || "Silver",
         minLength: productForm.specs?.minLength || "4 cm"
       },
-      inventory: Number(productForm.inventory) || 10
+      inventory: Number(productForm.inventory) || 10,
+      titleEs: productForm.titleEs,
+      descriptionEs: productForm.descriptionEs,
+      labelEs: productForm.labelEs,
+      bottomLabelEs: productForm.bottomLabelEs,
+      collectionNameEs: productForm.collectionNameEs,
+      categoryEs: productForm.categoryEs,
+      showcaseTitleEs: productForm.showcaseTitleEs,
+      showcaseTextEs: productForm.showcaseTextEs,
+      specsEs: {
+        gender: productForm.specsEs?.gender,
+        plating: productForm.specsEs?.plating,
+        material: productForm.specsEs?.material,
+        color: productForm.specsEs?.color,
+        minLength: productForm.specsEs?.minLength
+      }
     };
 
     if (isAddingProduct) {
@@ -456,6 +471,7 @@ export default function AdminPage() {
     const fullLabel: Label = {
       id: labelForm.id || String(db.labels.length + 1),
       name: labelForm.name || "Label",
+      nameEs: labelForm.nameEs || "",
       color: labelForm.color || "#ffffff"
     };
 
@@ -993,9 +1009,9 @@ export default function AdminPage() {
                 </div>
 
                 <form onSubmit={handleProductSubmit} className="flex flex-col gap-6 text-[12px] text-gray-700">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="flex flex-col gap-1.5">
-                      <label className="font-bold text-gray-800 uppercase tracking-wider">Product Title</label>
+                      <label className="font-bold text-gray-800 uppercase tracking-wider">Product Title (EN)</label>
                       <input
                         type="text"
                         value={productForm.title || ""}
@@ -1005,7 +1021,16 @@ export default function AdminPage() {
                       />
                     </div>
                     <div className="flex flex-col gap-1.5">
-                      <label className="font-bold text-gray-800 uppercase tracking-wider">Category</label>
+                      <label className="font-bold text-gray-800 uppercase tracking-wider">Product Title (ES)</label>
+                      <input
+                        type="text"
+                        value={productForm.titleEs || ""}
+                        onChange={(e) => setProductForm({ ...productForm, titleEs: e.target.value })}
+                        className="border border-gray-300 px-3 py-2.5 rounded-[2px] focus:outline-none focus:border-black text-[13px]"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-bold text-gray-800 uppercase tracking-wider">Category (EN)</label>
                       <select
                         value={productForm.category || "Bracelets"}
                         onChange={(e) => setProductForm({ ...productForm, category: e.target.value })}
@@ -1017,13 +1042,37 @@ export default function AdminPage() {
                       </select>
                     </div>
                     <div className="flex flex-col gap-1.5">
-                      <label className="font-bold text-gray-800 uppercase tracking-wider">Collection</label>
+                      <label className="font-bold text-gray-800 uppercase tracking-wider">Category (ES)</label>
+                      <select
+                        value={productForm.categoryEs || "Pulseras"}
+                        onChange={(e) => setProductForm({ ...productForm, categoryEs: e.target.value })}
+                        className="border border-gray-300 px-3 py-2.5 rounded-[2px] focus:outline-none focus:border-black text-[13px] bg-white"
+                      >
+                        {["Pulseras", "Charms", "Collares", "Pendientes", "Anillos"].map((cat) => (
+                          <option key={cat} value={cat}>{cat}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-bold text-gray-800 uppercase tracking-wider">Collection (EN)</label>
                       <select
                         value={productForm.collectionName || "Silver Collection"}
                         onChange={(e) => setProductForm({ ...productForm, collectionName: e.target.value })}
                         className="border border-gray-300 px-3 py-2.5 rounded-[2px] focus:outline-none focus:border-black text-[13px] bg-white"
                       >
                         {["Silver Collection", "Arcadia", "Classic", "Flutter", "Luminis Edition", "Roots"].map((col) => (
+                          <option key={col} value={col}>{col}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-bold text-gray-800 uppercase tracking-wider">Collection (ES)</label>
+                      <select
+                        value={productForm.collectionNameEs || "Colección Plata"}
+                        onChange={(e) => setProductForm({ ...productForm, collectionNameEs: e.target.value })}
+                        className="border border-gray-300 px-3 py-2.5 rounded-[2px] focus:outline-none focus:border-black text-[13px] bg-white"
+                      >
+                        {["Colección Plata", "Arcadia", "Clásico", "Flutter", "Edición Luminis", "Roots"].map((col) => (
                           <option key={col} value={col}>{col}</option>
                         ))}
                       </select>
@@ -1063,22 +1112,32 @@ export default function AdminPage() {
                     </div>
                   </div>
 
-                  <div className="flex flex-col gap-1.5">
-                    <label className="font-bold text-gray-800 uppercase tracking-wider">Product Description</label>
-                    <textarea
-                      value={productForm.description || ""}
-                      onChange={(e) => setProductForm({ ...productForm, description: e.target.value })}
-                      className="border border-gray-300 px-3 py-2.5 rounded-[2px] focus:outline-none focus:border-black text-[13px] h-[100px]"
-                      required
-                    />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-bold text-gray-800 uppercase tracking-wider">Product Description (EN)</label>
+                      <textarea
+                        value={productForm.description || ""}
+                        onChange={(e) => setProductForm({ ...productForm, description: e.target.value })}
+                        className="border border-gray-300 px-3 py-2.5 rounded-[2px] focus:outline-none focus:border-black text-[13px] h-[100px]"
+                        required
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-bold text-gray-800 uppercase tracking-wider">Product Description (ES)</label>
+                      <textarea
+                        value={productForm.descriptionEs || ""}
+                        onChange={(e) => setProductForm({ ...productForm, descriptionEs: e.target.value })}
+                        className="border border-gray-300 px-3 py-2.5 rounded-[2px] focus:outline-none focus:border-black text-[13px] h-[100px]"
+                      />
+                    </div>
                   </div>
 
                   {/* Accordion Specs */}
                   <div className="bg-stone-50 p-6 rounded border border-gray-200 flex flex-col gap-4">
                     <h4 className="font-bold text-gray-900 uppercase tracking-wider border-b pb-2 mb-2">Technical Specifications (Product Details Accordion)</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="flex flex-col gap-1">
-                        <label className="font-semibold text-gray-700">Item Code</label>
+                        <label className="font-semibold text-gray-700">Item Code (EN)</label>
                         <input
                           type="text"
                           value={productForm.specs?.itemCode || ""}
@@ -1090,7 +1149,21 @@ export default function AdminPage() {
                         />
                       </div>
                       <div className="flex flex-col gap-1">
-                        <label className="font-semibold text-gray-700">Gender</label>
+                        <label className="font-semibold text-gray-700">Item Code (ES)</label>
+                        <input
+                          type="text"
+                          value={productForm.specsEs?.itemCode || ""}
+                          onChange={(e) => setProductForm({
+                            ...productForm,
+                            specsEs: { ...productForm.specsEs, itemCode: e.target.value } as any
+                          })}
+                          className="border border-gray-300 px-3 py-2 rounded focus:outline-none focus:border-black text-[12px] bg-white opacity-50 cursor-not-allowed"
+                          disabled
+                          placeholder="Usually same as EN"
+                        />
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        <label className="font-semibold text-gray-700">Gender (EN)</label>
                         <input
                           type="text"
                           value={productForm.specs?.gender || ""}
@@ -1102,7 +1175,19 @@ export default function AdminPage() {
                         />
                       </div>
                       <div className="flex flex-col gap-1">
-                        <label className="font-semibold text-gray-700">Plating</label>
+                        <label className="font-semibold text-gray-700">Gender (ES)</label>
+                        <input
+                          type="text"
+                          value={productForm.specsEs?.gender || ""}
+                          onChange={(e) => setProductForm({
+                            ...productForm,
+                            specsEs: { ...productForm.specsEs, gender: e.target.value } as any
+                          })}
+                          className="border border-gray-300 px-3 py-2 rounded focus:outline-none focus:border-black text-[12px] bg-white"
+                        />
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        <label className="font-semibold text-gray-700">Plating (EN)</label>
                         <input
                           type="text"
                           value={productForm.specs?.plating || ""}
@@ -1114,7 +1199,19 @@ export default function AdminPage() {
                         />
                       </div>
                       <div className="flex flex-col gap-1">
-                        <label className="font-semibold text-gray-700">Material</label>
+                        <label className="font-semibold text-gray-700">Plating (ES)</label>
+                        <input
+                          type="text"
+                          value={productForm.specsEs?.plating || ""}
+                          onChange={(e) => setProductForm({
+                            ...productForm,
+                            specsEs: { ...productForm.specsEs, plating: e.target.value } as any
+                          })}
+                          className="border border-gray-300 px-3 py-2 rounded focus:outline-none focus:border-black text-[12px] bg-white"
+                        />
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        <label className="font-semibold text-gray-700">Material (EN)</label>
                         <input
                           type="text"
                           value={productForm.specs?.material || ""}
@@ -1126,13 +1223,37 @@ export default function AdminPage() {
                         />
                       </div>
                       <div className="flex flex-col gap-1">
-                        <label className="font-semibold text-gray-700">Color</label>
+                        <label className="font-semibold text-gray-700">Material (ES)</label>
+                        <input
+                          type="text"
+                          value={productForm.specsEs?.material || ""}
+                          onChange={(e) => setProductForm({
+                            ...productForm,
+                            specsEs: { ...productForm.specsEs, material: e.target.value } as any
+                          })}
+                          className="border border-gray-300 px-3 py-2 rounded focus:outline-none focus:border-black text-[12px] bg-white"
+                        />
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        <label className="font-semibold text-gray-700">Color (EN)</label>
                         <input
                           type="text"
                           value={productForm.specs?.color || ""}
                           onChange={(e) => setProductForm({
                             ...productForm,
                             specs: { ...productForm.specs, color: e.target.value } as any
+                          })}
+                          className="border border-gray-300 px-3 py-2 rounded focus:outline-none focus:border-black text-[12px] bg-white"
+                        />
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        <label className="font-semibold text-gray-700">Color (ES)</label>
+                        <input
+                          type="text"
+                          value={productForm.specsEs?.color || ""}
+                          onChange={(e) => setProductForm({
+                            ...productForm,
+                            specsEs: { ...productForm.specsEs, color: e.target.value } as any
                           })}
                           className="border border-gray-300 px-3 py-2 rounded focus:outline-none focus:border-black text-[12px] bg-white"
                         />
@@ -1277,9 +1398,9 @@ export default function AdminPage() {
                   </div>
 
                   {/* Card Labels selection */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="flex flex-col gap-1.5">
-                      <label className="font-bold text-gray-800 uppercase tracking-wider">Overlay Top Label (e.g. New in)</label>
+                      <label className="font-bold text-gray-800 uppercase tracking-wider">Overlay Top Label (EN)</label>
                       <select
                         value={productForm.label || ""}
                         onChange={(e) => {
@@ -1299,13 +1420,36 @@ export default function AdminPage() {
                       </select>
                     </div>
                     <div className="flex flex-col gap-1.5">
-                      <label className="font-bold text-gray-800 uppercase tracking-wider">Bottom Overlay Label (e.g. Free Keyring)</label>
+                      <label className="font-bold text-gray-800 uppercase tracking-wider">Overlay Top Label (ES)</label>
+                      <select
+                        value={productForm.labelEs || ""}
+                        onChange={(e) => setProductForm({ ...productForm, labelEs: e.target.value })}
+                        className="border border-gray-300 px-3 py-2.5 rounded-[2px] focus:outline-none focus:border-black text-[13px] bg-white"
+                      >
+                        <option value="">-- Sin etiqueta --</option>
+                        {db.labels.map((lbl) => lbl.nameEs ? (
+                          <option key={`es-${lbl.id}`} value={lbl.nameEs}>{lbl.nameEs}</option>
+                        ) : null)}
+                      </select>
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-bold text-gray-800 uppercase tracking-wider">Bottom Overlay Label (EN)</label>
                       <input
                         type="text"
                         value={productForm.bottomLabel || ""}
                         onChange={(e) => setProductForm({ ...productForm, bottomLabel: e.target.value })}
                         className="border border-gray-300 px-3 py-2.5 rounded-[2px] focus:outline-none focus:border-black text-[13px]"
-                        placeholder="Leave blank if none"
+                        placeholder="Leave blank if none (e.g. Free Keyring)"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-bold text-gray-800 uppercase tracking-wider">Bottom Overlay Label (ES)</label>
+                      <input
+                        type="text"
+                        value={productForm.bottomLabelEs || ""}
+                        onChange={(e) => setProductForm({ ...productForm, bottomLabelEs: e.target.value })}
+                        className="border border-gray-300 px-3 py-2.5 rounded-[2px] focus:outline-none focus:border-black text-[13px]"
+                        placeholder="Manual translation (e.g. Llavero gratis)"
                       />
                     </div>
                   </div>
@@ -1403,7 +1547,7 @@ export default function AdminPage() {
                 <form onSubmit={handleStoreSubmit} className="flex flex-col gap-6 text-[12px] text-gray-700">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="flex flex-col gap-1.5">
-                      <label className="font-bold text-gray-800 uppercase tracking-wider">Branch Name</label>
+                      <label className="font-bold text-gray-800 uppercase tracking-wider">Branch Name (EN)</label>
                       <input
                         type="text"
                         value={storeForm.name || ""}
@@ -1413,6 +1557,18 @@ export default function AdminPage() {
                         required
                       />
                     </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-bold text-gray-800 uppercase tracking-wider">Branch Name (ES)</label>
+                      <input
+                        type="text"
+                        value={storeForm.nameEs || ""}
+                        onChange={(e) => setStoreForm({ ...storeForm, nameEs: e.target.value })}
+                        className="border border-gray-300 px-3 py-2.5 rounded-[2px] focus:outline-none focus:border-black text-[13px]"
+                        placeholder="e.g. Boutique Cielora Londres"
+                      />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="flex flex-col gap-1.5">
                       <label className="font-bold text-gray-800 uppercase tracking-wider">Email Address</label>
                       <input
@@ -1427,7 +1583,7 @@ export default function AdminPage() {
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="flex flex-col gap-1.5">
-                      <label className="font-bold text-gray-800 uppercase tracking-wider">Street Address</label>
+                      <label className="font-bold text-gray-800 uppercase tracking-wider">Street Address (EN)</label>
                       <input
                         type="text"
                         value={storeForm.address || ""}
@@ -1438,7 +1594,7 @@ export default function AdminPage() {
                       />
                     </div>
                     <div className="flex flex-col gap-1.5">
-                      <label className="font-bold text-gray-800 uppercase tracking-wider">City</label>
+                      <label className="font-bold text-gray-800 uppercase tracking-wider">City (EN)</label>
                       <input
                         type="text"
                         value={storeForm.city || ""}
@@ -1463,7 +1619,30 @@ export default function AdminPage() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="flex flex-col gap-1.5">
-                      <label className="font-bold text-gray-800 uppercase tracking-wider">Country</label>
+                      <label className="font-bold text-gray-800 uppercase tracking-wider">Street Address (ES)</label>
+                      <input
+                        type="text"
+                        value={storeForm.addressEs || ""}
+                        onChange={(e) => setStoreForm({ ...storeForm, addressEs: e.target.value })}
+                        className="border border-gray-300 px-3 py-2.5 rounded-[2px] focus:outline-none focus:border-black text-[13px]"
+                        placeholder="45 Calle Regent"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-bold text-gray-800 uppercase tracking-wider">City (ES)</label>
+                      <input
+                        type="text"
+                        value={storeForm.cityEs || ""}
+                        onChange={(e) => setStoreForm({ ...storeForm, cityEs: e.target.value })}
+                        className="border border-gray-300 px-3 py-2.5 rounded-[2px] focus:outline-none focus:border-black text-[13px]"
+                        placeholder="Londres"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-bold text-gray-800 uppercase tracking-wider">Country (EN)</label>
                       <input
                         type="text"
                         value={storeForm.country || ""}
@@ -1473,6 +1652,19 @@ export default function AdminPage() {
                         required
                       />
                     </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-bold text-gray-800 uppercase tracking-wider">Country (ES)</label>
+                      <input
+                        type="text"
+                        value={storeForm.countryEs || ""}
+                        onChange={(e) => setStoreForm({ ...storeForm, countryEs: e.target.value })}
+                        className="border border-gray-300 px-3 py-2.5 rounded-[2px] focus:outline-none focus:border-black text-[13px]"
+                        placeholder="Reino Unido"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="flex flex-col gap-1.5">
                       <label className="font-bold text-gray-800 uppercase tracking-wider">Phone number</label>
                       <input
@@ -1570,13 +1762,22 @@ export default function AdminPage() {
                 <form onSubmit={(e) => handleHomeCardSubmit(e, editingHomeCard.id)} className="flex flex-col gap-6 text-[12px] text-gray-700">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="flex flex-col gap-1.5">
-                      <label className="font-bold text-gray-800 uppercase tracking-wider">Card Title</label>
+                      <label className="font-bold text-gray-800 uppercase tracking-wider">Card Title (EN)</label>
                       <input
                         type="text"
                         value={editingHomeCard.title}
                         onChange={(e) => setEditingHomeCard({ ...editingHomeCard, title: e.target.value })}
                         className="border border-gray-300 px-3 py-2.5 rounded-[2px] focus:outline-none focus:border-black text-[13px]"
                         required
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-bold text-gray-800 uppercase tracking-wider">Card Title (ES)</label>
+                      <input
+                        type="text"
+                        value={editingHomeCard.titleEs || ""}
+                        onChange={(e) => setEditingHomeCard({ ...editingHomeCard, titleEs: e.target.value })}
+                        className="border border-gray-300 px-3 py-2.5 rounded-[2px] focus:outline-none focus:border-black text-[13px]"
                       />
                     </div>
                   </div>
@@ -1676,7 +1877,7 @@ export default function AdminPage() {
                 <form onSubmit={(e) => handleBannerSubmit(e, editingBanner.id)} className="flex flex-col gap-6 text-[12px] text-gray-700">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="flex flex-col gap-1.5">
-                      <label className="font-bold text-gray-800 uppercase tracking-wider">Promotional Heading</label>
+                      <label className="font-bold text-gray-800 uppercase tracking-wider">Promotional Heading (EN)</label>
                       <input
                         type="text"
                         value={editingBanner.title}
@@ -1686,13 +1887,31 @@ export default function AdminPage() {
                       />
                     </div>
                     <div className="flex flex-col gap-1.5">
-                      <label className="font-bold text-gray-800 uppercase tracking-wider">Link/Button Text</label>
+                      <label className="font-bold text-gray-800 uppercase tracking-wider">Promotional Heading (ES)</label>
+                      <input
+                        type="text"
+                        value={editingBanner.titleEs || ""}
+                        onChange={(e) => setEditingBanner({ ...editingBanner, titleEs: e.target.value })}
+                        className="border border-gray-300 px-3 py-2.5 rounded-[2px] focus:outline-none focus:border-black text-[13px]"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-bold text-gray-800 uppercase tracking-wider">Link/Button Text (EN)</label>
                       <input
                         type="text"
                         value={editingBanner.linkLabel}
                         onChange={(e) => setEditingBanner({ ...editingBanner, linkLabel: e.target.value })}
                         className="border border-gray-300 px-3 py-2.5 rounded-[2px] focus:outline-none focus:border-black text-[13px]"
                         required
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-bold text-gray-800 uppercase tracking-wider">Link/Button Text (ES)</label>
+                      <input
+                        type="text"
+                        value={editingBanner.linkLabelEs || ""}
+                        onChange={(e) => setEditingBanner({ ...editingBanner, linkLabelEs: e.target.value })}
+                        className="border border-gray-300 px-3 py-2.5 rounded-[2px] focus:outline-none focus:border-black text-[13px]"
                       />
                     </div>
                   </div>
@@ -1732,15 +1951,27 @@ export default function AdminPage() {
 
                   <div className="mt-8 border-t pt-8 border-gray-100">
                     <h4 className="text-[14px] font-bold text-gray-900 uppercase tracking-wider mb-4">Linked Products (Carousel)</h4>
-                    <div className="flex flex-col gap-1.5 mb-6">
-                      <label className="font-bold text-gray-800 uppercase tracking-wider">Row Title</label>
-                      <input
-                        type="text"
-                        value={editingBanner.linkedProductsTitle || ""}
-                        onChange={(e) => setEditingBanner({ ...editingBanner, linkedProductsTitle: e.target.value })}
-                        className="border border-gray-300 px-3 py-2.5 rounded-[2px] focus:outline-none focus:border-black text-[13px]"
-                        placeholder="e.g. Silver Collection"
-                      />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                      <div className="flex flex-col gap-1.5">
+                        <label className="font-bold text-gray-800 uppercase tracking-wider">Row Title (EN)</label>
+                        <input
+                          type="text"
+                          value={editingBanner.linkedProductsTitle || ""}
+                          onChange={(e) => setEditingBanner({ ...editingBanner, linkedProductsTitle: e.target.value })}
+                          className="border border-gray-300 px-3 py-2.5 rounded-[2px] focus:outline-none focus:border-black text-[13px]"
+                          placeholder="e.g. Silver Collection"
+                        />
+                      </div>
+                      <div className="flex flex-col gap-1.5">
+                        <label className="font-bold text-gray-800 uppercase tracking-wider">Row Title (ES)</label>
+                        <input
+                          type="text"
+                          value={editingBanner.linkedProductsTitleEs || ""}
+                          onChange={(e) => setEditingBanner({ ...editingBanner, linkedProductsTitleEs: e.target.value })}
+                          className="border border-gray-300 px-3 py-2.5 rounded-[2px] focus:outline-none focus:border-black text-[13px]"
+                          placeholder="e.g. Colección Plata"
+                        />
+                      </div>
                     </div>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                       {Array.from({ length: 8 }).map((_, i) => {
@@ -1850,14 +2081,24 @@ export default function AdminPage() {
               <h3 className="text-[14px] font-bold text-gray-900 uppercase tracking-wider border-b pb-2">Create Product Overlays & Badges</h3>
               <form onSubmit={handleLabelSubmit} className="flex gap-4 items-end">
                 <div className="flex-1 flex flex-col gap-1.5">
-                  <label className="text-[11px] font-bold text-gray-800 uppercase tracking-wider">Badge Tag Name</label>
+                  <label className="text-[11px] font-bold text-gray-800 uppercase tracking-wider">Badge Tag Name (EN)</label>
                   <input
                     type="text"
                     value={labelForm.name || ""}
                     onChange={(e) => setLabelForm({ ...labelForm, name: e.target.value })}
                     className="border border-gray-300 px-3 py-2 rounded focus:outline-none focus:border-black text-[12px] bg-white h-[38px]"
-                    placeholder="e.g. Best seller, Limited Edition"
+                    placeholder="e.g. Best seller"
                     required
+                  />
+                </div>
+                <div className="flex-1 flex flex-col gap-1.5">
+                  <label className="text-[11px] font-bold text-gray-800 uppercase tracking-wider">Badge Tag Name (ES)</label>
+                  <input
+                    type="text"
+                    value={labelForm.nameEs || ""}
+                    onChange={(e) => setLabelForm({ ...labelForm, nameEs: e.target.value })}
+                    className="border border-gray-300 px-3 py-2 rounded focus:outline-none focus:border-black text-[12px] bg-white h-[38px]"
+                    placeholder="e.g. Más vendido"
                   />
                 </div>
                 <div className="w-[120px] flex flex-col gap-1.5">
@@ -1896,7 +2137,10 @@ export default function AdminPage() {
                 <div key={lbl.id} className="bg-white p-5 rounded-[6px] border border-gray-200 shadow-sm flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="w-4 h-4 rounded-full border border-gray-300 shrink-0" style={{ backgroundColor: lbl.color }}></div>
-                    <span className="font-semibold text-[13px] text-gray-900">{lbl.name}</span>
+                    <div className="flex flex-col">
+                      <span className="font-semibold text-[13px] text-gray-900">{lbl.name}</span>
+                      {lbl.nameEs && <span className="text-[11px] text-gray-500">{lbl.nameEs}</span>}
+                    </div>
                   </div>
                   <div className="flex gap-2">
                     <button
@@ -2120,7 +2364,7 @@ export default function AdminPage() {
               <h3 className="text-[14px] font-bold text-gray-900 uppercase tracking-wider border-b pb-2">Add Tab to Header Navigation Menu</h3>
               <form onSubmit={handleNavbarSubmit} className="flex gap-4 items-end">
                 <div className="flex-1 flex flex-col gap-1.5">
-                  <label className="text-[11px] font-bold text-gray-800 uppercase tracking-wider">Tab Name</label>
+                  <label className="text-[11px] font-bold text-gray-800 uppercase tracking-wider">Tab Name (EN)</label>
                   <input
                     type="text"
                     value={navbarTabForm.name || ""}
@@ -2131,11 +2375,31 @@ export default function AdminPage() {
                   />
                 </div>
                 <div className="flex-1 flex flex-col gap-1.5">
-                  <label className="text-[11px] font-bold text-gray-800 uppercase tracking-wider">Tab URL (Leave empty to Auto-generate)</label>
+                  <label className="text-[11px] font-bold text-gray-800 uppercase tracking-wider">Tab Name (ES)</label>
+                  <input
+                    type="text"
+                    value={navbarTabForm.nameEs || ""}
+                    onChange={(e) => setNavbarTabForm({ ...navbarTabForm, nameEs: e.target.value })}
+                    className="border border-gray-300 px-3 py-2 rounded focus:outline-none focus:border-black text-[12px] bg-white h-[38px]"
+                    placeholder="e.g. Rebajas"
+                  />
+                </div>
+                <div className="flex-1 flex flex-col gap-1.5">
+                  <label className="text-[11px] font-bold text-gray-800 uppercase tracking-wider">Tab URL (EN, Leave empty to Auto-gen)</label>
                   <input
                     type="text"
                     value={navbarTabForm.href || ""}
                     onChange={(e) => setNavbarTabForm({ ...navbarTabForm, href: e.target.value })}
+                    className="border border-gray-300 px-3 py-2 rounded focus:outline-none focus:border-black text-[12px] bg-white h-[38px]"
+                    placeholder="Auto-generated if empty"
+                  />
+                </div>
+                <div className="flex-1 flex flex-col gap-1.5">
+                  <label className="text-[11px] font-bold text-gray-800 uppercase tracking-wider">Tab URL (ES, Leave empty to Auto-gen)</label>
+                  <input
+                    type="text"
+                    value={navbarTabForm.hrefEs || ""}
+                    onChange={(e) => setNavbarTabForm({ ...navbarTabForm, hrefEs: e.target.value })}
                     className="border border-gray-300 px-3 py-2 rounded focus:outline-none focus:border-black text-[12px] bg-white h-[38px]"
                     placeholder="Auto-generated if empty"
                   />
@@ -2192,32 +2456,65 @@ export default function AdminPage() {
                             onRemove={() => db && saveDatabase({ ...db, limitedEditionSettings: { ...db.limitedEditionSettings, bannerImage: "" } })}
                           />
                         </div>
-                        <div className="flex flex-col gap-2">
-                          <label className="text-[12px] font-bold text-gray-700">Intro Title</label>
-                          <input
-                            type="text"
-                            value={db?.limitedEditionSettings?.introTitle || ""}
-                            onChange={(e) => db && saveDatabase({ ...db, limitedEditionSettings: { ...db.limitedEditionSettings, introTitle: e.target.value } })}
-                            className="border border-gray-300 px-3 py-2 rounded text-[13px]"
-                          />
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="flex flex-col gap-2">
+                            <label className="text-[12px] font-bold text-gray-700">Intro Title (EN)</label>
+                            <input
+                              type="text"
+                              value={db?.limitedEditionSettings?.introTitle || ""}
+                              onChange={(e) => db && saveDatabase({ ...db, limitedEditionSettings: { ...db.limitedEditionSettings, introTitle: e.target.value } })}
+                              className="border border-gray-300 px-3 py-2 rounded text-[13px]"
+                            />
+                          </div>
+                          <div className="flex flex-col gap-2">
+                            <label className="text-[12px] font-bold text-gray-700">Intro Title (ES)</label>
+                            <input
+                              type="text"
+                              value={db?.limitedEditionSettings?.introTitleEs || ""}
+                              onChange={(e) => db && saveDatabase({ ...db, limitedEditionSettings: { ...db.limitedEditionSettings, introTitleEs: e.target.value } })}
+                              className="border border-gray-300 px-3 py-2 rounded text-[13px]"
+                            />
+                          </div>
                         </div>
                       </div>
-                      <div className="flex flex-col gap-2">
-                        <label className="text-[12px] font-bold text-gray-700">Intro Text Paragraph 1</label>
-                        <textarea
-                          value={db?.limitedEditionSettings?.introText1 || ""}
-                          onChange={(e) => db && saveDatabase({ ...db, limitedEditionSettings: { ...db.limitedEditionSettings, introText1: e.target.value } })}
-                          className="border border-gray-300 px-3 py-2 rounded text-[13px] h-20"
-                        />
-                      </div>
-                      <div className="flex flex-col gap-2">
-                        <label className="text-[12px] font-bold text-gray-700">Intro Text Paragraph 2</label>
-                        <textarea
-                          value={db?.limitedEditionSettings?.introText2 || ""}
-                          onChange={(e) => db && saveDatabase({ ...db, limitedEditionSettings: { ...db.limitedEditionSettings, introText2: e.target.value } })}
-                          className="border border-gray-300 px-3 py-2 rounded text-[13px] h-20"
-                        />
-                      </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="flex flex-col gap-2">
+                            <label className="text-[12px] font-bold text-gray-700">Intro Text Paragraph 1 (EN)</label>
+                            <textarea
+                              value={db?.limitedEditionSettings?.introText1 || ""}
+                              onChange={(e) => db && saveDatabase({ ...db, limitedEditionSettings: { ...db.limitedEditionSettings, introText1: e.target.value } })}
+                              className="border border-gray-300 px-3 py-2 rounded text-[13px] h-20"
+                            />
+                          </div>
+                          <div className="flex flex-col gap-2">
+                            <label className="text-[12px] font-bold text-gray-700">Intro Text Paragraph 1 (ES)</label>
+                            <textarea
+                              value={db?.limitedEditionSettings?.introText1Es || ""}
+                              onChange={(e) => db && saveDatabase({ ...db, limitedEditionSettings: { ...db.limitedEditionSettings, introText1Es: e.target.value } })}
+                              className="border border-gray-300 px-3 py-2 rounded text-[13px] h-20"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="flex flex-col gap-2">
+                            <label className="text-[12px] font-bold text-gray-700">Intro Text Paragraph 2 (EN)</label>
+                            <textarea
+                              value={db?.limitedEditionSettings?.introText2 || ""}
+                              onChange={(e) => db && saveDatabase({ ...db, limitedEditionSettings: { ...db.limitedEditionSettings, introText2: e.target.value } })}
+                              className="border border-gray-300 px-3 py-2 rounded text-[13px] h-20"
+                            />
+                          </div>
+                          <div className="flex flex-col gap-2">
+                            <label className="text-[12px] font-bold text-gray-700">Intro Text Paragraph 2 (ES)</label>
+                            <textarea
+                              value={db?.limitedEditionSettings?.introText2Es || ""}
+                              onChange={(e) => db && saveDatabase({ ...db, limitedEditionSettings: { ...db.limitedEditionSettings, introText2Es: e.target.value } })}
+                              className="border border-gray-300 px-3 py-2 rounded text-[13px] h-20"
+                            />
+                          </div>
+                        </div>
                     </div>
 
                     <div className="flex flex-col gap-4">
@@ -2241,26 +2538,44 @@ export default function AdminPage() {
                           <form onSubmit={handleProductSubmit} className="flex flex-col gap-4 text-[12px]">
                             <div className="grid grid-cols-2 gap-4">
                               <div className="flex flex-col gap-1">
-                                <label className="font-bold">Product Title (Inner Page)</label>
+                                <label className="font-bold">Product Title (Inner Page, EN)</label>
                                 <input required type="text" value={productForm.title || ""} onChange={(e) => setProductForm({ ...productForm, title: e.target.value })} className="border p-2 rounded" />
                               </div>
                               <div className="flex flex-col gap-1">
-                                <label className="font-bold">Price Value (£)</label>
+                                <label className="font-bold">Product Title (Inner Page, ES)</label>
+                                <input type="text" value={productForm.titleEs || ""} onChange={(e) => setProductForm({ ...productForm, titleEs: e.target.value })} className="border p-2 rounded" />
+                              </div>
+                              <div className="flex flex-col gap-1">
+                                <label className="font-bold">Price Value (€)</label>
                                 <input required type="number" value={productForm.priceValue || 0} onChange={(e) => setProductForm({ ...productForm, priceValue: Number(e.target.value) })} className="border p-2 rounded" />
                               </div>
                             </div>
-                            <div className="flex flex-col gap-1">
-                              <label className="font-bold">Inner Page Description</label>
-                              <textarea required value={productForm.description || ""} onChange={(e) => setProductForm({ ...productForm, description: e.target.value })} className="border p-2 rounded h-20" />
-                            </div>
-                            <div className="grid grid-cols-2 gap-4 border-t pt-4 border-gray-200">
+                            <div className="grid grid-cols-2 gap-4 mt-2">
                               <div className="flex flex-col gap-1">
-                                <label className="font-bold text-[#d2977a]">Showcase Title (Outer Layout)</label>
+                                <label className="font-bold">Inner Page Description (EN)</label>
+                                <textarea required value={productForm.description || ""} onChange={(e) => setProductForm({ ...productForm, description: e.target.value })} className="border p-2 rounded h-20" />
+                              </div>
+                              <div className="flex flex-col gap-1">
+                                <label className="font-bold">Inner Page Description (ES)</label>
+                                <textarea value={productForm.descriptionEs || ""} onChange={(e) => setProductForm({ ...productForm, descriptionEs: e.target.value })} className="border p-2 rounded h-20" />
+                              </div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-4 border-t pt-4 border-gray-200 mt-2">
+                              <div className="flex flex-col gap-1">
+                                <label className="font-bold text-[#d2977a]">Showcase Title (EN)</label>
                                 <input type="text" value={productForm.showcaseTitle || ""} onChange={(e) => setProductForm({ ...productForm, showcaseTitle: e.target.value })} className="border p-2 rounded" placeholder="e.g. ONLY YOU" />
                               </div>
                               <div className="flex flex-col gap-1">
-                                <label className="font-bold text-[#d2977a]">Showcase Text (Outer Layout)</label>
+                                <label className="font-bold text-[#d2977a]">Showcase Title (ES)</label>
+                                <input type="text" value={productForm.showcaseTitleEs || ""} onChange={(e) => setProductForm({ ...productForm, showcaseTitleEs: e.target.value })} className="border p-2 rounded" placeholder="e.g. SOLAMENTE TÚ" />
+                              </div>
+                              <div className="flex flex-col gap-1">
+                                <label className="font-bold text-[#d2977a]">Showcase Text (EN)</label>
                                 <textarea value={productForm.showcaseText || ""} onChange={(e) => setProductForm({ ...productForm, showcaseText: e.target.value })} className="border p-2 rounded h-20" />
+                              </div>
+                              <div className="flex flex-col gap-1">
+                                <label className="font-bold text-[#d2977a]">Showcase Text (ES)</label>
+                                <textarea value={productForm.showcaseTextEs || ""} onChange={(e) => setProductForm({ ...productForm, showcaseTextEs: e.target.value })} className="border p-2 rounded h-20" />
                               </div>
                             </div>
                             <div className="grid grid-cols-2 gap-4 border-t pt-4 border-gray-200">
@@ -2347,9 +2662,9 @@ export default function AdminPage() {
                 ) : (
                   <>
                     <div className="flex flex-col gap-4">
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="flex flex-col gap-2">
-                          <label className="text-[12px] font-bold text-gray-700">Tab Name</label>
+                          <label className="text-[12px] font-bold text-gray-700">Tab Name (EN)</label>
                       <input
                         type="text"
                         value={editingNavbarTabFull.name}
@@ -2358,11 +2673,29 @@ export default function AdminPage() {
                       />
                     </div>
                     <div className="flex flex-col gap-2">
-                      <label className="text-[12px] font-bold text-gray-700">Href / Path</label>
+                      <label className="text-[12px] font-bold text-gray-700">Tab Name (ES)</label>
+                      <input
+                        type="text"
+                        value={editingNavbarTabFull.nameEs || ""}
+                        onChange={(e) => setEditingNavbarTabFull({ ...editingNavbarTabFull, nameEs: e.target.value })}
+                        className="border border-gray-300 px-3 py-2 rounded text-[14px]"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label className="text-[12px] font-bold text-gray-700">Href / Path (EN)</label>
                       <input
                         type="text"
                         value={editingNavbarTabFull.href}
                         onChange={(e) => setEditingNavbarTabFull({ ...editingNavbarTabFull, href: e.target.value })}
+                        className="border border-gray-300 px-3 py-2 rounded text-[14px]"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label className="text-[12px] font-bold text-gray-700">Href / Path (ES)</label>
+                      <input
+                        type="text"
+                        value={editingNavbarTabFull.hrefEs || ""}
+                        onChange={(e) => setEditingNavbarTabFull({ ...editingNavbarTabFull, hrefEs: e.target.value })}
                         className="border border-gray-300 px-3 py-2 rounded text-[14px]"
                       />
                     </div>
@@ -2375,7 +2708,8 @@ export default function AdminPage() {
                     <button
                       onClick={() => {
                         const newFilters = [...(editingNavbarTabFull.groupFilters || []), "New Filter"];
-                        setEditingNavbarTabFull({ ...editingNavbarTabFull, groupFilters: newFilters });
+                        const newFiltersEs = [...(editingNavbarTabFull.groupFiltersEs || []), "Nuevo Filtro"];
+                        setEditingNavbarTabFull({ ...editingNavbarTabFull, groupFilters: newFilters, groupFiltersEs: newFiltersEs });
                       }}
                       className="text-[11px] bg-gray-100 px-3 py-1 rounded font-semibold border"
                     >
@@ -2394,13 +2728,31 @@ export default function AdminPage() {
                             setEditingNavbarTabFull({ ...editingNavbarTabFull, groupFilters: newFilters });
                           }}
                           className="border border-gray-300 px-2 py-1.5 rounded text-[12px] flex-1"
+                          placeholder="Filter (EN)"
+                        />
+                        <input
+                          type="text"
+                          value={editingNavbarTabFull.groupFiltersEs?.[fIdx] || ""}
+                          onChange={(e) => {
+                            const newFiltersEs = [...(editingNavbarTabFull.groupFiltersEs || editingNavbarTabFull.groupFilters || [])];
+                            newFiltersEs[fIdx] = e.target.value;
+                            setEditingNavbarTabFull({ ...editingNavbarTabFull, groupFiltersEs: newFiltersEs });
+                          }}
+                          className="border border-gray-300 px-2 py-1.5 rounded text-[12px] flex-1"
+                          placeholder="Filter (ES)"
                         />
                         <button
                           onClick={() => {
                             if (confirm("Are you sure you want to delete this filter?")) {
                               const newFilters = [...(editingNavbarTabFull.groupFilters || [])];
                               newFilters.splice(fIdx, 1);
-                              setEditingNavbarTabFull({ ...editingNavbarTabFull, groupFilters: newFilters });
+
+                              const newFiltersEs = [...(editingNavbarTabFull.groupFiltersEs || [])];
+                              if (newFiltersEs.length > fIdx) {
+                                newFiltersEs.splice(fIdx, 1);
+                              }
+
+                              setEditingNavbarTabFull({ ...editingNavbarTabFull, groupFilters: newFilters, groupFiltersEs: newFiltersEs });
                             }
                           }}
                           className="text-red-500 font-bold px-2 py-1 text-[12px]"
@@ -2440,7 +2792,7 @@ export default function AdminPage() {
                       />
                     </div>
                     <div className="flex flex-col gap-2">
-                      <label className="text-[12px] font-bold text-gray-700">Feature Title</label>
+                      <label className="text-[12px] font-bold text-gray-700">Feature Title (EN)</label>
                       <input
                         type="text"
                         value={editingNavbarTabFull.megaMenu?.featureTitle || ""}
@@ -2449,12 +2801,22 @@ export default function AdminPage() {
                         placeholder="e.g. Featured Items"
                       />
                     </div>
+                    <div className="flex flex-col gap-2">
+                      <label className="text-[12px] font-bold text-gray-700">Feature Title (ES)</label>
+                      <input
+                        type="text"
+                        value={editingNavbarTabFull.megaMenu?.featureTitleEs || ""}
+                        onChange={(e) => setEditingNavbarTabFull({ ...editingNavbarTabFull, megaMenu: { ...(editingNavbarTabFull.megaMenu || { columns: [] }), featureTitleEs: e.target.value } })}
+                        className="border border-gray-300 px-3 py-2 rounded text-[14px]"
+                        placeholder="e.g. Artículos destacados"
+                      />
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-3 gap-6 mt-6">
                     {(editingNavbarTabFull.megaMenu?.columns || []).map((col, cIdx) => (
                       <div key={cIdx} className="border rounded p-4 flex flex-col gap-4 bg-gray-50">
-                        <div className="flex justify-between items-center">
+                        <div className="flex justify-between items-center gap-2">
                           <input
                             type="text"
                             value={col.title}
@@ -2463,8 +2825,19 @@ export default function AdminPage() {
                               newCols[cIdx].title = e.target.value;
                               setEditingNavbarTabFull({ ...editingNavbarTabFull, megaMenu: { ...editingNavbarTabFull.megaMenu!, columns: newCols } });
                             }}
-                            className="border border-gray-300 px-2 py-1 rounded text-[12px] font-bold uppercase w-2/3"
-                            placeholder="Column Title"
+                            className="border border-gray-300 px-2 py-1 rounded text-[12px] font-bold uppercase w-1/2"
+                            placeholder="Column Title (EN)"
+                          />
+                          <input
+                            type="text"
+                            value={col.titleEs || ""}
+                            onChange={(e) => {
+                              const newCols = [...editingNavbarTabFull.megaMenu!.columns];
+                              newCols[cIdx].titleEs = e.target.value;
+                              setEditingNavbarTabFull({ ...editingNavbarTabFull, megaMenu: { ...editingNavbarTabFull.megaMenu!, columns: newCols } });
+                            }}
+                            className="border border-gray-300 px-2 py-1 rounded text-[12px] font-bold uppercase w-1/2"
+                            placeholder="Column Title (ES)"
                           />
                           <button
                             onClick={() => {
@@ -2474,7 +2847,7 @@ export default function AdminPage() {
                                 setEditingNavbarTabFull({ ...editingNavbarTabFull, megaMenu: { ...editingNavbarTabFull.megaMenu!, columns: newCols } });
                               }
                             }}
-                            className="text-red-500 text-[10px] font-bold uppercase"
+                            className="text-red-500 text-[10px] font-bold uppercase whitespace-nowrap"
                           >
                             Delete Col
                           </button>
@@ -2483,7 +2856,7 @@ export default function AdminPage() {
                         <div className="flex flex-col gap-2">
                           {col.links.map((link, lIdx) => (
                             <div key={lIdx} className="flex flex-col gap-1 border-b pb-2 mb-1">
-                              <div className="flex justify-between">
+                              <div className="flex justify-between gap-1">
                                 <input
                                   type="text"
                                   value={link.name}
@@ -2495,8 +2868,22 @@ export default function AdminPage() {
                                     newCols[cIdx].links[lIdx].href = `${editingNavbarTabFull.href}?filter=${newName}`;
                                     setEditingNavbarTabFull({ ...editingNavbarTabFull, megaMenu: { ...editingNavbarTabFull.megaMenu!, columns: newCols } });
                                   }}
-                                  className="border border-gray-300 px-2 py-1 rounded text-[12px] w-full"
-                                  placeholder="Link Name"
+                                  className="border border-gray-300 px-2 py-1 rounded text-[12px] w-1/2"
+                                  placeholder="Link Name (EN)"
+                                />
+                                <input
+                                  type="text"
+                                  value={link.nameEs || ""}
+                                  onChange={(e) => {
+                                    const newCols = [...editingNavbarTabFull.megaMenu!.columns];
+                                    const newNameEs = e.target.value;
+                                    newCols[cIdx].links[lIdx].nameEs = newNameEs;
+                                    // Auto-update the hrefEs based on the new name
+                                    newCols[cIdx].links[lIdx].hrefEs = `${editingNavbarTabFull.hrefEs || editingNavbarTabFull.href}?filter=${newNameEs}`;
+                                    setEditingNavbarTabFull({ ...editingNavbarTabFull, megaMenu: { ...editingNavbarTabFull.megaMenu!, columns: newCols } });
+                                  }}
+                                  className="border border-gray-300 px-2 py-1 rounded text-[12px] w-1/2"
+                                  placeholder="Link Name (ES)"
                                 />
                                 <button
                                   onClick={() => {
@@ -2511,17 +2898,30 @@ export default function AdminPage() {
                                   x
                                 </button>
                               </div>
-                              <input
-                                type="text"
-                                value={link.href}
-                                onChange={(e) => {
-                                  const newCols = [...editingNavbarTabFull.megaMenu!.columns];
-                                  newCols[cIdx].links[lIdx].href = e.target.value;
-                                  setEditingNavbarTabFull({ ...editingNavbarTabFull, megaMenu: { ...editingNavbarTabFull.megaMenu!, columns: newCols } });
-                                }}
-                                className="border border-gray-300 px-2 py-1 rounded text-[10px] text-gray-500 font-mono w-full"
-                                placeholder="/path?filter=..."
-                              />
+                              <div className="flex gap-1 mt-1">
+                                <input
+                                  type="text"
+                                  value={link.href}
+                                  onChange={(e) => {
+                                    const newCols = [...editingNavbarTabFull.megaMenu!.columns];
+                                    newCols[cIdx].links[lIdx].href = e.target.value;
+                                    setEditingNavbarTabFull({ ...editingNavbarTabFull, megaMenu: { ...editingNavbarTabFull.megaMenu!, columns: newCols } });
+                                  }}
+                                  className="border border-gray-300 px-2 py-1 rounded text-[10px] text-gray-500 font-mono w-1/2"
+                                  placeholder="/path?filter=... (EN)"
+                                />
+                                <input
+                                  type="text"
+                                  value={link.hrefEs || ""}
+                                  onChange={(e) => {
+                                    const newCols = [...editingNavbarTabFull.megaMenu!.columns];
+                                    newCols[cIdx].links[lIdx].hrefEs = e.target.value;
+                                    setEditingNavbarTabFull({ ...editingNavbarTabFull, megaMenu: { ...editingNavbarTabFull.megaMenu!, columns: newCols } });
+                                  }}
+                                  className="border border-gray-300 px-2 py-1 rounded text-[10px] text-gray-500 font-mono w-1/2"
+                                  placeholder="/path?filter=... (ES)"
+                                />
+                              </div>
                             </div>
                           ))}
                           <button

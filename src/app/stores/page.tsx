@@ -19,8 +19,10 @@ export default function StoresPage() {
   const [stores, setStores] = useState<Store[]>([]);
   const [selectedStore, setSelectedStore] = useState<Store | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isEs, setIsEs] = useState(true);
 
   useEffect(() => {
+    setIsEs(!document.cookie.includes("cielora_lang=en"));
     fetch("/api/db")
       .then((res) => res.json())
       .then((data) => {
@@ -39,7 +41,7 @@ export default function StoresPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[calc(100vh-70px)] bg-white text-gray-500 font-medium">
-        Loading store locations...
+        {isEs ? "Cargando ubicaciones de tiendas..." : "Loading store locations..."}
       </div>
     );
   }
@@ -47,7 +49,7 @@ export default function StoresPage() {
   if (stores.length === 0) {
     return (
       <div className="flex items-center justify-center min-h-[calc(100vh-70px)] bg-white text-gray-500 font-medium">
-        No store locations configured.
+        {isEs ? "No hay ubicaciones de tiendas configuradas." : "No store locations configured."}
       </div>
     );
   }
@@ -56,7 +58,7 @@ export default function StoresPage() {
     <div className="flex flex-col md:flex-row min-h-[calc(100vh-70px)] bg-white">
       {/* Left Panel */}
       <div className="w-full md:w-[380px] lg:w-[450px] p-6 md:p-8 flex-shrink-0 bg-white z-10 shadow-md md:shadow-none overflow-y-auto border-r border-gray-100 flex flex-col gap-6">
-        <h1 className="text-[22px] font-medium text-[#c43e27]">Stores</h1>
+        <h1 className="text-[22px] font-medium text-[#c43e27]">{isEs ? "Tiendas" : "Stores"}</h1>
         
         <div className="flex flex-col gap-5">
           {stores.map((store) => {
@@ -95,13 +97,13 @@ export default function StoresPage() {
                     : "border-gray-200 hover:border-gray-300"
                 }`}
               >
-                <p className="font-semibold text-[15px] text-gray-900 mb-2">{store.name}</p>
+                <p className="font-semibold text-[15px] text-gray-900 mb-2">{isEs && store.nameEs ? store.nameEs : store.name}</p>
                 <div className="text-gray-600 leading-relaxed text-[13px]">
-                  <p>{store.address}</p>
-                  <p>{store.postcode} {store.city}</p>
-                  <p>{store.country}</p>
-                  {store.phone && <p className="mt-3 font-medium text-gray-800">Phone: {store.phone}</p>}
-                  {store.email && <p className="font-medium text-gray-800">Email: {store.email}</p>}
+                  <p>{isEs && store.addressEs ? store.addressEs : store.address}</p>
+                  <p>{store.postcode} {isEs && store.cityEs ? store.cityEs : store.city}</p>
+                  <p>{isEs && store.countryEs ? store.countryEs : store.country}</p>
+                  {store.phone && <p className="mt-3 font-medium text-gray-800">{isEs ? "Teléfono:" : "Phone:"} {store.phone}</p>}
+                  {store.email && <p className="font-medium text-gray-800">{isEs ? "Correo:" : "Email:"} {store.email}</p>}
                   
                   {!store.hideDirectionsButton && (
                     <a 
@@ -111,7 +113,7 @@ export default function StoresPage() {
                       className="mt-4 inline-block bg-[#c43e27] text-white px-4 py-2 rounded text-[13px] font-medium hover:bg-[#a93320] transition-colors"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      Get Directions
+                      {isEs ? "Cómo llegar" : "Get Directions"}
                     </a>
                   )}
                 </div>
@@ -131,9 +133,9 @@ export default function StoresPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <h3 className="text-[18px] font-medium text-gray-700 mb-2">Map view unavailable</h3>
+                <h3 className="text-[18px] font-medium text-gray-700 mb-2">{isEs ? "Vista de mapa no disponible" : "Map view unavailable"}</h3>
                 <p className="text-[14px] max-w-sm mx-auto">
-                  A map view is currently not available for this location. You can still use the &quot;Get Directions&quot; button to navigate via Google Maps.
+                  {isEs ? "La vista de mapa no está disponible para esta ubicación. Todavía puedes utilizar el botón \"Cómo llegar\" para navegar por Google Maps." : "A map view is currently not available for this location. You can still use the \"Get Directions\" button to navigate via Google Maps."}
                 </p>
               </div>
             );

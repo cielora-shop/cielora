@@ -33,15 +33,37 @@ export interface Product {
   isLimitedEdition?: boolean;
   showcaseTitle?: string;
   showcaseText?: string;
+
+  // Spanish fields
+  titleEs?: string;
+  descriptionEs?: string;
+  labelEs?: string;
+  bottomLabelEs?: string;
+  collectionNameEs?: string;
+  categoryEs?: string;
+  showcaseTitleEs?: string;
+  showcaseTextEs?: string;
+  specsEs?: {
+    gender?: string;
+    plating?: string;
+    material?: string;
+    color?: string;
+    minLength?: string;
+    [key: string]: string | undefined;
+  };
 }
 
 export interface Store {
   id: string;
   name: string;
+  nameEs?: string;
   address: string;
+  addressEs?: string;
   city: string;
+  cityEs?: string;
   postcode: string;
   country: string;
+  countryEs?: string;
   phone: string;
   email: string;
   googleMapsUrl: string;
@@ -59,6 +81,10 @@ export interface Banner {
   visible: boolean;
   linkedProductsTitle?: string;
   linkedProductIds?: (string | null)[];
+  titleEs?: string;
+  subtitleEs?: string;
+  linkLabelEs?: string;
+  linkedProductsTitleEs?: string;
 }
 
 export interface HomeCard {
@@ -66,11 +92,13 @@ export interface HomeCard {
   title: string;
   image: string;
   link: string;
+  titleEs?: string;
 }
 
 export interface Label {
   id: string;
   name: string;
+  nameEs?: string;
   color: string;
 }
 
@@ -104,17 +132,22 @@ export interface MegaMenuLink {
   name: string;
   href: string;
   badge?: string;
+  nameEs?: string;
+  hrefEs?: string;
+  badgeEs?: string;
 }
 
 export interface MegaMenuColumn {
   title: string;
   links: MegaMenuLink[];
+  titleEs?: string;
 }
 
 export interface MegaMenu {
   columns: MegaMenuColumn[];
   featureTitle?: string;
   featureImage?: string;
+  featureTitleEs?: string;
 }
 
 export interface NavbarTab {
@@ -123,6 +156,9 @@ export interface NavbarTab {
   megaMenu?: MegaMenu;
   groupFilters?: string[];
   isHidden?: boolean;
+  nameEs?: string;
+  hrefEs?: string;
+  groupFiltersEs?: string[];
 }
 
 export interface GlobalSettings {
@@ -138,13 +174,17 @@ export interface GlobalSettings {
     handcraftedText: string;
   };
   sitePaused?: boolean;
+  translations?: Record<string, string>;
 }
 
 export interface LimitedEditionSettings {
-  bannerImage: string;
-  introTitle: string;
-  introText1: string;
-  introText2: string;
+  bannerImage?: string;
+  introTitle?: string;
+  introTitleEs?: string;
+  introText1?: string;
+  introText1Es?: string;
+  introText2?: string;
+  introText2Es?: string;
 }
 
 export interface SocialLink {
@@ -366,10 +406,10 @@ function getInitialDbState(): DbSchema {
   ];
 
   const labels: Label[] = [
-    { id: "1", name: "New in", color: "#cde6ec" },
-    { id: "2", name: "Best seller", color: "#e1bbff" },
-    { id: "3", name: "Free Keyring", color: "#7ce5bf" },
-    { id: "4", name: "Free Shipping", color: "#ffb3c7" }
+    { id: "1", name: "New in", nameEs: "Nuevo", color: "#cde6ec" },
+    { id: "2", name: "Best seller", nameEs: "Más vendido", color: "#e1bbff" },
+    { id: "3", name: "Free Keyring", nameEs: "Llavero gratis", color: "#7ce5bf" },
+    { id: "4", name: "Free Shipping", nameEs: "Envío gratis", color: "#ffb3c7" }
   ];
 
   const navbarTabs: NavbarTab[] = [
@@ -707,7 +747,20 @@ function getInitialDbState(): DbSchema {
       helpLink: "#",
       handcraftedText: "Our jewelry is made in Spain and 100% handcrafted."
     },
-    sitePaused: false
+    sitePaused: false,
+    translations: {
+      "Add to Bag": "Añadir a la Cesta",
+      "Discover": "Descubrir",
+      "Out of Stock": "Agotado",
+      "Filters": "Filtros",
+      "Quantity": "Cantidad",
+      "Checkout": "Finalizar compra",
+      "Your Cart": "Tu Cesta",
+      "View Cart": "Ver Cesta",
+      "Subtotal": "Subtotal",
+      "Search": "Buscar",
+      "My Account": "Mi Cuenta"
+    }
   };
 
   const limitedEditionSettings: LimitedEditionSettings = {

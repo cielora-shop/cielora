@@ -6,10 +6,17 @@ import { useState, useEffect } from "react";
 import ProductCard from "@/components/ProductCard";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
+  
+  const [isSpanish, setIsSpanish] = useState(false);
+  useEffect(() => {
+    setIsSpanish(!document.cookie.includes("cielora_lang=en"));
+  }, []);
+
   const [isOpen, setIsOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
@@ -19,28 +26,14 @@ export default function Navbar() {
 
   const changeLanguage = (lang: string) => {
     if (typeof window !== "undefined") {
-      if (lang === "es") {
-        document.cookie = "cielora_lang=es; path=/";
-        document.cookie = "googtrans=/en/es; path=/";
-        document.cookie = "googtrans=/en/es; domain=" + window.location.hostname + "; path=/";
-        document.cookie = "googtrans=/en/es; domain=." + window.location.hostname + "; path=/";
-      } else {
-        document.cookie = "cielora_lang=en; path=/";
-        
-        // Force value to /en/en to revert translation if deletion fails
-        document.cookie = "googtrans=/en/en; path=/;";
-        document.cookie = "googtrans=/en/en; domain=" + window.location.hostname + "; path=/;";
-        document.cookie = "googtrans=/en/en; domain=." + window.location.hostname + "; path=/;";
-        
-        // Clear aggressively on root domain (fixes Vercel subdomains)
-        const hostParts = window.location.hostname.split('.');
-        if (hostParts.length >= 2) {
-            const rootDomain = hostParts.slice(-2).join('.');
-            document.cookie = "googtrans=/en/en; domain=" + rootDomain + "; path=/;";
-            document.cookie = "googtrans=/en/en; domain=." + rootDomain + "; path=/;";
-        }
-      }
-      window.location.reload();
+      document.cookie = `cielora_lang=${lang}; path=/`;
+      // Clear old google translate cookies just in case
+      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=" + window.location.hostname + "; path=/;";
+      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=." + window.location.hostname + "; path=/;";
+      
+      router.refresh();
+      setTimeout(() => window.location.reload(), 100);
     }
   };
 
@@ -105,6 +98,7 @@ export default function Navbar() {
 
           <nav className="hidden lg:flex items-center justify-between flex-1 mx-12 xl:mx-24 h-[70px]">
             {tabs.map((tab) => {
+              const tabName = isSpanish && tab.nameEs ? tab.nameEs : tab.name;
               const linkClass = "text-[14px] font-medium text-gray-900 hover:text-black hover:font-semibold w-fit relative transition-transform duration-300 hover:translate-x-[20px] before:content-['>'] before:absolute before:left-[-20px] before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300 before:font-light after:content-[''] after:absolute after:-bottom-[2px] after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-black after:transition-transform after:duration-300 hover:after:scale-x-100";
 
               if (tab.megaMenu && tab.megaMenu.columns && tab.megaMenu.columns.length > 0) {
@@ -115,7 +109,7 @@ export default function Navbar() {
                       href={tab.href}
                       className={`flex-1 flex justify-center items-center h-full text-[13px] xl:text-[14px] ${isOutlet ? "text-[#ac2505] group-hover:border-[#ac2505]" : "text-gray-600 group-hover:text-black group-hover:border-black"} font-medium px-1 xl:px-2 whitespace-nowrap transition-colors border-b-[3px] border-transparent text-center`}
                     >
-                      {tab.name}
+                      {tabName}
                     </Link>
 
                     {/* Mega Menu Dropdown */}
@@ -126,11 +120,11 @@ export default function Navbar() {
                           {tab.megaMenu.columns.map((col: any, cIdx: number) => (
                             <div key={cIdx} className="flex flex-col gap-4">
                               {col.title && (
-                                <h4 className="text-[11px] font-normal text-gray-500 uppercase tracking-wider">{col.title}</h4>
+                                <div className="font-semibold text-gray-900 mb-6 uppercase tracking-wider">{col.titleEs && isSpanish ? col.titleEs : col.title}</div>
                               )}
                               {col.links.map((link: any, lIdx: number) => (
-                                <Link key={lIdx} href={link.href} className={linkClass + (link.badge ? " flex items-center gap-2" : "")}>
-                                  {link.name}
+                                <Link key={lIdx} href={link.hrefEs && isSpanish ? link.hrefEs : link.href} className="text-gray-600 hover:text-black transition-colors block">
+                                  {link.nameEs && isSpanish ? link.nameEs : link.name}
                                   {link.badge && (
                                     <span className="bg-[#e6f4f1] text-[14px] px-1 py-0.5 font-normal">{link.badge}</span>
                                   )}
@@ -144,7 +138,7 @@ export default function Navbar() {
                         {tab.megaMenu.featureImage && (
                           <div className="w-[450px] xl:w-[600px] shrink-0 flex flex-col gap-4">
                             {tab.megaMenu.featureTitle && (
-                              <h4 className="text-[20px] font-normal text-black">{tab.megaMenu.featureTitle}</h4>
+                              <h4 className="text-[20px] font-normal text-black">{tab.megaMenu.featureTitleEs && isSpanish ? tab.megaMenu.featureTitleEs : tab.megaMenu.featureTitle}</h4>
                             )}
                             <Image src={tab.megaMenu.featureImage} alt={tab.megaMenu.featureTitle || tab.name} width={600} height={260} className="w-full h-[260px] object-cover" />
                           </div>
@@ -162,7 +156,7 @@ export default function Navbar() {
                   href={tab.href}
                   className={`flex-1 flex justify-center items-center h-full text-[13px] xl:text-[14px] ${isOutlet ? "text-[#ac2505] hover:border-[#ac2505]" : "text-gray-600 hover:text-black hover:border-black"} font-medium px-1 xl:px-2 whitespace-nowrap transition-colors border-b-[3px] border-transparent text-center`}
                 >
-                  {tab.name}
+                  {tabName}
                 </Link>
               );
             })}
@@ -257,7 +251,7 @@ export default function Navbar() {
                 className="text-[14px] text-gray-600 hover:text-black font-medium px-4 py-2"
                 onClick={() => setIsOpen(false)}
               >
-                {tab.name}
+                {isSpanish && tab.nameEs ? tab.nameEs : tab.name}
               </Link>
             ))}
           </nav>

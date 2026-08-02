@@ -17,6 +17,11 @@ export default function ProductRow({ collectionName, className = "", products }:
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
+  const [isEs, setIsEs] = useState(true);
+  useEffect(() => {
+    setIsEs(!document.cookie.includes("cielora_lang=en"));
+  }, []);
+
   const checkScroll = useCallback(() => {
     if (scrollRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
@@ -82,11 +87,11 @@ export default function ProductRow({ collectionName, className = "", products }:
           <div key={product.id} className="w-[50%] md:w-[25%] flex-shrink-0 pr-1">
             <ProductCard 
               id={product.id}
-              title={product.title}
+              title={isEs && product.titleEs ? product.titleEs : product.title}
               price={product.price}
-              label={product.label}
+              label={isEs && product.labelEs ? product.labelEs : product.label}
               labelColor={product.labelColor}
-              bottomLabel={product.bottomLabel}
+              bottomLabel={isEs && product.bottomLabelEs ? product.bottomLabelEs : product.bottomLabel}
               colors={product.colors}
               images={product.images}
               galleryImages={product.galleryImages}

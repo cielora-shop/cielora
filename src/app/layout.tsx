@@ -48,7 +48,6 @@ import Footer from "@/components/footer";
 import { CartProvider } from "@/context/CartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
 import SideCart from "@/components/SideCart";
-import GoogleTranslateScripts from "@/components/GoogleTranslateScripts";
 import { headers } from "next/headers";
 import { getDb } from "@/lib/db";
 
@@ -103,7 +102,6 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-sans text-foreground bg-background" suppressHydrationWarning>
-        <GoogleTranslateScripts />
         <WishlistProvider>
           <CartProvider>
             <Navbar />

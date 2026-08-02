@@ -2,6 +2,7 @@
 
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -11,6 +12,12 @@ export default function CartPage() {
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   const [itemToRemove, setItemToRemove] = useState<any | null>(null);
   const [isClosingModal, setIsClosingModal] = useState(false);
+
+  const [isEs, setIsEs] = useState(true);
+  import { useEffect } from "react";
+  useEffect(() => {
+    setIsEs(!document.cookie.includes("cielora_lang=en"));
+  }, []);
 
   const cartItemsCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
   const tax = cartTotal * (taxPercentage / 100);
@@ -38,7 +45,7 @@ export default function CartPage() {
   return (
     <div className="w-full px-[48px] pb-12 min-h-screen font-sans">
       <h1 className="pt-8 text-[16px] font-semibold text-gray-900 mb-8">
-        Cart <span className="font-normal text-gray-400 text-[12px]">({cartItemsCount} items)</span>
+        {isEs ? "Carrito" : "Cart"} <span className="font-normal text-gray-400 text-[12px]">({cartItemsCount} {isEs ? (cartItemsCount === 1 ? "artículo" : "artículos") : (cartItemsCount === 1 ? "item" : "items")})</span>
       </h1>
 
       <div className="flex flex-col md:flex-row gap-12 xl:gap-24">
@@ -47,9 +54,9 @@ export default function CartPage() {
           {/* Items List */}
           {cartItems.length === 0 ? (
             <div className="text-center py-12 border border-gray-100 bg-[#f9f9f9]">
-              <p className="text-gray-500 mb-6">Your cart is currently empty.</p>
+              <p className="text-gray-500 mb-6">{isEs ? "Tu carrito está actualmente vacío." : "Your cart is currently empty."}</p>
               <Link href="/shop-by" className="bg-[#221f1f] text-white py-3 px-8 text-[14px] font-medium hover:bg-black transition-colors inline-block">
-                Continue Shopping
+                {isEs ? "Continuar Comprando" : "Continue Shopping"}
               </Link>
             </div>
           ) : (
@@ -82,7 +89,7 @@ export default function CartPage() {
                         )}
                         <span className="text-[14px] font-semibold text-[#b44131]">{item.price}</span>
                       </div>
-                      <p className="text-[13px] text-gray-600">Colour: <span className="capitalize text-gray-900">{item.color}</span></p>
+                      <p className="text-[13px] text-gray-600">{isEs ? "Color:" : "Colour:"} <span className="capitalize text-gray-900">{item.color}</span></p>
                     </div>
                     
                     <div className="flex flex-col items-end gap-6 justify-between h-full min-h-[90px]">
@@ -131,29 +138,29 @@ export default function CartPage() {
               <span>£{cartTotal.toFixed(2)}</span>
             </div>
             <div className="flex justify-between">
-              <span>Shipping cost</span>
+              <span>{isEs ? "Gastos de envío" : "Shipping cost"}</span>
               <span>£0.00</span>
             </div>
             <div className="flex justify-between">
-              <span>Tax</span>
+              <span>{isEs ? "Impuestos" : "Tax"}</span>
               <span>£{tax.toFixed(2)}</span>
             </div>
             <div className="flex justify-between font-bold text-[15px] text-black mt-2">
-              <span className="uppercase tracking-wide text-[13px]">Total (Tax included)</span>
+              <span className="uppercase tracking-wide text-[13px]">{isEs ? "Total (Impuestos incluidos)" : "Total (Tax included)"}</span>
               <span>£{finalTotal.toFixed(2)}</span>
             </div>
           </div>
 
           <div className="flex items-center gap-3 text-[13px] text-gray-900 mb-8 border border-gray-100 p-4 bg-[#f9f9f9] shadow-sm">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
-            <span>Estimated delivery: <strong>20 June - 23 June</strong></span>
+            <span>{isEs ? "Entrega estimada:" : "Estimated delivery:"} <strong>{isEs ? "20 Junio - 23 Junio" : "20 June - 23 June"}</strong></span>
           </div>
 
           <Link 
             href="/checkout" 
             className={`w-full block bg-[#221f1f] text-white py-4 text-center text-[15px] font-medium hover:bg-[#fffbf7] hover:text-black border border-[#221f1f] hover:border-black transition-colors ${cartItems.length === 0 ? "opacity-50 pointer-events-none" : ""}`}
           >
-            Go To Checkout
+            {isEs ? "Ir al pago" : "Go To Checkout"}
           </Link>
         </div>
       </div>
@@ -164,23 +171,23 @@ export default function CartPage() {
           <div className={`bg-[#fffbf7] w-full max-w-[500px] shadow-2xl flex flex-col ${isClosingModal ? "animate-slideUp" : "animate-slideDown"}`}>
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-gray-200">
-              <h3 className="text-[16px] font-medium text-gray-900">Remove Product?</h3>
+              <h3 className="text-[16px] font-medium text-gray-900">{isEs ? "¿Eliminar producto?" : "Remove Product?"}</h3>
               <button onClick={cancelRemove} className="text-gray-500 hover:text-black transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
               </button>
             </div>
             {/* Body */}
             <div className="p-4 py-6 border-b border-gray-200">
-              <p className="text-[14px] text-gray-800 mb-1">Are you sure you want to remove the following product from the cart?</p>
+              <p className="text-[14px] text-gray-800 mb-1">{isEs ? "¿Estás seguro de que deseas eliminar el siguiente producto del carrito?" : "Are you sure you want to remove the following product from the cart?"}</p>
               <p className="text-[14px] text-gray-600">{itemToRemove.title}</p>
             </div>
             {/* Footer */}
             <div className="p-4 flex justify-end gap-4">
               <button onClick={cancelRemove} className="w-[120px] py-2 border border-black text-gray-800 text-[14px] font-medium hover:bg-black hover:text-white transition-colors bg-[#fffbf7] flex justify-center items-center">
-                Cancel
+                {isEs ? "Cancelar" : "Cancel"}
               </button>
               <button onClick={confirmRemove} className="w-[120px] py-2 bg-[#221f1f] text-white text-[14px] font-medium hover:bg-[#fffbf7] hover:text-black border border-[#221f1f] hover:border-black transition-colors flex justify-center items-center">
-                Yes
+                {isEs ? "Sí" : "Yes"}
               </button>
             </div>
           </div>

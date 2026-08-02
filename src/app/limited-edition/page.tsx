@@ -1,8 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { getDb } from "@/lib/db";
+import { cookies } from "next/headers";
 
 export default async function LimitedEditionPage() {
+  const cookieStore = await cookies();
+  const isEs = cookieStore.get('cielora_lang')?.value !== 'en';
   const db = await getDb();
   const settings = db.limitedEditionSettings;
   const limitedProducts = db.products.filter(p => p.isLimitedEdition);
@@ -38,13 +41,13 @@ export default async function LimitedEditionPage() {
       <div className="relative z-10 bg-white w-full flex flex-col items-center">
         {/* Intro Section */}
         <div className="w-full max-w-5xl px-8 pt-20 pb-[36px] text-center">
-          <h1 className="text-[20px] font-bold tracking-widest mb-6 uppercase">{settings?.introTitle || "LIMITED EDITIONS"}</h1>
+          <h1 className="text-[20px] font-bold tracking-widest mb-6 uppercase">{isEs ? (settings?.introTitleEs || "EDICIONES LIMITADAS") : (settings?.introTitle || "LIMITED EDITIONS")}</h1>
           <div className="flex flex-col gap-[4px]">
             <p className="text-gray-700 text-[14px]">
-              {settings?.introText1}
+              {isEs && settings?.introText1Es ? settings.introText1Es : settings?.introText1}
             </p>
             <p className="text-gray-700 text-[14px]">
-              {settings?.introText2}
+              {isEs && settings?.introText2Es ? settings.introText2Es : settings?.introText2}
             </p>
           </div>
         </div>
@@ -68,24 +71,24 @@ export default async function LimitedEditionPage() {
                     </div>
                   ) : (
                     <div className="flex flex-col items-center justify-center text-center px-4 md:px-12 py-12 md:py-0 order-2 md:order-1 md:aspect-square">
-                      <h2 className="text-[20px] font-bold tracking-widest mb-[16px] uppercase">{prod.showcaseTitle || prod.title}</h2>
+                      <h2 className="text-[20px] font-bold tracking-widest mb-[16px] uppercase">{isEs && prod.showcaseTitleEs ? prod.showcaseTitleEs : (prod.showcaseTitle || (isEs && prod.titleEs ? prod.titleEs : prod.title))}</h2>
                       <p className="text-gray-600 text-[14px] leading-relaxed mb-8">
-                        {prod.showcaseText || prod.description}
+                        {isEs && prod.showcaseTextEs ? prod.showcaseTextEs : (prod.showcaseText || (isEs && prod.descriptionEs ? prod.descriptionEs : prod.description))}
                       </p>
                       <span className="text-black font-semibold uppercase tracking-wider text-sm group-hover:underline underline-offset-4">
-                        Discover {prod.showcaseTitle || prod.title} &gt;&gt;
+                        {isEs ? "Descubrir" : "Discover"} {isEs && prod.showcaseTitleEs ? prod.showcaseTitleEs : (prod.showcaseTitle || (isEs && prod.titleEs ? prod.titleEs : prod.title))} &gt;&gt;
                       </span>
                     </div>
                   )}
 
                   {isImageLeft ? (
                     <div className="flex flex-col items-center justify-center text-center px-4 md:px-12 py-12 md:py-0 md:aspect-square">
-                      <h2 className="text-[20px] font-bold tracking-widest mb-[16px] uppercase">{prod.showcaseTitle || prod.title}</h2>
+                      <h2 className="text-[20px] font-bold tracking-widest mb-[16px] uppercase">{isEs && prod.showcaseTitleEs ? prod.showcaseTitleEs : (prod.showcaseTitle || (isEs && prod.titleEs ? prod.titleEs : prod.title))}</h2>
                       <p className="text-gray-600 text-[14px] leading-relaxed mb-8">
-                        {prod.showcaseText || prod.description}
+                        {isEs && prod.showcaseTextEs ? prod.showcaseTextEs : (prod.showcaseText || (isEs && prod.descriptionEs ? prod.descriptionEs : prod.description))}
                       </p>
                       <span className="text-black font-semibold uppercase tracking-wider text-sm group-hover:underline underline-offset-4">
-                        Discover {prod.showcaseTitle || prod.title} &gt;&gt;
+                        {isEs ? "Descubrir" : "Discover"} {isEs && prod.showcaseTitleEs ? prod.showcaseTitleEs : (prod.showcaseTitle || (isEs && prod.titleEs ? prod.titleEs : prod.title))} &gt;&gt;
                       </span>
                     </div>
                   ) : (

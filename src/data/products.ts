@@ -15,6 +15,19 @@ export interface Product {
   galleryImages: string[];
   collectionName?: string;
   category?: string;
+  titleEs?: string;
+  descriptionEs?: string;
+  labelEs?: string;
+  bottomLabelEs?: string;
+  collectionNameEs?: string;
+  categoryEs?: string;
+  specsEs?: {
+    gender?: string;
+    plating?: string;
+    material?: string;
+    color?: string;
+    minLength?: string;
+  };
 }
 
 // Generate the bulk of the products dynamically, but we'll override specific ones.

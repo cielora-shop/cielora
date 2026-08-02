@@ -1,6 +1,7 @@
 "use client";
 
 import { useCart } from "@/context/CartContext";
+import { useState, useEffect } from "react";
 
 interface AddToCartButtonProps {
   product: {
@@ -14,6 +15,11 @@ interface AddToCartButtonProps {
 
 export default function AddToCartButton({ product, selectedColor }: AddToCartButtonProps) {
   const { addToCart } = useCart();
+  const [isEs, setIsEs] = useState(true);
+
+  useEffect(() => {
+    setIsEs(!document.cookie.includes("cielora_lang=en"));
+  }, []);
 
   const handleAddToCart = () => {
     // Generate a mock original price for demo purposes like in the design (£140.00 £98.00)
@@ -36,7 +42,7 @@ export default function AddToCartButton({ product, selectedColor }: AddToCartBut
       onClick={handleAddToCart}
       className="flex-1 bg-[#221f1f] text-white font-medium text-[16px] py-3 px-4 flex items-center justify-center transition-colors hover:bg-black"
     >
-      <span>Add to Cart</span>
+      <span>{isEs ? "Añadir al carrito" : "Add to Cart"}</span>
     </button>
   );
 }

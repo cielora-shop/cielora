@@ -12,6 +12,8 @@ function BraceletsContent() {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const [selectedTopFilter, setSelectedTopFilter] = useState<string | null>(null);
   const [visibleCount, setVisibleCount] = useState(16);
+  const [isEs, setIsEs] = useState(true);
+  useEffect(() => { setIsEs(!document.cookie.includes("cielora_lang=en")); }, []);
   
   const searchParams = useSearchParams();
   const filterParam = searchParams.get('filter');
@@ -226,7 +228,7 @@ function BraceletsContent() {
   if (loading) {
     return (
       <div className="w-full bg-white min-h-screen flex items-center justify-center text-gray-500 font-medium">
-        Loading bracelets...
+        {isEs ? "Cargando..." : "Loading bracelets..."}
       </div>
     );
   }
@@ -236,13 +238,11 @@ function BraceletsContent() {
       <div className="px-4 md:px-12 xl:px-24 pt-4 md:pt-8 pb-12">
         {/* Breadcrumb */}
         <div className="text-[10px] text-gray-500 mb-[12px]">
-          <Link href="/" className="hover:underline">Home</Link> / <span className="text-black">Bracelets</span>
+          <Link href="/" className="hover:underline">{isEs ? "Inicio" : "Home"}</Link> / <span className="text-black">{isEs ? "Pulseras" : "Bracelets"}</span>
         </div>
 
         {/* Title */}
-        <h1 className="text-[24px] font-semibold text-black pb-[4px] mb-4">
-          Bracelets for women
-        </h1>
+        <h1 className="text-[24px] font-semibold text-black pb-[4px] mb-4">{isEs ? "Pulseras para mujer" : "Bracelets for women"}</h1>
 
         {/* Top Filter Buttons */}
         <div className="flex flex-wrap gap-[6px] mb-0">
@@ -405,11 +405,11 @@ function BraceletsContent() {
                 <div className="absolute top-full right-0 mt-1 w-48 bg-white border border-gray-400 z-50 flex flex-col shadow-sm">
                   {["NEW IN", "BEST SELLERS", "MOST POPULAR", "PRICE LOW TO HIGH", "PRICE HIGH TO LOW"].map((option) => (
                     <button 
-                      key={option}
+                      key={isEs ? (option === "NEW IN" ? "NUEVO" : option === "BEST SELLERS" ? "MÁS VENDIDOS" : option === "MOST POPULAR" ? "MÁS POPULAR" : option === "PRICE LOW TO HIGH" ? "PRECIO MENOR A MAYOR" : "PRECIO MAYOR A MENOR") : option}
                       onClick={() => { setSortBy(option); setIsSortOpen(false); }}
                       className={`text-left px-3 py-2 text-[10px] hover:bg-gray-100 ${sortBy === option ? "font-semibold bg-[#2563eb] text-white hover:bg-[#2563eb]" : "text-gray-900"}`}
                     >
-                      {option}
+                      {isEs ? (option === "NEW IN" ? "NUEVO" : option === "BEST SELLERS" ? "MÁS VENDIDOS" : option === "MOST POPULAR" ? "MÁS POPULAR" : option === "PRICE LOW TO HIGH" ? "PRECIO MENOR A MAYOR" : "PRECIO MAYOR A MENOR") : option}
                     </button>
                   ))}
                 </div>
@@ -423,7 +423,7 @@ function BraceletsContent() {
         {/* Active Filters */}
         {Object.entries(selectedFilters).some(([_, vals]) => vals.length > 0) && (
           <div className="flex flex-wrap gap-2 mt-4 items-center">
-            <span className="text-[12px] text-gray-500 mr-2">Applied Filters:</span>
+            <span className="text-[12px] text-gray-500 mr-2">{isEs ? "Filtros aplicados:" : "Applied Filters:"}</span>
             {Object.entries(selectedFilters).map(([category, values]) => 
               values.map(val => (
                 <button
@@ -467,7 +467,7 @@ function BraceletsContent() {
 
         {/* Load More Section */}
         <div className="flex flex-col items-center justify-center mt-20 mb-8 w-full max-w-[420px] mx-auto px-4">
-          <p className="text-[12px] text-gray-600 mb-3">You've viewed {Math.min(visibleCount, filteredProducts.length)} of {filteredProducts.length} products</p>
+          <p className="text-[12px] text-gray-600 mb-3">{isEs ? `Has visto ${Math.min(visibleCount, filteredProducts.length)} de ${filteredProducts.length} productos` : `You\'ve viewed ${Math.min(visibleCount, filteredProducts.length)} of ${filteredProducts.length} products`}</p>
           <div className="w-full bg-[#e5e5e5] h-[6px] mb-6">
             <div className="bg-[#b44131] h-full" style={{ width: `${filteredProducts.length > 0 ? (Math.min(visibleCount, filteredProducts.length)/filteredProducts.length)*100 : 0}%` }}></div>
           </div>

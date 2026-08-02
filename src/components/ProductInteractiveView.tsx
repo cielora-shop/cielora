@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ZoomableImage from "@/components/ZoomableImage";
 import SizeSelector from "@/components/SizeSelector";
 import DetailsAccordion from "@/components/DetailsAccordion";
@@ -16,6 +16,16 @@ export default function ProductInteractiveView({
   settings: GlobalSettings;
 }) {
   const [selectedColor, setSelectedColor] = useState(product.colors[0] || "silver");
+  
+  const [isEs, setIsEs] = useState(true);
+  useEffect(() => {
+    setIsEs(!document.cookie.includes("cielora_lang=en"));
+  }, []);
+
+  const t = (key: string) => {
+    if (!isEs) return key;
+    return settings.translations?.[key] || key;
+  };
 
   const installmentsCount = settings.installmentsCount || 3;
   const installmentValue = (product.priceValue / installmentsCount).toFixed(2);
@@ -51,13 +61,13 @@ export default function ProductInteractiveView({
           {/* Breadcrumbs */}
           <nav className="text-[12px] text-gray-500 mb-6 font-normal">
             <span className="hover:text-black cursor-pointer">Home</span> <span className="mx-1">&gt;</span>
-            <span className="hover:text-black cursor-pointer">{product.category || 'Shop'}</span> <span className="mx-1">&gt;</span>
-            <span className="hover:text-black cursor-pointer">{product.title}</span>
+            <span className="hover:text-black cursor-pointer">{product.categoryEs && isEs ? product.categoryEs : (product.category || 'Shop')}</span> <span className="mx-1">&gt;</span>
+            <span className="hover:text-black cursor-pointer">{isEs && product.titleEs ? product.titleEs : product.title}</span>
           </nav>
 
           {/* Title & Price */}
           <h1 className="text-[20px] font-semibold leading-tight text-gray-900 mb-1 pr-8">
-            {product.title}
+            {isEs && product.titleEs ? product.titleEs : product.title}
           </h1>
           <p className="text-[16px] font-semibold text-gray-900 mb-[20px]">
             {product.price}
@@ -144,14 +154,14 @@ export default function ProductInteractiveView({
 
           {/* Description */}
           <div className="mt-8 mb-6">
-            <h3 className="text-[12px] font-semibold text-gray-900 mb-3">Description</h3>
+            <h3 className="text-[12px] font-semibold text-gray-900 mb-3">{isEs ? "Descripción" : "Description"}</h3>
             <p className="text-[12px] text-gray-600 leading-[1.6]">
-              {product.description}
+              {isEs && product.descriptionEs ? product.descriptionEs : product.description}
             </p>
           </div>
 
           {/* Details Accordion */}
-          <DetailsAccordion specs={product.specs} shippingReturns={settings.shippingReturns} />
+          <DetailsAccordion specs={isEs && product.specsEs ? product.specsEs : product.specs} shippingReturns={settings.shippingReturns} isEs={isEs} />
         </div>
       </div>
     </div>

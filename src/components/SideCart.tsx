@@ -11,6 +11,11 @@ export default function SideCart() {
   const [itemToRemove, setItemToRemove] = useState<any | null>(null);
   const [isClosingModal, setIsClosingModal] = useState(false);
 
+  const [isEs, setIsEs] = useState(true);
+  useEffect(() => {
+    setIsEs(!document.cookie.includes("cielora_lang=en"));
+  }, []);
+
   const confirmRemove = () => {
     if (itemToRemove) {
       setIsClosingModal(true);
@@ -61,7 +66,7 @@ export default function SideCart() {
             <div className="w-5 h-5 rounded-full bg-[#8ce0c9] flex items-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
             </div>
-            <span className="text-[13px] font-semibold text-gray-900 underline underline-offset-4 decoration-1">Added to cart</span>
+            <span className="text-[13px] font-semibold text-gray-900 underline underline-offset-4 decoration-1">{isEs ? "Añadido al carrito" : "Added to cart"}</span>
           </div>
           <button onClick={closeCart} className="text-gray-500 hover:text-black">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -70,14 +75,14 @@ export default function SideCart() {
 
         <div className="px-6 pb-[12px]">
           <h2 className="text-[16px] font-semibold text-gray-900">
-            Cart <span className="font-normal text-black">({cartItems.length} {cartItems.length === 1 ? "Item" : "Items"})</span>
+            {isEs ? "Carrito" : "Cart"} <span className="font-normal text-black">({cartItems.length} {cartItems.length === 1 ? (isEs ? "Artículo" : "Item") : (isEs ? "Artículos" : "Items")})</span>
           </h2>
         </div>
 
         {/* Cart Items List */}
         <div className="flex-1 px-6 overflow-y-auto custom-scrollbar">
           {cartItems.length === 0 ? (
-            <p className="text-gray-500 text-sm mt-4">Your cart is empty.</p>
+            <p className="text-gray-500 text-sm mt-4">{isEs ? "Tu carrito está vacío." : "Your cart is empty."}</p>
           ) : (
             <div className="flex flex-col gap-6">
               {cartItems.map((item, idx) => (
@@ -93,7 +98,7 @@ export default function SideCart() {
                       )}
                       <span className="text-[14px] font-semibold text-[#b44131]">{item.price}</span>
                     </div>
-                    <p className="text-[12px] text-gray-600 mb-3">Colour: <span className="capitalize">{item.color}</span></p>
+                    <p className="text-[12px] text-gray-600 mb-3">{isEs ? "Color:" : "Colour:"} <span className="capitalize">{item.color}</span></p>
                     
                     <div className="flex items-center gap-4 mt-auto">
                       {item.quantity > 1 ? (
@@ -126,24 +131,24 @@ export default function SideCart() {
             <span>£{cartTotal.toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-[13px] text-gray-900 mb-2">
-            <span>Shipping cost</span>
+            <span>{isEs ? "Gastos de envío" : "Shipping cost"}</span>
             <span>£0.00</span>
           </div>
           <div className="flex justify-between text-[13px] text-gray-900 mb-4">
-            <span>Tax</span>
+            <span>{isEs ? "Impuestos" : "Tax"}</span>
             <span>£{tax.toFixed(2)}</span>
           </div>
           <div className="flex justify-between font-semibold text-[15px] text-gray-900 mb-6">
-            <span>Total (Tax included)</span>
+            <span>{isEs ? "Total (Impuestos incluidos)" : "Total (Tax included)"}</span>
             <span>£{finalTotal.toFixed(2)}</span>
           </div>
 
           <div className="flex gap-3">
             <Link href="/cart" className="flex-1 border border-black bg-[#fffbf7] text-black py-3 px-4 text-center text-[14px] font-medium hover:bg-black hover:text-white transition-colors" onClick={closeCart}>
-              View Cart ({cartItems.length})
+              {isEs ? "Ver carrito" : "View Cart"} ({cartItems.length})
             </Link>
             <Link href="/checkout" className="flex-1 bg-[#221f1f] text-white border border-[#221f1f] py-3 px-4 text-center text-[14px] font-medium hover:bg-[#fffbf7] hover:text-black hover:border-black transition-colors" onClick={closeCart}>
-              Go to checkout (£{finalTotal.toFixed(2)})
+              {isEs ? "Ir al pago" : "Go to checkout"} (£{finalTotal.toFixed(2)})
             </Link>
           </div>
         </div>
@@ -155,23 +160,23 @@ export default function SideCart() {
           <div className={`bg-[#fffbf7] w-full max-w-[500px] shadow-2xl flex flex-col ${isClosingModal ? "animate-slideUp" : "animate-slideDown"}`}>
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-gray-200">
-              <h3 className="text-[16px] font-medium text-gray-900">Remove Product?</h3>
+              <h3 className="text-[16px] font-medium text-gray-900">{isEs ? "¿Eliminar producto?" : "Remove Product?"}</h3>
               <button onClick={cancelRemove} className="text-gray-500 hover:text-black transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
               </button>
             </div>
             {/* Body */}
             <div className="p-4 py-6 border-b border-gray-200">
-              <p className="text-[14px] text-gray-800 mb-1">Are you sure you want to remove the following product from the cart?</p>
+              <p className="text-[14px] text-gray-800 mb-1">{isEs ? "¿Estás seguro de que deseas eliminar el siguiente producto del carrito?" : "Are you sure you want to remove the following product from the cart?"}</p>
               <p className="text-[14px] text-gray-600">{itemToRemove.title}</p>
             </div>
             {/* Footer */}
             <div className="p-4 flex justify-end gap-4">
               <button onClick={cancelRemove} className="w-[120px] py-2 border border-black text-gray-800 text-[14px] font-medium hover:bg-black hover:text-white transition-colors bg-[#fffbf7] flex justify-center items-center">
-                Cancel
+                {isEs ? "Cancelar" : "Cancel"}
               </button>
               <button onClick={confirmRemove} className="w-[120px] py-2 bg-[#221f1f] text-white text-[14px] font-medium hover:bg-[#fffbf7] hover:text-black border border-[#221f1f] hover:border-black transition-colors flex justify-center items-center">
-                Yes
+                {isEs ? "Sí" : "Yes"}
               </button>
             </div>
           </div>

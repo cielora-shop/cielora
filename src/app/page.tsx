@@ -3,8 +3,13 @@ import Link from "next/link";
 
 import ProductRow from "@/components/ProductRow";
 import { getDb } from "@/lib/db";
+import { cookies } from "next/headers";
 
 export default async function Home() {
+  const cookieStore = await cookies();
+  const lang = cookieStore.get("cielora_lang")?.value || "es";
+  const isEs = lang === "es";
+
   const db = await getDb();
   const products = db.products;
   const banners = db.banners;
@@ -41,9 +46,9 @@ export default async function Home() {
                 />
               </div>
               <div className="z-10 text-right w-full px-4 sm:px-8 lg:px-16 xl:px-24 flex flex-col items-end">
-                <h1 className="text-[30px] font-medium text-white drop-shadow-lg uppercase tracking-wider">{topHero.title}</h1>
+                <h1 className="text-[30px] font-medium text-white drop-shadow-lg uppercase tracking-wider">{isEs && topHero.titleEs ? topHero.titleEs : topHero.title}</h1>
                 <span className="text-[16px] font-medium text-white mt-2 group-hover:text-gray-300 transition-colors uppercase tracking-wider">
-                  {topHero.linkLabel}
+                  {isEs && topHero.linkLabelEs ? topHero.linkLabelEs : topHero.linkLabel}
                 </span>
               </div>
             </div>
@@ -53,7 +58,7 @@ export default async function Home() {
 
       {/* Top Hero Product Row */}
       {topHero && topHero.linkedProductIds && getProductsForBanner(topHero).length > 0 && (
-        <ProductRow products={getProductsForBanner(topHero)} collectionName={topHero.linkedProductsTitle || ""} className="py-5" />
+        <ProductRow products={getProductsForBanner(topHero)} collectionName={isEs && topHero.linkedProductsTitleEs ? topHero.linkedProductsTitleEs : (topHero.linkedProductsTitle || "")} className="py-5" />
       )}
 
       {/* Arcadia Hero Banner */}
@@ -69,10 +74,10 @@ export default async function Home() {
             </div>
             <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-24 flex flex-col items-end justify-center h-full z-10 relative">
               <h2 className="text-[40px] font-medium text-white leading-none text-right uppercase tracking-wider">
-                {arcadiaBanner.title}
+                {isEs && arcadiaBanner.titleEs ? arcadiaBanner.titleEs : arcadiaBanner.title}
               </h2>
               <span className="text-[16px] font-medium text-white group-hover:text-gray-300 transition-colors text-right flex items-center gap-1 mt-2 uppercase tracking-wider">
-                {arcadiaBanner.linkLabel}
+                {isEs && arcadiaBanner.linkLabelEs ? arcadiaBanner.linkLabelEs : arcadiaBanner.linkLabel}
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6" /></svg>
               </span>
             </div>
@@ -82,7 +87,7 @@ export default async function Home() {
 
       {/* Arcadia Product Row */}
       {arcadiaBanner && arcadiaBanner.visible && arcadiaBanner.linkedProductIds && getProductsForBanner(arcadiaBanner).length > 0 && (
-        <ProductRow products={getProductsForBanner(arcadiaBanner)} collectionName={arcadiaBanner.linkedProductsTitle || ""} className="py-5" />
+        <ProductRow products={getProductsForBanner(arcadiaBanner)} collectionName={isEs && arcadiaBanner.linkedProductsTitleEs ? arcadiaBanner.linkedProductsTitleEs : (arcadiaBanner.linkedProductsTitle || "")} className="py-5" />
       )}
 
       {/* Mid Banner */}
@@ -98,10 +103,10 @@ export default async function Home() {
             </div>
             <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-24 flex flex-col items-end justify-center h-full z-10 relative">
               <h2 className="text-[32px] font-medium text-white max-w-md text-right leading-tight uppercase tracking-wider">
-                {midBanner.title}
+                {isEs && midBanner.titleEs ? midBanner.titleEs : midBanner.title}
               </h2>
               <span className="text-[16px] font-medium text-white mt-4 flex items-center gap-1 group-hover:text-gray-300 transition-colors uppercase tracking-wider">
-                {midBanner.linkLabel}
+                {isEs && midBanner.linkLabelEs ? midBanner.linkLabelEs : midBanner.linkLabel}
               </span>
             </div>
           </section>
@@ -117,7 +122,7 @@ export default async function Home() {
                 <div className={`aspect-[3/4] ${index % 2 === 0 ? "bg-gray-100 group-hover:bg-gray-200" : "bg-stone-200 group-hover:bg-stone-300"} transition-colors w-full overflow-hidden relative`}>
                   <img src={card.image} alt={card.title} className="absolute inset-0 w-full h-full object-cover" />
                 </div>
-                <p className="text-[20px] font-semibold pt-4 text-gray-900">{card.title}</p>
+                <p className="text-[20px] font-semibold pt-4 text-gray-900">{isEs && card.titleEs ? card.titleEs : card.title}</p>
               </Link>
             ))}
           </div>
@@ -136,7 +141,7 @@ export default async function Home() {
               </div>
               <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-24 flex flex-col items-end justify-center h-full z-10 relative">
                 <span className="text-[16px] font-normal text-white group-hover:text-gray-300 transition-colors uppercase tracking-wider">
-                  {flutterBanner.linkLabel}
+                  {isEs && flutterBanner.linkLabelEs ? flutterBanner.linkLabelEs : flutterBanner.linkLabel}
                 </span>
               </div>
             </section>
@@ -145,7 +150,7 @@ export default async function Home() {
 
         {/* Flutter Product Row */}
         {flutterBanner && flutterBanner.visible && flutterBanner.linkedProductIds && getProductsForBanner(flutterBanner).length > 0 && (
-          <ProductRow products={getProductsForBanner(flutterBanner)} collectionName={flutterBanner.linkedProductsTitle || ""} className="py-5" />
+          <ProductRow products={getProductsForBanner(flutterBanner)} collectionName={isEs && flutterBanner.linkedProductsTitleEs ? flutterBanner.linkedProductsTitleEs : (flutterBanner.linkedProductsTitle || "")} className="py-5" />
         )}
 
         {/* Luminis Edition */}
@@ -161,7 +166,7 @@ export default async function Home() {
               </div>
               <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-24 flex flex-col items-end justify-center h-full z-10 relative">
                 <span className="text-[16px] font-normal text-white group-hover:text-gray-300 transition-colors uppercase tracking-wider">
-                  {luminisBanner.linkLabel}
+                  {isEs && luminisBanner.linkLabelEs ? luminisBanner.linkLabelEs : luminisBanner.linkLabel}
                 </span>
               </div>
             </section>

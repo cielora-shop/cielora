@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SizeGuideModal from './SizeGuideModal';
 interface SizeSelectorProps {
   sizes?: string[];
@@ -11,6 +11,11 @@ export default function SizeSelector({ sizes = ['M', 'L', 'XL'] }: SizeSelectorP
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [isEs, setIsEs] = useState(true);
+  useEffect(() => {
+    setIsEs(!document.cookie.includes("cielora_lang=en"));
+  }, []);
+
   const handleSelect = (size: string) => {
     setSelectedSize(size);
     setIsOpen(false);
@@ -18,7 +23,7 @@ export default function SizeSelector({ sizes = ['M', 'L', 'XL'] }: SizeSelectorP
 
   return (
     <div className="mb-6 w-full">
-      <div className="text-[12px] font-semibold text-gray-900 mb-[4px]">Select Size</div>
+      <div className="text-[12px] font-semibold text-gray-900 mb-[4px]">{isEs ? "Seleccionar Talla" : "Select Size"}</div>
       
       <div className="border-t border-gray-200"></div>
       
@@ -52,7 +57,7 @@ export default function SizeSelector({ sizes = ['M', 'L', 'XL'] }: SizeSelectorP
         onClick={() => setIsModalOpen(true)}
         className="text-[10px] text-gray-900 underline cursor-pointer inline-block decoration-1 underline-offset-2 hover:text-[#ad4431] transition-colors"
       >
-        Size & Fit Guide
+        {isEs ? "Guía de tallas y ajuste" : "Size & Fit Guide"}
       </div>
       
       <SizeGuideModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
