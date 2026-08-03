@@ -32,14 +32,14 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       <div className="mt-12 pb-6">
         <h2 className="text-[16px] font-medium px-4 sm:px-6 lg:px-8 mb-0">You may also like</h2>
         <div className="w-full">
-          <ProductRow collectionName="Silver Collection" price="£ 165.00" label="NEW IN" className="pt-[20px] pb-0" />
+          <ProductRow collectionName="Silver Collection" price="€ 165.00" label="NEW IN" className="pt-[20px] pb-0" />
         </div>
       </div>
 
       <div className="pt-6 pb-16">
         <h2 className="text-[16px] font-medium px-4 sm:px-6 lg:px-8 mb-0">Others also bought</h2>
         <div className="w-full">
-          <ProductRow collectionName="Silver Collection" price="£ 165.00" label="BEST SELLER" className="pt-[20px] pb-16" />
+          <ProductRow collectionName="Silver Collection" price="€ 165.00" label="BEST SELLER" className="pt-[20px] pb-16" />
         </div>
       </div>
     </main>

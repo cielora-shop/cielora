@@ -260,7 +260,7 @@ function getInitialDbState(): DbSchema {
       id: "le-1",
       title: "Only You Necklace",
       description: "Like a chain of decisions that need no explanation, each metal bead acts as an independent artistic object, with irregular textures that ensure no two elements will ever be identical. A sculptural ensemble designed to be showcased as a piece of handcrafted luxury.",
-      price: "£ 215.00",
+      price: "€ 215.00",
       priceValue: 215,
       colors: ["silver"],
       images: { silver: { img1: "/images/product 2.jpg", img2: "/images/product 2.jpg" } },
@@ -277,7 +277,7 @@ function getInitialDbState(): DbSchema {
       id: "le-2",
       title: "Arcadia Necklace",
       description: "Another stunning piece of handcrafted jewelry, reflecting the perfect blend of tradition and modernity. Each element tells a unique story, carefully designed to highlight the beauty and elegance of its wearer.",
-      price: "£ 195.00",
+      price: "€ 195.00",
       priceValue: 195,
       colors: ["silver"],
       images: { silver: { img1: "/images/product 3.jpg", img2: "/images/product 3.jpg" } },
@@ -294,7 +294,7 @@ function getInitialDbState(): DbSchema {
       id: "le-3",
       title: "Eternity Collection",
       description: "A timeless piece crafted to capture the essence of forever. This elegant design combines classic beauty with modern sophistication, making it the perfect statement of enduring style.",
-      price: "£ 250.00",
+      price: "€ 250.00",
       priceValue: 250,
       colors: ["silver"],
       images: { silver: { img1: "/images/product 4.jpg", img2: "/images/product 4.jpg" } },
@@ -706,7 +706,7 @@ function getInitialDbState(): DbSchema {
       customerPhone: "+44 7911 123456",
       shippingAddress: "45 Regent St, London, W1B 4DY, UK",
       items: [
-        { id: "1", title: "Silver Earring", price: "£ 165.00", priceValue: 165, quantity: 1, color: "silver", image: "/images/product 1.2.PNG" }
+        { id: "1", title: "Silver Earring", price: "€ 165.00", priceValue: 165, quantity: 1, color: "silver", image: "/images/product 1.2.PNG" }
       ],
       subtotal: 165.00,
       tax: 28.63,
@@ -723,7 +723,7 @@ function getInitialDbState(): DbSchema {
       customerPhone: "+31 6 1234 5678",
       shippingAddress: "Keizersgracht 456, 1016 GD Amsterdam, NL",
       items: [
-        { id: "2", title: "Silver Fish shape earings", price: "£ 115.00", priceValue: 115, quantity: 2, color: "silver", image: "/images/product 7.PNG" }
+        { id: "2", title: "Silver Fish shape earings", price: "€ 115.00", priceValue: 115, quantity: 2, color: "silver", image: "/images/product 7.PNG" }
       ],
       subtotal: 230.00,
       tax: 39.91,

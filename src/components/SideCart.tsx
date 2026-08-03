@@ -128,19 +128,19 @@ export default function SideCart() {
         <div className="p-6 bg-[#fffbf7] border-t border-gray-100">
           <div className="flex justify-between text-[13px] text-gray-900 mb-2">
             <span>Subtotal</span>
-            <span>£{cartTotal.toFixed(2)}</span>
+            <span>€{cartTotal.toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-[13px] text-gray-900 mb-2">
             <span>{isEs ? "Gastos de envío" : "Shipping cost"}</span>
-            <span>£0.00</span>
+            <span>€0.00</span>
           </div>
           <div className="flex justify-between text-[13px] text-gray-900 mb-4">
             <span>{isEs ? "Impuestos" : "Tax"}</span>
-            <span>£{tax.toFixed(2)}</span>
+            <span>€{tax.toFixed(2)}</span>
           </div>
           <div className="flex justify-between font-semibold text-[15px] text-gray-900 mb-6">
             <span>{isEs ? "Total (Impuestos incluidos)" : "Total (Tax included)"}</span>
-            <span>£{finalTotal.toFixed(2)}</span>
+            <span>€{finalTotal.toFixed(2)}</span>
           </div>
 
           <div className="flex gap-3">
@@ -148,7 +148,7 @@ export default function SideCart() {
               {isEs ? "Ver carrito" : "View Cart"} ({cartItems.length})
             </Link>
             <Link href="/checkout" className="flex-1 bg-[#221f1f] text-white border border-[#221f1f] py-3 px-4 text-center text-[14px] font-medium hover:bg-[#fffbf7] hover:text-black hover:border-black transition-colors" onClick={closeCart}>
-              {isEs ? "Ir al pago" : "Go to checkout"} (£{finalTotal.toFixed(2)})
+              {isEs ? "Ir al pago" : "Go to checkout"} (€{finalTotal.toFixed(2)})
             </Link>
           </div>
         </div>

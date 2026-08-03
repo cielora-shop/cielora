@@ -22,9 +22,9 @@ export default function AddToCartButton({ product, selectedColor }: AddToCartBut
   }, []);
 
   const handleAddToCart = () => {
-    // Generate a mock original price for demo purposes like in the design (£140.00 £98.00)
+    // Generate a mock original price for demo purposes like in the design (€140.00 €98.00)
     const priceValue = parseFloat(product.price.replace(/[^0-9.]/g, ""));
-    const originalPrice = priceValue < 100 ? `£${(priceValue * 1.4).toFixed(2)}` : undefined;
+    const originalPrice = priceValue < 100 ? `€${(priceValue * 1.4).toFixed(2)}` : undefined;
 
     addToCart({
       id: product.id,

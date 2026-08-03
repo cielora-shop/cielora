@@ -5,7 +5,6 @@ import { useWishlist } from "@/context/WishlistContext";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
 export default function CartPage() {
   const { cartItems, removeFromCart, updateQuantity, cartTotal, taxPercentage } = useCart();
@@ -14,7 +13,6 @@ export default function CartPage() {
   const [isClosingModal, setIsClosingModal] = useState(false);
 
   const [isEs, setIsEs] = useState(true);
-  import { useEffect } from "react";
   useEffect(() => {
     setIsEs(!document.cookie.includes("cielora_lang=en"));
   }, []);
@@ -135,19 +133,19 @@ export default function CartPage() {
           <div className="flex flex-col gap-3 text-[14px] text-gray-900 mb-6">
             <div className="flex justify-between">
               <span>Subtotal</span>
-              <span>£{cartTotal.toFixed(2)}</span>
+              <span>€{cartTotal.toFixed(2)}</span>
             </div>
             <div className="flex justify-between">
               <span>{isEs ? "Gastos de envío" : "Shipping cost"}</span>
-              <span>£0.00</span>
+              <span>€0.00</span>
             </div>
             <div className="flex justify-between">
               <span>{isEs ? "Impuestos" : "Tax"}</span>
-              <span>£{tax.toFixed(2)}</span>
+              <span>€{tax.toFixed(2)}</span>
             </div>
             <div className="flex justify-between font-bold text-[15px] text-black mt-2">
               <span className="uppercase tracking-wide text-[13px]">{isEs ? "Total (Impuestos incluidos)" : "Total (Tax included)"}</span>
-              <span>£{finalTotal.toFixed(2)}</span>
+              <span>€{finalTotal.toFixed(2)}</span>
             </div>
           </div>
 

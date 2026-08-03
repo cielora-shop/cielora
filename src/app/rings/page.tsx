@@ -76,13 +76,13 @@ function RingsContent() {
     { name: "Best Selling Rings", count: 0 }
   ];
   const prices = [
-    { name: "£0 - £20", count: 0 },
-    { name: "£20 - £50", count: 0 },
-    { name: "£50 - £100", count: 0 },
-    { name: "£100 - £200", count: 0 },
-    { name: "£200 - £300", count: 0 },
-    { name: "£300 - £500", count: 0 },
-    { name: "More than £500", count: 0 }
+    { name: "€0 - €20", count: 0 },
+    { name: "€20 - €50", count: 0 },
+    { name: "€50 - €100", count: 0 },
+    { name: "€100 - €200", count: 0 },
+    { name: "€200 - €300", count: 0 },
+    { name: "€300 - €500", count: 0 },
+    { name: "More than €500", count: 0 }
   ];
   const sizes = [
     { name: "9", count: 0 },
@@ -159,8 +159,8 @@ function RingsContent() {
     
     if (selectedFilters.PRICE.length > 0) {
       const priceMatch = selectedFilters.PRICE.some(rangeStr => {
-        if (rangeStr === "More than £500") return p.priceValue >= 500;
-        const match = rangeStr.match(/£(\d+)\s*-\s*£(\d+)/);
+        if (rangeStr === "More than €500") return p.priceValue >= 500;
+        const match = rangeStr.match(/€(\d+)\s*-\s*€(\d+)/);
         if (match) {
            return p.priceValue >= parseInt(match[1]) && p.priceValue <= parseInt(match[2]);
         }
@@ -209,8 +209,8 @@ function RingsContent() {
   const getCount = (keyword: string, type: "PRICE" | "TEXT") => {
     return categoryProducts.filter(p => {
       if (type === "PRICE") {
-        if (keyword === "More than £500") return p.priceValue >= 500;
-        const match = keyword.match(/£(\d+)\s*-\s*£(\d+)/);
+        if (keyword === "More than €500") return p.priceValue >= 500;
+        const match = keyword.match(/€(\d+)\s*-\s*€(\d+)/);
         if (match) return p.priceValue >= parseInt(match[1]) && p.priceValue <= parseInt(match[2]);
         return false;
       }
@@ -221,7 +221,7 @@ function RingsContent() {
   if (loading) {
     return (
       <div className="w-full bg-white min-h-screen flex items-center justify-center text-gray-500 font-medium">
-        {isEs ? "Cargando..." : "{isEs ? "Cargando..." : "{isEs ? "Cargando..." : "Loading rings..."}"}"}
+        {isEs ? "Cargando..." : "Loading rings..."}
       </div>
     );
   }

@@ -32,7 +32,7 @@ export default function AdminPage() {
     id: "",
     title: "",
     description: "",
-    price: "£ ",
+    price: "€ ",
     priceValue: 0,
     label: "",
     labelColor: "#cde6ec",
@@ -245,7 +245,7 @@ export default function AdminPage() {
     if (!db) return;
 
     let updatedProducts = [...db.products];
-    const newPrice = `£ ${Number(productForm.priceValue).toFixed(2)}`;
+    const newPrice = `€ ${Number(productForm.priceValue).toFixed(2)}`;
 
     // Parse image values
     const imagesVal = {
@@ -368,7 +368,7 @@ export default function AdminPage() {
       id: String(db?.products.length ? Math.max(...db.products.map(p => Number(p.id) || 0)) + 1 : 1),
       title: "",
       description: "",
-      price: "£ ",
+      price: "€ ",
       priceValue: 0,
       label: "",
       labelColor: "#cde6ec",
@@ -811,7 +811,7 @@ export default function AdminPage() {
             {/* Stats Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               {[
-                { title: "Revenue (Delivered)", value: `£ ${totalRevenue.toFixed(2)}`, bg: "bg-white", border: "border-gray-200" },
+                { title: "Revenue (Delivered)", value: `€ ${totalRevenue.toFixed(2)}`, bg: "bg-white", border: "border-gray-200" },
                 { title: "Product Catalog", value: totalProducts, bg: "bg-white", border: "border-gray-200" },
                 { title: "Physical Branches", value: totalStores, bg: "bg-white", border: "border-gray-200" },
                 { title: "Active Banners", value: activeBanners, bg: "bg-white", border: "border-gray-200" }
@@ -2194,7 +2194,7 @@ export default function AdminPage() {
                           {order.customerName}
                           <div className="text-[10px] text-gray-400 font-normal mt-0.5">{order.customerEmail}</div>
                         </td>
-                        <td className="p-4 font-semibold text-gray-950">£ {order.total.toFixed(2)}</td>
+                        <td className="p-4 font-semibold text-gray-950">€ {order.total.toFixed(2)}</td>
                         <td className="p-4">
                           <span
                             className={`px-3 py-1 rounded-full text-[10px] font-semibold border ${
@@ -2250,7 +2250,7 @@ export default function AdminPage() {
                     <p><span className="font-bold text-gray-600">Email Address:</span> {editingOrder.customerEmail}</p>
                     {editingOrder.customerPhone && <p><span className="font-bold text-gray-600">Phone:</span> {editingOrder.customerPhone}</p>}
                     <p><span className="font-bold text-gray-600">Delivery Address:</span> {editingOrder.shippingAddress}</p>
-                    <p><span className="font-bold text-gray-600">Order Subtotal:</span> £ {editingOrder.subtotal.toFixed(2)}</p>
+                    <p><span className="font-bold text-gray-600">Order Subtotal:</span> € {editingOrder.subtotal.toFixed(2)}</p>
                     <p><span className="font-bold text-gray-600">Filing Date:</span> {new Date(editingOrder.date).toLocaleString()}</p>
                   </div>
 

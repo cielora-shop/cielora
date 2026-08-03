@@ -5,10 +5,14 @@ import { useState, useEffect } from "react";
 interface Store {
   id: string;
   name: string;
+  nameEs?: string;
   address: string;
+  addressEs?: string;
   city: string;
+  cityEs?: string;
   postcode: string;
   country: string;
+  countryEs?: string;
   phone: string;
   email: string;
   googleMapsUrl: string;

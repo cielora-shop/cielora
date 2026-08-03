@@ -76,7 +76,7 @@ const generatedProducts: Product[] = Array.from({ length: 48 }).map((_, i) => {
     id: String(i + 1), // use 1-based indexing
     title: category,
     description: `Beautiful ${category} made of ${component} with ${plating}. Leather: ${leather}. Size: ${size}. Colors: ${productColors.join(', ')}. ${extras}`,
-    price: `£ ${priceValue.toFixed(2)}`,
+    price: `€ ${priceValue.toFixed(2)}`,
     priceValue,
     label,
     labelColor,
@@ -110,7 +110,7 @@ allProducts[0] = {
   ...allProducts[0],
   title: "Silver Earring",
   category: "Earrings",
-  price: "£ 165.00",
+  price: "€ 165.00",
   priceValue: 165,
   images: {
     ...allProducts[0].images,

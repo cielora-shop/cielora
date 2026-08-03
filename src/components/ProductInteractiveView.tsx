@@ -100,7 +100,7 @@ export default function ProductInteractiveView({
 
           {/* Promo Banner */}
           <div className="w-full bg-[#f2f4f6] text-gray-800 text-[12px] py-2.5 px-3 mb-4">
-            FATHER'S DAY | Free key ring with purchases over £90
+            FATHER'S DAY | Free key ring with purchases over €90
           </div>
 
           {/* Add to Cart & Wishlist */}
@@ -136,10 +136,24 @@ export default function ProductInteractiveView({
               </div>
               <div className="flex flex-col">
                 <span className="text-[14px] text-gray-900 mb-1">
-                  {installmentsCount} payments of <span className="font-bold">£{installmentValue}</span> at 0% interest with Klarna
+                  {isEs ? (
+                    <>
+                      {installmentsCount} pagos de <span className="font-bold">€{installmentValue}</span> con 0% de interés con Klarna
+                    </>
+                  ) : (
+                    <>
+                      {installmentsCount} payments of <span className="font-bold">€{installmentValue}</span> at 0% interest with Klarna
+                    </>
+                  )}
                 </span>
-                <a href="#" className="text-[14px] text-gray-900 underline decoration-1 underline-offset-2 mb-2 hover:text-gray-600 transition-colors w-fit">Learn more</a>
-                <span className="text-[13px] text-gray-500">{settings.legalDisclaimer}</span>
+                <a href="#" className="text-[14px] text-gray-900 underline decoration-1 underline-offset-2 mb-2 hover:text-gray-600 transition-colors w-fit">
+                  {isEs ? "Saber más" : "Learn more"}
+                </a>
+                <span className="text-[13px] text-gray-500">
+                  {isEs && settings.legalDisclaimer === "18+, T&C apply, Credit subject to status." 
+                    ? "Mayores de 18, aplican T&C, Crédito sujeto a estado." 
+                    : settings.legalDisclaimer}
+                </span>
               </div>
             </div>
           )}
@@ -148,7 +162,16 @@ export default function ProductInteractiveView({
           {settings.paypalEnabled && (
             <div className="w-full flex items-center gap-2 mb-8 text-[13px] text-gray-800">
               <span className="italic font-bold text-[15px] text-[#003087]">PayPal</span>
-              <span>Pay in {installmentsCount} interest-free payments of £{installmentValue}. <a href="#" className="underline text-[#0070ba] hover:text-[#003087]">Learn more</a></span>
+              <span>
+                {isEs ? (
+                  <>Paga en {installmentsCount} plazos sin intereses de €{installmentValue}.</>
+                ) : (
+                  <>Pay in {installmentsCount} interest-free payments of €{installmentValue}.</>
+                )}{" "}
+                <a href="#" className="underline text-[#0070ba] hover:text-[#003087]">
+                  {isEs ? "Saber más" : "Learn more"}
+                </a>
+              </span>
             </div>
           )}
 
