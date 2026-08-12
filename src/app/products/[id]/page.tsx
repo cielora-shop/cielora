@@ -26,7 +26,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   const installmentValue = (product.priceValue / installmentsCount).toFixed(2);
 
   return (
-    <main className="flex flex-col min-h-screen bg-white pt-16">
+    <main className="flex flex-col min-h-screen bg-white pt-0 lg:pt-16">
       <ProductInteractiveView product={product} settings={settings} />
 
       <div className="mt-12 pb-6">

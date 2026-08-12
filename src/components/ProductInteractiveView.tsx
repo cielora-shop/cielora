@@ -40,19 +40,51 @@ export default function ProductInteractiveView({
     ...((colorImages as any).galleryImages || product.galleryImages || [])
   ].filter(Boolean); // removes empty strings/nulls
 
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const scrollLeft = e.currentTarget.scrollLeft;
+    const width = e.currentTarget.clientWidth;
+    const newIndex = Math.round(scrollLeft / width);
+    if (newIndex !== activeImageIndex) {
+      setActiveImageIndex(newIndex);
+    }
+  };
+
   return (
     <div className="w-full flex flex-col lg:flex-row gap-8 lg:gap-12 xl:gap-16 pb-0">
       {/* Left Side - Image Gallery */}
-      <div className="w-full lg:w-[60%] xl:w-[65%] flex flex-col">
-        <div className="grid grid-cols-2 gap-1">
+      <div className="w-full lg:w-[60%] xl:w-[65%] flex flex-col relative">
+        <div 
+          className="flex lg:grid lg:grid-cols-2 gap-1 overflow-x-auto snap-x snap-mandatory lg:overflow-visible no-scrollbar"
+          onScroll={handleScroll}
+        >
           {displayImages.length > 0 ? (
             displayImages.map((src, idx) => (
-              <ZoomableImage key={idx} src={src} alt={`${product.title} Image ${idx + 1}`} />
+              <div key={idx} className="w-full min-w-full lg:min-w-0 snap-center">
+                <ZoomableImage src={src} alt={`${product.title} Image ${idx + 1}`} />
+              </div>
             ))
           ) : (
-            <ZoomableImage src="/placeholder.jpg" alt={product.title} />
+            <div className="w-full min-w-full lg:min-w-0 snap-center">
+              <ZoomableImage src="/placeholder.jpg" alt={product.title} />
+            </div>
           )}
         </div>
+        
+        {/* Mobile Pagination Lines */}
+        {displayImages.length > 1 && (
+          <div className="flex lg:hidden justify-center items-center gap-2 mt-4 mb-2">
+            {displayImages.map((_, idx) => (
+              <div 
+                key={idx} 
+                className={`h-[2px] w-6 transition-colors ${
+                  idx === activeImageIndex ? 'bg-[#a34b31]' : 'bg-[#e5e7eb]'
+                }`} 
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Right Side - Product Info */}
