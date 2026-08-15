@@ -95,6 +95,8 @@ export default async function RootLayout({
     );
   }
 
+  const isCheckoutRoute = pathname.startsWith("/checkout");
+
   return (
     <html
       lang="en"
