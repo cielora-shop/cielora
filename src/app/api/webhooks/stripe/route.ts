@@ -3,7 +3,7 @@ import Stripe from "stripe";
 import { getDb, saveDb } from "@/lib/db";
 import nodemailer from "nodemailer";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "sk_test_placeholder", {
   apiVersion: "2026-07-29.dahlia", // Using latest stable stripe API version string format
 });
 
