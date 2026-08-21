@@ -54,7 +54,7 @@ export default function ProfilePage() {
         setIsLoading(true);
         setErrorMsg("");
         try {
-          const res = await fetch(`/api/orders/search?email=${encodeURIComponent(session.user.email as string)}`);
+          const res = await fetch(`/api/orders/search?email=${encodeURIComponent(session?.user?.email as string)}`);
           const data = await res.json();
           
           if (res.ok && data.results) {
