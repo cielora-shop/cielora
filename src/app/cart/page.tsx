@@ -25,7 +25,7 @@ export default function CartPage() {
     if (itemToRemove) {
       setIsClosingModal(true);
       setTimeout(() => {
-        removeFromCart(itemToRemove.id);
+        removeFromCart(itemToRemove.cartItemId!);
         setItemToRemove(null);
         setIsClosingModal(false);
       }, 300);
@@ -59,15 +59,17 @@ export default function CartPage() {
             </div>
           ) : (
             <div className="flex flex-wrap gap-10">
-              {cartItems.map((item, idx) => (
-                <div key={`${item.id}-${idx}`} className="w-full sm:w-[380px] flex flex-col gap-4 group relative">
+              {cartItems.map((item, idx) => {
+                const itemKey = item.cartItemId || `${item.id}-${item.color}-${item.size || 'default'}`;
+                return (
+                <div key={itemKey} className="w-full sm:w-[380px] flex flex-col gap-4 group relative">
                   {/* Image Box */}
                   <div className="w-full aspect-square relative bg-[#f9f9f9] flex items-center justify-center p-8 group-hover:bg-[#f4f4f4] transition-colors overflow-hidden">
                     <Link href={`/products/${item.id}`} className="absolute inset-0 z-0 cursor-pointer">
                       <Image src={item.image} alt={item.title} fill className="object-contain p-12 transition-transform duration-500 group-hover:scale-[1.2]" />
                     </Link>
                     <button 
-                      onClick={() => setItemToRemove(item)}
+                      onClick={() => setItemToRemove({...item, cartItemId: itemKey})}
                       className="absolute top-4 right-4 text-gray-400 hover:text-black transition-colors p-2 z-10"
                       aria-label="Remove item"
                     >
@@ -87,7 +89,10 @@ export default function CartPage() {
                         )}
                         <span className="text-[14px] font-semibold text-[#b44131]">{item.price}</span>
                       </div>
-                      <p className="text-[13px] text-gray-600">{isEs ? "Color:" : "Colour:"} <span className="capitalize text-gray-900">{item.color}</span></p>
+                      <p className="text-[13px] text-gray-600 mb-1">{isEs ? "Color:" : "Colour:"} <span className="capitalize text-gray-900">{item.color}</span></p>
+                      {item.size && (
+                        <p className="text-[13px] text-gray-600">{isEs ? "Talla:" : "Size:"} <span className="uppercase text-gray-900">{item.size}</span></p>
+                      )}
                     </div>
                     
                     <div className="flex flex-col items-end gap-6 justify-between h-full min-h-[90px]">
@@ -107,23 +112,23 @@ export default function CartPage() {
                       
                       <div className="flex items-center gap-4 mt-auto">
                         {item.quantity > 1 ? (
-                          <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="text-gray-400 hover:text-black">
+                          <button onClick={() => updateQuantity(itemKey, item.quantity - 1)} className="text-gray-400 hover:text-black">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                           </button>
                         ) : (
-                          <button onClick={() => setItemToRemove(item)} className="text-gray-400 hover:text-red-500">
+                          <button onClick={() => setItemToRemove({...item, cartItemId: itemKey})} className="text-gray-400 hover:text-red-500">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
                           </button>
                         )}
                         <span className="text-[14px] w-4 text-center text-gray-900">{item.quantity}</span>
-                        <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="text-gray-400 hover:text-black">
+                        <button onClick={() => updateQuantity(itemKey, item.quantity + 1)} className="text-gray-400 hover:text-black">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                         </button>
                       </div>
                     </div>
                   </div>
                 </div>
-              ))}
+              )})}
             </div>
           )}
         </div>

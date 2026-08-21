@@ -109,6 +109,8 @@ export interface OrderItem {
   priceValue: number;
   quantity: number;
   color: string;
+  size?: string;
+  description?: string;
   image: string;
 }
 
@@ -126,6 +128,7 @@ export interface Order {
   courier: string;
   trackingCode: string;
   date: string;
+  stripePaymentIntentId?: string;
 }
 
 export interface MegaMenuLink {
@@ -161,7 +164,15 @@ export interface NavbarTab {
   groupFiltersEs?: string[];
 }
 
+export interface ShippingRule {
+  id: string;
+  minOrderValue: number;
+  maxOrderValue: number | null; // null means 'and up'
+  shippingCost: number;
+}
+
 export interface GlobalSettings {
+  shippingRules?: ShippingRule[];
   klarnaEnabled: boolean;
   paypalEnabled: boolean;
   installmentsCount: number;
@@ -736,6 +747,9 @@ function getInitialDbState(): DbSchema {
   ];
 
   const settings: GlobalSettings = {
+    shippingRules: [
+      { id: "default", minOrderValue: 0, maxOrderValue: null, shippingCost: 8.99 }
+    ],
     klarnaEnabled: true,
     paypalEnabled: true,
     installmentsCount: 3,
@@ -895,6 +909,28 @@ export async function getDb(): Promise<DbSchema> {
       if (sl1 && sl1.platform === "Facebook") sl1.platform = "Instagram";
       const sl2 = parsed.socialLinks.find(sl => sl.id === "sl2");
       if (sl2 && sl2.platform === "Twitter") sl2.platform = "Facebook";
+    }
+
+    // Cleanup old Pending orders (older than 24h)
+    if (parsed.orders) {
+      const now = new Date().getTime();
+      const oneDayMs = 24 * 60 * 60 * 1000;
+      
+      const originalCount = parsed.orders.length;
+      parsed.orders = parsed.orders.filter(order => {
+        if (order.status === "Pending") {
+          const orderDate = new Date(order.date).getTime();
+          if (now - orderDate > oneDayMs) {
+            return false; // delete it
+          }
+        }
+        return true;
+      });
+      
+      // If we cleaned up any orders, save the db asynchronously to persist cleanup
+      if (parsed.orders.length !== originalCount) {
+        saveDb(parsed).catch(err => console.error("Error saving DB after cleanup", err));
+      }
     }
 
     return parsed;

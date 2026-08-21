@@ -35,36 +35,52 @@ export default function CheckoutPage() {
   const [formError, setFormError] = useState("");
   const [cardExpiry, setCardExpiry] = useState("");
   const [clientSecret, setClientSecret] = useState("");
+  const [orderId, setOrderId] = useState("");
   const [isInitializingStripe, setIsInitializingStripe] = useState(false);
-  const { cartItems, cartTotal, taxPercentage } = useCart();
+  const { cartItems, cartTotal, taxPercentage, calculatedShippingCost: shippingCost } = useCart();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  // Reset to step 1 if cart is empty after mounting
+  useEffect(() => {
+    if (mounted && cartItems.length === 0) {
+      setStep(1);
+      // Optional: you could also clear addressData here if you wanted a full reset
+    }
+  }, [mounted, cartItems.length]);
+
   const taxAmount = (cartTotal * taxPercentage) / 100;
-  const shippingCost = 8.99; // Standard shipping
   const finalTotal = cartTotal + taxAmount + shippingCost;
 
   useEffect(() => {
-    if (paymentMethod === "cards" && finalTotal > 0 && !clientSecret) {
+    if (step === 3 && finalTotal > 0 && !clientSecret) {
       setIsInitializingStripe(true);
       fetch("/api/create-payment-intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: finalTotal }),
+        body: JSON.stringify({ 
+          amount: finalTotal,
+          cartItems,
+          addressData,
+          taxAmount,
+          shippingCost,
+          subtotal: cartTotal
+        }),
       })
         .then((res) => res.json())
         .then((data) => {
           if (data.clientSecret) {
             setClientSecret(data.clientSecret);
+            setOrderId(data.orderId);
           }
         })
         .catch((err) => console.error(err))
         .finally(() => setIsInitializingStripe(false));
     }
-  }, [paymentMethod, finalTotal, clientSecret]);
+  }, [step, finalTotal, clientSecret]);
 
   return (
     <div className="min-h-screen bg-white text-black py-8">
@@ -205,7 +221,7 @@ export default function CheckoutPage() {
                       </div>
                       <h3 className="font-bold text-[15px] mb-1">Home Delivery</h3>
                       <p className="text-gray-600 text-sm mb-3">5-7 Business Days</p>
-                      <p className="font-medium">€8.99</p>
+                      <p className="font-medium">{shippingCost === 0 ? "Free" : `€${shippingCost.toFixed(2)}`}</p>
                     </div>
                   </div>
 
@@ -314,163 +330,72 @@ export default function CheckoutPage() {
 
           {step === 3 && (
             <div className="animate-in fade-in slide-in-from-right-8 duration-500">
-              {!paymentMethod ? (
-                <>
-                  <h2 className="text-[22px] font-medium mb-6">Chose a payment method</h2>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Cards Option */}
-                    <div 
-                      onClick={() => setPaymentMethod('cards')}
-                      className="border border-gray-200 px-8 py-6 flex items-center gap-12 cursor-pointer hover:border-black transition-colors bg-white"
-                    >
-                      <div className="">
-                        <CreditCard size={42} strokeWidth={1} fill="#020617" color="#fff" />
-                      </div>
-                      <div className="font-medium text-[16px]">Cards</div>
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <h2 className="text-xl font-bold mb-6">Shipping to</h2>
+                
+                <div className="border border-gray-200 p-6 bg-white mb-6 flex justify-between items-start">
+                  <div>
+                    <div className="mb-4 text-gray-500">
+                      <Home size={28} strokeWidth={1} />
                     </div>
-
-                    {/* PayPal Option */}
-                    <div 
-                      onClick={() => setPaymentMethod('paypal')}
-                      className="border border-gray-200 px-6 py-5 flex items-center gap-6 cursor-pointer hover:border-black transition-colors bg-white"
-                    >
-                      <div className="font-extrabold italic text-[26px] flex items-center tracking-tighter">
-                        <span className="text-[#003087]">Pay</span><span className="text-[#0079C1]">Pal</span>
-                      </div>
-                      <div className="flex flex-col">
-                        <span className="font-medium text-[16px]">PayPal</span>
-                        <span className="text-gray-500 text-[13px] leading-tight mt-1">
-                          You will be redirected to the PayPal<br/>website to complete the payment
-                        </span>
-                      </div>
-                    </div>
+                    <p className="font-bold text-[15px] mb-1">{(addressData.firstName + " " + addressData.lastName).toUpperCase() || "ASHUTOSH SINGH"}</p>
+                    <p className="text-gray-400 text-[15px]">{addressData.address1 || "29, PHASE-3, ROAD NO. 8, CENTRAL COLONY,"}</p>
+                    <p className="text-gray-400 text-[15px]">{(addressData.postalCode || "302013") + " " + (addressData.city || "JAIPUR") + " " + (addressData.state || "Rajasthan")}</p>
+                    <p className="text-gray-400 text-[15px]">Phone:{addressData.phoneNumber || "8769359925"}</p>
                   </div>
-                  
-                  <div className="mt-12">
-                    <button 
-                      onClick={() => setStep(2)}
-                      className="text-gray-500 hover:text-black hover:underline text-sm font-medium"
-                    >
-                      Back to Shipping
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                  <h2 className="text-xl font-bold mb-6">Shipping to</h2>
-                  
-                  <div className="border border-gray-200 p-6 bg-white mb-6 flex justify-between items-start">
-                    <div>
-                      <div className="mb-4 text-gray-500">
-                        <Home size={28} strokeWidth={1} />
-                      </div>
-                      <p className="font-bold text-[15px] mb-1">{(addressData.firstName + " " + addressData.lastName).toUpperCase() || "ASHUTOSH SINGH"}</p>
-                      <p className="text-gray-400 text-[15px]">{addressData.address1 || "29, PHASE-3, ROAD NO. 8, CENTRAL COLONY,"}</p>
-                      <p className="text-gray-400 text-[15px]">{(addressData.postalCode || "302013") + " " + (addressData.city || "JAIPUR") + " " + (addressData.state || "Rajasthan")}</p>
-                      <p className="text-gray-400 text-[15px]">Phone:{addressData.phoneNumber || "8769359925"}</p>
-                    </div>
-                    <button 
-                      type="button"
-                      onClick={() => setStep(2)}
-                      className="p-2 border border-gray-300 hover:border-black transition-colors"
-                    >
-                      <Pencil size={18} strokeWidth={1.5} color="#666" />
-                    </button>
-                  </div>
-
-                  <label 
-                    className="flex items-center gap-3 cursor-pointer group mb-8"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setBillingSameAsShipping(!billingSameAsShipping);
-                    }}
+                  <button 
+                    type="button"
+                    onClick={() => setStep(2)}
+                    className="p-2 border border-gray-300 hover:border-black transition-colors"
                   >
-                    <div className="w-5 h-5 border border-black flex shrink-0 items-center justify-center group-hover:bg-gray-50">
-                      {billingSameAsShipping && <Check size={16} strokeWidth={3} />}
+                    <Pencil size={18} strokeWidth={1.5} color="#666" />
+                  </button>
+                </div>
+
+                <label 
+                  className="flex items-center gap-3 cursor-pointer group mb-8"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setBillingSameAsShipping(!billingSameAsShipping);
+                  }}
+                >
+                  <div className="w-5 h-5 border border-black flex shrink-0 items-center justify-center group-hover:bg-gray-50">
+                    {billingSameAsShipping && <Check size={16} strokeWidth={3} />}
+                  </div>
+                  <span className="text-[15px] font-medium text-black">Billing address same as shipping</span>
+                </label>
+
+                <div className="mt-8">
+                  <h2 className="text-xl font-bold mb-6">Payment</h2>
+                  {isInitializingStripe ? (
+                    <div className="py-12 flex justify-center items-center">
+                      <p className="text-gray-500">Loading secure payment...</p>
                     </div>
-                    <span className="text-[15px] font-medium text-black">Billing address same as shipping</span>
-                  </label>
-
-                  {paymentMethod === 'cards' ? (
-                    <>
-                      <div className="border border-gray-200 p-6 bg-white mb-8 flex justify-between items-center">
-                        <div className="flex items-center gap-6">
-                          <CreditCard size={38} strokeWidth={1} fill="#020617" color="#fff" />
-                          <span className="font-bold text-[15px]">Cards</span>
-                        </div>
-                        <button 
-                          type="button"
-                          onClick={() => setPaymentMethod(null)}
-                          className="p-2 border border-gray-300 hover:border-black transition-colors"
-                        >
-                          <Pencil size={18} strokeWidth={1.5} color="#666" />
-                        </button>
-                      </div>
-
-                      <div className="mt-8">
-                        {isInitializingStripe ? (
-                          <div className="py-12 flex justify-center items-center">
-                            <p className="text-gray-500">Loading secure payment...</p>
-                          </div>
-                        ) : clientSecret ? (
-                          <Elements 
-                            stripe={stripePromise} 
-                            options={{ 
-                              clientSecret, 
-                              appearance: { 
-                                theme: 'stripe',
-                                variables: { colorPrimary: '#a66a53' }
-                              } 
-                            }}
-                          >
-                            <StripeCheckout 
-                              amount={finalTotal} 
-                              onSuccess={() => alert("Payment Successful!")} 
-                              onCancel={() => setPaymentMethod(null)} 
-                            />
-                          </Elements>
-                        ) : (
-                          <p className="text-red-500 py-4">Failed to initialize payment.</p>
-                        )}
-                      </div>
-                    </>
+                  ) : clientSecret ? (
+                    <Elements 
+                      stripe={stripePromise} 
+                      options={{ 
+                        clientSecret, 
+                        appearance: { 
+                          theme: 'stripe',
+                          variables: { colorPrimary: '#a66a53' }
+                        } 
+                      }}
+                    >
+                      <StripeCheckout 
+                        amount={finalTotal} 
+                        orderId={orderId}
+                        onSuccess={() => {
+                          window.location.href = `/checkout/success?orderId=${orderId}`;
+                        }}
+                        onCancel={() => setStep(2)} 
+                      />
+                    </Elements>
                   ) : (
-                    <>
-                      <div className="border border-gray-200 px-6 py-5 bg-white mb-8 flex justify-between items-center">
-                        <div className="flex items-center gap-6">
-                          <div className="font-extrabold italic text-[26px] flex items-center tracking-tighter w-[80px] shrink-0">
-                            <span className="text-[#003087]">Pay</span><span className="text-[#0079C1]">Pal</span>
-                          </div>
-                          <div className="flex flex-col">
-                            <span className="font-bold text-[15px]">PayPal</span>
-                            <span className="text-gray-500 text-[13px] leading-tight mt-1">
-                              You will be redirected to the PayPal website to complete the payment
-                            </span>
-                          </div>
-                        </div>
-                        <button 
-                          type="button"
-                          onClick={() => setPaymentMethod(null)}
-                          className="p-2 border border-gray-300 hover:border-black transition-colors"
-                        >
-                          <Pencil size={18} strokeWidth={1.5} color="#666" />
-                        </button>
-                      </div>
-                      
-                      <button 
-                        type="button"
-                        onClick={() => alert("PayPal integration coming soon!")}
-                        className="w-full bg-[#ffc439] hover:bg-[#f4bb33] transition-colors py-4 flex items-center justify-center rounded-md"
-                      >
-                        <div className="font-extrabold italic text-[20px] flex items-center tracking-tighter">
-                          <span className="text-[#003087]">Pay</span><span className="text-[#0079C1]">Pal</span>
-                        </div>
-                      </button>
-                    </>
+                    <p className="text-red-500 py-4">Failed to initialize payment.</p>
                   )}
                 </div>
-              )}
+              </div>
             </div>
           )}
         </div>
@@ -498,6 +423,9 @@ export default function CheckoutPage() {
                         <span className="font-semibold text-sm">{item.price}</span>
                       </div>
                       <p className="text-gray-500 text-xs mb-1">Color: {item.color}</p>
+                      {item.size && (
+                        <p className="text-gray-500 text-xs mb-1">Size: {item.size}</p>
+                      )}
                       <p className="text-gray-500 text-xs">Qty: {item.quantity}</p>
                     </div>
                   </div>
@@ -514,7 +442,7 @@ export default function CheckoutPage() {
               </div>
               <div className="flex justify-between text-gray-600">
                 <span>Shipping</span>
-                <span>{step >= 2 ? '€8.99' : 'Calculated at next step'}</span>
+                <span>{step >= 2 ? (shippingCost === 0 ? 'Free' : `€${shippingCost.toFixed(2)}`) : 'Calculated at next step'}</span>
               </div>
               <div className="flex justify-between text-gray-600">
                 <span>Estimated Tax ({taxPercentage}%)</span>

@@ -20,7 +20,7 @@ export default function SideCart() {
     if (itemToRemove) {
       setIsClosingModal(true);
       setTimeout(() => {
-        removeFromCart(itemToRemove.id);
+        removeFromCart(itemToRemove.cartItemId!);
         setItemToRemove(null);
         setIsClosingModal(false);
       }, 300);
@@ -85,8 +85,10 @@ export default function SideCart() {
             <p className="text-gray-500 text-sm mt-4">{isEs ? "Tu carrito está vacío." : "Your cart is empty."}</p>
           ) : (
             <div className="flex flex-col gap-6">
-              {cartItems.map((item, idx) => (
-                <div key={`${item.id}-${idx}`} className="flex gap-4">
+              {cartItems.map((item, idx) => {
+                const itemKey = item.cartItemId || `${item.id}-${item.color}-${item.size || 'default'}`;
+                return (
+                <div key={itemKey} className="flex gap-4">
                   <div className="w-[100px] h-[100px] relative bg-[#f9f9f9] flex-shrink-0 flex items-center justify-center">
                     <Image src={item.image} alt={item.title} fill className="object-cover p-2" />
                   </div>
@@ -98,26 +100,28 @@ export default function SideCart() {
                       )}
                       <span className="text-[14px] font-semibold text-[#b44131]">{item.price}</span>
                     </div>
-                    <p className="text-[12px] text-gray-600 mb-3">{isEs ? "Color:" : "Colour:"} <span className="capitalize">{item.color}</span></p>
-                    
+                    <p className="text-[12px] text-gray-600 mb-1">{isEs ? "Color:" : "Colour:"} <span className="capitalize">{item.color}</span></p>
+                    {item.size && (
+                      <p className="text-[12px] text-gray-600 mb-2">{isEs ? "Talla:" : "Size:"} <span className="uppercase">{item.size}</span></p>
+                    )}
                     <div className="flex items-center gap-4 mt-auto">
                       {item.quantity > 1 ? (
-                        <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="text-gray-400 hover:text-black">
+                        <button onClick={() => updateQuantity(itemKey, item.quantity - 1)} className="text-gray-400 hover:text-black">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                         </button>
                       ) : (
-                        <button onClick={() => setItemToRemove(item)} className="text-gray-400 hover:text-red-500">
+                        <button onClick={() => setItemToRemove({...item, cartItemId: itemKey})} className="text-gray-400 hover:text-red-500">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
                         </button>
                       )}
                       <span className="text-[13px] w-4 text-center">{item.quantity}</span>
-                      <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="text-gray-400 hover:text-black">
+                      <button onClick={() => updateQuantity(itemKey, item.quantity + 1)} className="text-gray-400 hover:text-black">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                       </button>
                     </div>
                   </div>
                 </div>
-              ))}
+              )})}
             </div>
           )}
 

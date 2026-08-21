@@ -2262,7 +2262,16 @@ export default function AdminPage() {
                           <img src={item.image} alt={item.title} className="w-12 h-14 object-cover border rounded" />
                           <div className="flex-1">
                             <p className="font-semibold text-gray-900">{item.title}</p>
-                            <p className="text-gray-500 font-normal uppercase text-[10px]">Metal: {item.color} | Qty: {item.quantity}</p>
+                            <p className="text-gray-500 font-normal uppercase text-[10px]">
+                              Metal: {item.color} 
+                              {item.size ? ` | Size: ${item.size}` : ""} 
+                              | Qty: {item.quantity}
+                            </p>
+                            {item.description && (
+                              <p className="text-gray-400 font-normal text-[10px] mt-1 line-clamp-2" title={item.description}>
+                                {item.description}
+                              </p>
+                            )}
                           </div>
                           <span className="font-semibold text-gray-900">{item.price}</span>
                         </div>
@@ -3104,6 +3113,87 @@ export default function AdminPage() {
                       required
                     />
                   </div>
+                </div>
+              </div>
+
+              {/* Dynamic Shipping Rules */}
+              <div className="flex flex-col gap-4 bg-stone-50 p-6 rounded border border-gray-200">
+                <h4 className="font-bold text-gray-950 uppercase tracking-wider border-b pb-2 mb-2">Dynamic Shipping Rules</h4>
+                <div className="flex flex-col gap-4">
+                  {(db.settings.shippingRules || []).map((rule, idx) => (
+                    <div key={rule.id || idx} className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end bg-white p-4 border border-gray-100 shadow-sm rounded">
+                      <div className="flex flex-col gap-1.5">
+                        <label className="font-bold text-gray-800 uppercase tracking-wider text-[10px]">Min Order Value (€)</label>
+                        <input
+                          type="number"
+                          value={rule.minOrderValue}
+                          onChange={(e) => {
+                            const newRules = [...(db.settings.shippingRules || [])];
+                            newRules[idx].minOrderValue = Number(e.target.value);
+                            setDb({ ...db, settings: { ...db.settings, shippingRules: newRules } });
+                          }}
+                          className="border border-gray-300 px-3 py-2 rounded focus:outline-none focus:border-black text-[13px] bg-white"
+                          required
+                        />
+                      </div>
+                      <div className="flex flex-col gap-1.5">
+                        <label className="font-bold text-gray-800 uppercase tracking-wider text-[10px]">Max Order Value (€)</label>
+                        <input
+                          type="number"
+                          value={rule.maxOrderValue === null ? "" : rule.maxOrderValue}
+                          placeholder="Leave empty for 'and up'"
+                          onChange={(e) => {
+                            const newRules = [...(db.settings.shippingRules || [])];
+                            newRules[idx].maxOrderValue = e.target.value ? Number(e.target.value) : null;
+                            setDb({ ...db, settings: { ...db.settings, shippingRules: newRules } });
+                          }}
+                          className="border border-gray-300 px-3 py-2 rounded focus:outline-none focus:border-black text-[13px] bg-white"
+                        />
+                      </div>
+                      <div className="flex flex-col gap-1.5">
+                        <label className="font-bold text-gray-800 uppercase tracking-wider text-[10px]">Shipping Cost (€)</label>
+                        <input
+                          type="number"
+                          step="0.01"
+                          value={rule.shippingCost}
+                          onChange={(e) => {
+                            const newRules = [...(db.settings.shippingRules || [])];
+                            newRules[idx].shippingCost = Number(e.target.value);
+                            setDb({ ...db, settings: { ...db.settings, shippingRules: newRules } });
+                          }}
+                          className="border border-gray-300 px-3 py-2 rounded focus:outline-none focus:border-black text-[13px] bg-white"
+                          required
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const newRules = [...(db.settings.shippingRules || [])];
+                          newRules.splice(idx, 1);
+                          setDb({ ...db, settings: { ...db.settings, shippingRules: newRules } });
+                        }}
+                        className="bg-red-50 text-red-600 border border-red-200 px-4 py-2 rounded font-bold uppercase text-[11px] hover:bg-red-100 hover:text-red-700 transition-colors h-[38px]"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const newRules = [...(db.settings.shippingRules || [])];
+                      newRules.push({
+                        id: Date.now().toString(),
+                        minOrderValue: 0,
+                        maxOrderValue: null,
+                        shippingCost: 0
+                      });
+                      setDb({ ...db, settings: { ...db.settings, shippingRules: newRules } });
+                    }}
+                    className="w-full border border-dashed border-gray-400 py-3 text-[12px] font-bold text-gray-600 uppercase tracking-wider hover:bg-stone-100 hover:text-gray-900 transition-colors rounded"
+                  >
+                    + Add Shipping Rule
+                  </button>
                 </div>
               </div>
 

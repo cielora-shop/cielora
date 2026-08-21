@@ -16,6 +16,7 @@ export default function ProductInteractiveView({
   settings: GlobalSettings;
 }) {
   const [selectedColor, setSelectedColor] = useState(product.colors[0] || "silver");
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
   
   const [isEs, setIsEs] = useState(true);
   useEffect(() => {
@@ -128,7 +129,9 @@ export default function ProductInteractiveView({
           </div>
 
           {/* Size Selector */}
-          <SizeSelector sizes={product.sizes} />
+          {product.sizes && product.sizes.length > 0 && (
+            <SizeSelector sizes={product.sizes} value={selectedSize} onChange={setSelectedSize} />
+          )}
 
           {/* Promo Banner */}
           <div className="w-full bg-[#f2f4f6] text-gray-800 text-[12px] py-2.5 px-3 mb-4">
@@ -145,6 +148,9 @@ export default function ProductInteractiveView({
                 image: displayImages[0] || "/placeholder.jpg"
               }}
               selectedColor={selectedColor}
+              size={selectedSize || undefined}
+              description={product.description}
+              disabled={Boolean(product.sizes && product.sizes.length > 0 && !selectedSize)}
             />
             <WishlistButton 
               product={{

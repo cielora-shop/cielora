@@ -1,13 +1,17 @@
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
+import React, { createContext, useContext, useState, ReactNode, useEffect, useCallback } from "react";
+import { ShippingRule } from "@/lib/db";
 
 export interface CartItem {
+  cartItemId?: string; // Unique identifier for the cart item (id + color + size)
   id: string | number;
   title: string;
   price: string;
   originalPrice?: string;
   color: string;
+  size?: string;
+  description?: string;
   quantity: number;
   image: string;
 }
@@ -18,10 +22,13 @@ interface CartContextType {
   closeCart: () => void;
   cartItems: CartItem[];
   addToCart: (item: CartItem) => void;
-  removeFromCart: (id: string | number) => void;
-  updateQuantity: (id: string | number, quantity: number) => void;
+  removeFromCart: (cartItemId: string) => void;
+  updateQuantity: (cartItemId: string, quantity: number) => void;
+  clearCart: () => void;
   cartTotal: number;
   taxPercentage: number;
+  shippingRules: ShippingRule[];
+  calculatedShippingCost: number;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -30,6 +37,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [taxPercentage, setTaxPercentage] = useState<number>(17.35);
+  const [shippingRules, setShippingRules] = useState<ShippingRule[]>([{ id: "default", minOrderValue: 0, maxOrderValue: null, shippingCost: 8.99 }]);
   const [isMounted, setIsMounted] = useState(false);
 
   // Load from local storage on mount
@@ -51,6 +59,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
         if (data?.settings?.taxPercentage !== undefined) {
           setTaxPercentage(data.settings.taxPercentage);
         }
+        if (data?.settings?.shippingRules) {
+          setShippingRules(data.settings.shippingRules);
+        }
       })
       .catch(err => console.error("Error fetching db settings", err));
   }, []);
@@ -70,31 +81,53 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const closeCart = () => setIsCartOpen(false);
 
   const addToCart = (item: CartItem) => {
+    const generatedCartItemId = `${item.id}-${item.color}-${item.size || 'default'}`;
+    
     setCartItems((prev) => {
-      const existing = prev.find((i) => i.id === item.id && i.color === item.color);
+      const existing = prev.find((i) => i.cartItemId === generatedCartItemId);
       if (existing) {
         return prev.map((i) =>
-          i.id === item.id && i.color === item.color ? { ...i, quantity: i.quantity + 1 } : i
+          i.cartItemId === generatedCartItemId ? { ...i, quantity: i.quantity + (item.quantity || 1) } : i
         );
       }
-      return [...prev, item];
+      return [...prev, { ...item, cartItemId: generatedCartItemId }];
     });
     openCart();
   };
 
-  const removeFromCart = (id: string | number) => {
-    setCartItems((prev) => prev.filter((i) => i.id !== id));
+  const removeFromCart = (cartItemId: string) => {
+    setCartItems((prev) => prev.filter((i) => i.cartItemId !== cartItemId));
   };
 
-  const updateQuantity = (id: string | number, quantity: number) => {
+  const updateQuantity = (cartItemId: string, quantity: number) => {
     if (quantity < 1) return;
-    setCartItems((prev) => prev.map((i) => (i.id === id ? { ...i, quantity } : i)));
+    setCartItems((prev) => prev.map((i) => (i.cartItemId === cartItemId ? { ...i, quantity } : i)));
   };
+
+  const clearCart = useCallback(() => {
+    setCartItems([]);
+  }, []);
 
   const cartTotal = cartItems.reduce((total, item) => {
     const priceValue = parseFloat(item.price.replace(/[^0-9.]/g, ""));
     return total + priceValue * item.quantity;
   }, 0);
+
+  const calculatedShippingCost = React.useMemo(() => {
+    if (!shippingRules || shippingRules.length === 0) return 8.99;
+    
+    // Sort rules by minOrderValue descending so higher thresholds match first
+    const sortedRules = [...shippingRules].sort((a, b) => b.minOrderValue - a.minOrderValue);
+
+    // Find the applicable rule
+    const matchingRule = sortedRules.find(rule => {
+      const meetsMin = cartTotal >= rule.minOrderValue;
+      const meetsMax = rule.maxOrderValue === null || cartTotal < rule.maxOrderValue;
+      return meetsMin && meetsMax;
+    });
+
+    return matchingRule ? matchingRule.shippingCost : 8.99;
+  }, [cartTotal, shippingRules]);
 
   return (
     <CartContext.Provider
@@ -106,8 +139,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
         addToCart,
         removeFromCart,
         updateQuantity,
+        clearCart,
         cartTotal,
         taxPercentage,
+        shippingRules,
+        calculatedShippingCost,
       }}
     >
       {children}

@@ -7,7 +7,7 @@ import {
   useElements
 } from "@stripe/react-stripe-js";
 
-export default function StripeCheckout({ amount, onSuccess, onCancel }: { amount: number, onSuccess: () => void, onCancel: () => void }) {
+export default function StripeCheckout({ amount, orderId, onSuccess, onCancel }: { amount: number, orderId: string, onSuccess: () => void, onCancel: () => void }) {
   const stripe = useStripe();
   const elements = useElements();
   const [message, setMessage] = useState<string | null>(null);
@@ -25,7 +25,7 @@ export default function StripeCheckout({ amount, onSuccess, onCancel }: { amount
     const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `${window.location.origin}/checkout/success`,
+        return_url: `${window.location.origin}/checkout/success?orderId=${orderId}`,
       },
       redirect: "if_required",
     });
@@ -51,7 +51,7 @@ export default function StripeCheckout({ amount, onSuccess, onCancel }: { amount
         </div>
       )}
 
-      <div className="flex gap-4 mt-8">
+      <div className="flex flex-col-reverse md:flex-row gap-4 mt-8">
         <button
           type="button"
           onClick={onCancel}

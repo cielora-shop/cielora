@@ -46,6 +46,7 @@ export const metadata: Metadata = {
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import { CartProvider } from "@/context/CartContext";
+import NextAuthProvider from "@/components/NextAuthProvider";
 import { WishlistProvider } from "@/context/WishlistContext";
 import SideCart from "@/components/SideCart";
 import { headers } from "next/headers";
@@ -104,14 +105,16 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-sans text-foreground bg-background" suppressHydrationWarning>
-        <WishlistProvider>
-          <CartProvider>
-            <Navbar />
-            {children}
-            <Footer />
-            <SideCart />
-          </CartProvider>
-        </WishlistProvider>
+        <NextAuthProvider>
+          <WishlistProvider>
+            <CartProvider>
+              <Navbar />
+              {children}
+              <Footer />
+              <SideCart />
+            </CartProvider>
+          </WishlistProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );

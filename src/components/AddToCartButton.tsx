@@ -11,9 +11,12 @@ interface AddToCartButtonProps {
     image: string;
   };
   selectedColor: string;
+  size?: string;
+  description?: string;
+  disabled?: boolean;
 }
 
-export default function AddToCartButton({ product, selectedColor }: AddToCartButtonProps) {
+export default function AddToCartButton({ product, selectedColor, size, description, disabled }: AddToCartButtonProps) {
   const { addToCart } = useCart();
   const [isEs, setIsEs] = useState(true);
 
@@ -32,6 +35,8 @@ export default function AddToCartButton({ product, selectedColor }: AddToCartBut
       price: product.price,
       originalPrice,
       color: selectedColor || "golden",
+      size,
+      description,
       quantity: 1,
       image: product.image,
     });
@@ -40,7 +45,12 @@ export default function AddToCartButton({ product, selectedColor }: AddToCartBut
   return (
     <button 
       onClick={handleAddToCart}
-      className="flex-1 bg-[#221f1f] text-white font-medium text-[16px] py-3 px-4 flex items-center justify-center transition-colors hover:bg-black"
+      disabled={disabled}
+      className={`flex-1 font-medium text-[16px] py-3 px-4 flex items-center justify-center transition-colors ${
+        disabled 
+          ? "bg-gray-300 text-gray-500 cursor-not-allowed" 
+          : "bg-[#221f1f] text-white hover:bg-black"
+      }`}
     >
       <span>{isEs ? "Añadir al carrito" : "Add to Cart"}</span>
     </button>
