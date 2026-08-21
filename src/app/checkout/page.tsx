@@ -150,8 +150,21 @@ export default function CheckoutPage() {
         {/* Left Column: Flow Steps */}
         <div className="flex-1 max-w-2xl">
           
-          {step === 1 && (
-            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+          {mounted && cartItems.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-12 text-center animate-in fade-in duration-500">
+              <h2 className="text-2xl font-bold mb-4">Your checkout is empty</h2>
+              <p className="text-gray-500 mb-8">Add some beautiful jewelry to your cart to proceed with checkout.</p>
+              <Link 
+                href="/shop-by" 
+                className="bg-[#221f1f] text-white px-8 py-4 font-medium text-[15px] hover:bg-black transition-colors"
+              >
+                Continue Shopping
+              </Link>
+            </div>
+          ) : (
+            <>
+              {step === 1 && status !== "authenticated" && (
+                <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
               {/* Sign In Section */}
               <div className="mb-12">
                 <h2 className="text-xl font-bold mb-1">Sign in</h2>
@@ -237,14 +250,16 @@ export default function CheckoutPage() {
                     </div>
                   </div>
 
-                  <div className="mt-12 flex justify-start items-center">
-                    <button 
-                      onClick={() => setStep(1)}
-                      className="text-gray-500 hover:text-black hover:underline text-sm font-medium"
-                    >
-                      Back to Details
-                    </button>
-                  </div>
+                  {status !== "authenticated" && (
+                    <div className="mt-12 flex justify-start items-center">
+                      <button 
+                        onClick={() => setStep(1)}
+                        className="text-gray-500 hover:text-black hover:underline text-sm font-medium"
+                      >
+                        Back to Details
+                      </button>
+                    </div>
+                  )}
                 </>
               ) : (
                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -409,6 +424,8 @@ export default function CheckoutPage() {
                 </div>
               </div>
             </div>
+          )}
+            </>
           )}
         </div>
 
