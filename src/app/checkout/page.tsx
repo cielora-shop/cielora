@@ -8,6 +8,7 @@ import { useCart } from "@/context/CartContext";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import StripeCheckout from "@/components/StripeCheckout";
+import { useSession } from "next-auth/react";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid recreating the `Stripe` object on every render.
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "");
@@ -39,10 +40,21 @@ export default function CheckoutPage() {
   const [isInitializingStripe, setIsInitializingStripe] = useState(false);
   const { cartItems, cartTotal, taxPercentage, calculatedShippingCost: shippingCost } = useCart();
   const [mounted, setMounted] = useState(false);
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (status === "authenticated" && step === 1 && cartItems.length > 0) {
+      setStep(2);
+      setAddressData(prev => ({
+        ...prev,
+        email: prev.email || session?.user?.email || "",
+      }));
+    }
+  }, [status, step, session, cartItems.length]);
 
   // Reset to step 1 if cart is empty after mounting
   useEffect(() => {
